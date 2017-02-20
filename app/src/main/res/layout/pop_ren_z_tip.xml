@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        style="@style/TextSize15Colorfff"
+        android:layout_gravity="center_horizontal"
+        android:drawableBottom="@mipmap/wode_tanchu"
+        android:drawablePadding="@dimen/size25"
+        android:gravity="center_horizontal"
+        android:text="认证后享受更多权限哦"
+        android:textSize="@dimen/sp18" />
+
+    <TextView
+        android:id="@+id/tv_go"
+        style="@style/TextSize15Colorfff"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/size35"
+        android:background="@drawable/hs_shape_53bbb9_radius_17"
+        android:paddingBottom="@dimen/size8"
+        android:paddingLeft="@dimen/size40"
+        android:paddingRight="@dimen/size40"
+        android:paddingTop="@dimen/size8"
+        android:text="去认证"
+        android:textSize="@dimen/sp17" />
+
+    <ImageView
+        android:id="@+id/iv_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/size32"
+        android:src="@mipmap/wode_cancel" />
+</LinearLayout>

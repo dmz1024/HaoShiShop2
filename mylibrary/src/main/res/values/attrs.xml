@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="TextImage">
+        <attr name="TextImage_seat" format="integer"></attr>
+        <attr name="TextImage_drawable" format="reference"></attr>
+        <attr name="TextImage_height" format="dimension" />
+        <attr name="TextImage_width" format="dimension" />
+    </declare-styleable>
+
+
+    <declare-styleable name="TitleRelativeLayout">
+        <attr name="TitleRelativeLayout_title_image" format="reference"></attr>
+        <attr name="TitleRelativeLayout_content_image" format="reference"></attr>
+        <attr name="TitleRelativeLayout_title" format="string"></attr>
+        <attr name="TitleRelativeLayout_title_style" format="reference"></attr>
+        <attr name="TitleRelativeLayout_content_style" format="reference"></attr>
+        <attr name="TitleRelativeLayout_content" format="string"></attr>
+        <attr name="TitleRelativeLayout_view_visi" format="boolean"></attr>
+        <attr name="TitleRelativeLayout_content_visi" format="boolean"></attr>
+        <attr name="TitleRelativeLayout_show_view" format="integer"></attr>
+        <attr name="TitleRelativeLayout_content_image_visi" format="boolean"></attr>
+    </declare-styleable>
+
+
+    <declare-styleable name="Color2Text">
+        <attr name="Color2Text_size" format="dimension"></attr>
+        <attr name="Color2Text_color" format="color"></attr>
+        <attr name="Color2Text_content" format="string"></attr>
+
+    </declare-styleable>
+
+    <declare-styleable name="SwitchButton">
+        <attr name="oncolor" format="color"></attr>
+        <attr name="offcolor" format="color"></attr>
+        <attr name="btncolor" format="color"></attr>
+        <attr name="is_on" format="boolean"></attr>
+    </declare-styleable>
+
+
+
+
+    <!--<declare-styleable name="RatingBarView">-->
+
+        <!--<attr name="starImageSize" format="dimension" />-->
+        <!--<attr name="starCount" format="integer" />-->
+        <!--<attr name="starEmpty" format="reference" />-->
+        <!--<attr name="starFill" format="reference" />-->
+
+    <!--</declare-styleable>-->
+
+
+    <!--<declare-styleable name="MyRatingBar">-->
+
+        <!--<attr name="MyRatingBar_starImageSize" format="dimension" />-->
+        <!--&lt;!&ndash; 每两个星星见距离 &ndash;&gt;-->
+        <!--<attr name="MyRatingBar_space" format="float" />-->
+        <!--<attr name="MyRatingBar_starCount" format="integer" />-->
+        <!--<attr name="MyRatingBar_starCurrent" format="float" />-->
+        <!--&lt;!&ndash; 分辨率,比如设置为0.2最小可以显示0.2颗星星 &ndash;&gt;-->
+        <!--<attr name="MyRatingBar_step" format="float" />-->
+        <!--<attr name="MyRatingBar_starEmpty" format="reference" />-->
+        <!--&lt;!&ndash; boolean值 &ndash;&gt;-->
+        <!--<attr name="MyRatingBar_clickable" format="boolean" />-->
+        <!--<attr name="MyRatingBar_starFill" format="reference" />-->
+
+    <!--</declare-styleable>-->
+
+
+    <!--<declare-styleable name="RatingBar">-->
+        <!--&lt;!&ndash; 选中的图片资源 &ndash;&gt;-->
+        <!--<attr name="starSrc" format="reference" />-->
+        <!--&lt;!&ndash; 未选中的图片资源 &ndash;&gt;-->
+        <!--<attr name="starDst" format="reference" />-->
+        <!--&lt;!&ndash; boolean值 &ndash;&gt;-->
+        <!--<attr name="clickable" format="boolean" />-->
+        <!--&lt;!&ndash; 分辨率,比如设置为0.2最小可以显示0.2颗星星 &ndash;&gt;-->
+        <!--<attr name="step" format="float" />-->
+        <!--&lt;!&ndash; 每两个星星见距离 &ndash;&gt;-->
+        <!--<attr name="space" format="float" />-->
+        <!--&lt;!&ndash; 星星的个数 &ndash;&gt;-->
+        <!--<attr name="starNumber" format="integer" />-->
+    <!--</declare-styleable>-->
+
+
+    <!--<declare-styleable name="HorizontalProgressBarWithNumber">-->
+        <!--<attr name="progress_unreached_color" format="color" />-->
+        <!--<attr name="progress_reached_color" format="color" />-->
+        <!--<attr name="progress_reached_bar_height" format="dimension" />-->
+        <!--<attr name="progress_unreached_bar_height" format="dimension" />-->
+        <!--<attr name="progress_text_size" format="dimension" />-->
+        <!--<attr name="progress_text_color" format="color" />-->
+        <!--<attr name="progress_text_offset" format="dimension" />-->
+        <!--<attr name="progress_text_visibility" format="enum">-->
+            <!--<enum name="visible" value="0" />-->
+            <!--<enum name="invisible" value="1" />-->
+        <!--</attr>-->
+    <!--</declare-styleable>-->
+</resources>

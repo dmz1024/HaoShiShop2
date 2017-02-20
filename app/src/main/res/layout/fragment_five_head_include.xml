@@ -1,0 +1,108 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/size250">
+
+    <ImageView
+        android:id="@+id/iv_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/touxiang" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.recker.flyshapeimageview.ShapeImageView
+            android:id="@+id/iv_head"
+            android:layout_width="@dimen/size85"
+            android:layout_height="@dimen/size85"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/size12"
+            android:scaleType="fitXY"
+            android:src="@mipmap/touxiang"
+            app:frame_color="#55ffffff"
+            app:frame_width="@dimen/size4"
+            app:shape_mode="circle" />
+
+        <!--<ImageView-->
+            <!--android:id="@+id/iv_head"-->
+            <!--android:layout_width="@dimen/size85"-->
+            <!--android:layout_height="@dimen/size85"-->
+            <!--android:layout_centerHorizontal="true"-->
+            <!--android:layout_marginTop="@dimen/size12"-->
+            <!--android:scaleType="fitXY"-->
+            <!--android:src="@mipmap/touxiang" />-->
+
+        <ImageView
+            android:id="@+id/iv_set"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/size15"
+            android:layout_marginTop="@dimen/size12"
+            android:src="@mipmap/wode_setting" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            style="@style/TextSize15Colorfff"
+            android:layout_below="@id/iv_head"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/size4"
+            android:drawablePadding="@dimen/size2"
+            android:drawableRight="@mipmap/zqh_boy"
+            android:text="邓如果" />
+
+        <TextView
+            android:id="@+id/tv_check"
+            style="@style/TextSize13Color666"
+            android:layout_below="@id/tv_name"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/size11"
+            android:background="@drawable/hs_shape_e9e9e9_radius_10"
+            android:paddingBottom="@dimen/size3"
+            android:paddingLeft="@dimen/size13"
+            android:paddingRight="@dimen/size13"
+            android:paddingTop="@dimen/size3"
+            android:text="未认证" />
+
+        <LinearLayout
+            android:layout_width="@dimen/size250"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:weightSum="3">
+
+            <TextView
+                android:id="@+id/tv_message"
+                style="@style/TextSize14Color333"
+                android:layout_weight="1"
+                android:width="0dp"
+                android:gravity="center"
+                android:lineSpacingExtra="@dimen/size7"
+                android:text="10\n通知\n"
+                android:textColor="#f9f9f9" />
+
+            <TextView
+                android:id="@+id/tv_zan"
+                style="@style/TextSize14Color333"
+                android:layout_weight="1"
+                android:width="0dp"
+                android:gravity="center"
+                android:lineSpacingExtra="@dimen/size7"
+                android:text="10\n赞\n"
+                android:textColor="#f9f9f9" />
+
+            <TextView
+                android:id="@+id/tv_ping"
+                style="@style/TextSize14Color333"
+                android:layout_weight="1"
+                android:width="0dp"
+                android:gravity="center"
+                android:lineSpacingExtra="@dimen/size7"
+                android:text="10\n评论\n"
+                android:textColor="#f9f9f9" />
+        </LinearLayout>
+    </RelativeLayout>
+</FrameLayout>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff">
+
+    <TextView
+        android:id="@+id/tv_logo"
+        style="@style/TextSize15Color666"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/size25"
+        android:drawablePadding="@dimen/size10"
+        android:drawableTop="@mipmap/logo"
+        android:text="聚郝氏  融天下" />
+
+    <EditText
+        android:id="@+id/et_name"
+        android:background="@null"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size40"
+        android:layout_below="@id/tv_logo"
+        android:layout_marginLeft="@dimen/size30"
+        android:layout_marginRight="@dimen/size30"
+        android:layout_marginTop="@dimen/size42"
+        android:drawableLeft="@mipmap/yonghu"
+        android:drawablePadding="@dimen/size16"
+        android:gravity="center_vertical"
+        android:hint="用户名/手机号/邮箱"
+        android:textColor="#666"
+        android:textColorHint="#c3c3c3"
+        android:textSize="@dimen/sp14" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size0.5"
+        android:layout_alignLeft="@id/et_name"
+        android:layout_alignRight="@id/et_name"
+        android:layout_below="@id/et_name"
+        android:background="#dadada" />
+
+    <EditText
+        android:id="@+id/et_password"
+        android:background="@null"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size40"
+        android:layout_below="@id/et_name"
+        android:layout_marginLeft="@dimen/size30"
+        android:layout_marginRight="@dimen/size30"
+        android:layout_marginTop="@dimen/size10"
+        android:drawableLeft="@mipmap/mima"
+        android:drawablePadding="@dimen/size16"
+        android:gravity="center_vertical"
+        android:hint="输入密码"
+        android:textColor="#666"
+        android:textColorHint="#c3c3c3"
+        android:textSize="@dimen/sp14" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size0.5"
+        android:layout_alignLeft="@id/et_name"
+        android:layout_alignRight="@id/et_name"
+        android:layout_below="@id/et_password"
+        android:background="#dadada" />
+
+    <Button
+        android:id="@+id/bt_login"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size40"
+        android:layout_alignLeft="@id/et_name"
+        android:layout_alignRight="@id/et_name"
+        android:layout_below="@id/et_password"
+        android:layout_marginTop="@dimen/size31"
+        android:background="@drawable/hs_shape_ee9821_radius_3"
+        android:text="登录"
+        android:textColor="#fff"
+        android:textSize="@dimen/sp16" />
+
+    <TextView
+        android:id="@+id/tv_forgot"
+        style="@style/TextSize14Color666"
+        android:layout_below="@id/bt_login"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/size10"
+        android:text="忘记密码？" />
+
+    <TextView
+        android:id="@+id/tv_other"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/size70"
+        android:textColor="#c3c3c3"
+        android:text="使用合作方账号登录"
+        style="@style/TextSize14Color333" />
+    <ImageView
+        android:id="@+id/iv_wechat"
+        android:src="@mipmap/weixin_2"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@id/tv_other"
+        android:layout_marginLeft="@dimen/size5"
+        android:layout_marginBottom="@dimen/size30"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <ImageView
+        android:id="@+id/iv_qq"
+        android:src="@mipmap/qq"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@id/tv_other"
+        android:layout_marginRight="@dimen/size5"
+        android:layout_marginBottom="@dimen/size30"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

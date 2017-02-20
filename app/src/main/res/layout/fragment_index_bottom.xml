@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/size49"
+    android:orientation="horizontal"
+    android:weightSum="5">
+
+    <TextView
+        android:id="@+id/tv_one"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:drawablePadding="@dimen/size5"
+        android:drawableTop="@mipmap/tab_zongqinhui"
+        android:gravity="center"
+        android:text="宗亲会"
+        android:textColor="#ee9821"
+        android:textSize="@dimen/sp10" />
+
+    <TextView
+        android:id="@+id/tv_two"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:drawablePadding="@dimen/size5"
+        android:drawableTop="@mipmap/tab_shangcheng_wei"
+        android:gravity="center"
+        android:text="商城"
+        android:textColor="#666"
+        android:textSize="@dimen/sp10" />
+
+    <TextView
+        android:id="@+id/tv_three"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:drawablePadding="@dimen/size5"
+        android:drawableTop="@mipmap/tab_faxian_wei"
+        android:gravity="center"
+        android:text="发现"
+        android:textColor="#666"
+        android:textSize="@dimen/sp10" />
+
+    <TextView
+        android:id="@+id/tv_four"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:drawablePadding="@dimen/size5"
+        android:drawableTop="@mipmap/tab_xunqin_wei"
+        android:gravity="center"
+        android:text="寻亲"
+
+        android:textColor="#666"
+        android:textSize="@dimen/sp10" />
+
+    <TextView
+        android:id="@+id/tv_five"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:drawablePadding="@dimen/size5"
+        android:drawableTop="@mipmap/tab_wode_wei"
+        android:gravity="center"
+        android:text="我的"
+        android:textColor="#666"
+        android:textSize="@dimen/sp10" />
+</LinearLayout>

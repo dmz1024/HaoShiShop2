@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<view.TextImage
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/tv_title"
+    style="@style/TextSize14Color999"
+    android:drawablePadding="@dimen/size3"
+    android:gravity="center_vertical"
+    android:layout_width="match_parent"
+    android:text="个人资料"
+    android:paddingBottom="@dimen/size10"
+    android:background="#f5f5f5"
+    android:paddingTop="@dimen/size10"
+    app:TextImage_drawable="@drawable/hs_line_ee9821"
+    app:TextImage_height="@dimen/size26"
+    app:TextImage_seat="1"
+    app:TextImage_width="@dimen/size5" />

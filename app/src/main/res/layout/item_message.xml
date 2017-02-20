@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#fff"
+    android:paddingLeft="@dimen/size10"
+    android:paddingRight="@dimen/size10"
+    android:paddingTop="@dimen/size10">
+
+    <ImageView
+        android:id="@+id/iv_img"
+        android:layout_width="@dimen/size10"
+        android:layout_height="@dimen/size10"
+        android:layout_centerVertical="true"
+        android:src="@drawable/hs_shape_oval_999" />
+
+    <TextView
+        android:id="@+id/tv_time"
+        style="@style/TextSize12Color999"
+        android:layout_alignParentRight="true"
+        android:text="1分钟前" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        style="@style/TextSize15Color333"
+        android:layout_marginLeft="@dimen/size10"
+        android:layout_marginRight="@dimen/size5"
+        android:layout_toLeftOf="@id/tv_time"
+        android:layout_toRightOf="@id/iv_img"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="系统维护公共" />
+
+    <TextView
+        android:id="@+id/tv_content"
+        style="@style/TextSize12Color999"
+        android:layout_alignLeft="@id/tv_title"
+        android:layout_below="@id/tv_title"
+        android:layout_marginTop="@dimen/size8"
+        android:ellipsize="end"
+        android:lineSpacingExtra="@dimen/size3"
+        android:maxLines="2"
+        android:text="系统维护公共系统维护公共系统维护公共系统维护公共系统维护公共系统维护公共" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size0.5"
+        android:layout_below="@id/tv_content"
+        android:layout_marginTop="@dimen/size10"
+        android:background="#f5f5f5" />
+</RelativeLayout>

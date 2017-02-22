@@ -39,7 +39,7 @@ public class IndexContentFragment extends NotNetWorkBaseFragment {
         fragments = new ArrayList<>();
         fragments.add(new IndexOneFragment());
         fragments.add(new Fragment());
-        fragments.add(new Fragment());
+        fragments.add(new IndexTwoFragment());
         fragments.add(new Fragment());
         fragments.add(new IndexFiveFragment());
         vp_content.setOffscreenPageLimit(fragments.size());
@@ -80,5 +80,7 @@ public class IndexContentFragment extends NotNetWorkBaseFragment {
     public int currentPosition() {
         return vp_content.getCurrentItem();
     }
+
+
 
 }

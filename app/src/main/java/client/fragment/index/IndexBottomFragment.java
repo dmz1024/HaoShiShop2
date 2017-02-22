@@ -88,11 +88,6 @@ public class IndexBottomFragment extends NotNetWorkBaseFragment {
 
         changeImageColor(position);
         RxBus.get().post("indexBottomTabChange", position);
-        if (position != 3) {
-            RxBus.get().post("changeBarColor", "#ffffff");
-        } else {
-            RxBus.get().post("changeBarColor", "#f73f5f");
-        }
     }
 
     private int index=0;

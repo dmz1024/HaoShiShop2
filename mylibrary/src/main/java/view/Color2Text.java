@@ -37,15 +37,15 @@ public class Color2Text extends TextView {
     }
 
     private void init(AttributeSet attrs) {
-        TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.Color2Text);
-        size = typedArray.getDimensionPixelSize(R.styleable.Color2Text_Color2Text_size, 11);
-        color = typedArray.getColor(R.styleable.Color2Text_Color2Text_color, getResources().getColor(R.color.color333));
-        String content = typedArray.getString(R.styleable.Color2Text_Color2Text_content);
-        typedArray.recycle();
-        oldText = getText().toString();
-        nowText = content == null ? "" : content;
-        setText(oldText + nowText);
-        setColor();
+//        TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.Color2Text);
+//        size = typedArray.getDimensionPixelSize(R.styleable.Color2Text_Color2Text_size, 11);
+//        color = typedArray.getColor(R.styleable.Color2Text_Color2Text_color, getResources().getColor(R.color.color333));
+//        String content = typedArray.getString(R.styleable.Color2Text_Color2Text_content);
+//        typedArray.recycle();
+//        oldText = getText().toString();
+//        nowText = content == null ? "" : content;
+//        setText(oldText + nowText);
+//        setColor();
     }
 
 

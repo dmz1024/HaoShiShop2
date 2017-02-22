@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="#fff"
+    android:layout_height="match_parent">
+
+
+    <View
+        android:id="@+id/view"
+        android:layout_alignParentBottom="true"
+        android:layout_width="@dimen/size0.5"
+        android:layout_height="@dimen/size60"/>
+    <ImageView
+        android:id="@+id/iv_cancel"
+        android:src="@mipmap/cancel"
+        android:layout_above="@id/view"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_content"
+        android:layout_above="@id/iv_cancel"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="@dimen/size20"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</RelativeLayout>

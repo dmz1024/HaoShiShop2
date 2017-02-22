@@ -54,29 +54,29 @@ public class GeneralAdapter extends BaseAdapter<GeneralBean> {
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         switch (viewType) {
             case 0:
-                return new Viewf5f5f5ViewHolder(View.inflate(ctx, R.layout.item_view, null));
+                return new Viewf5f5f5ViewHolder(getView(R.layout.item_view,parent));
             case 1:
-                return new MyOrderNumViewHolder(View.inflate(ctx, R.layout.item_my_order_num, null));
+                return new MyOrderNumViewHolder(getView(R.layout.item_my_order_num,parent));
             case 2:
-                return new MyItemViewHolder(View.inflate(ctx, R.layout.item_my_center_item, null));
+                return new MyItemViewHolder(getView(R.layout.item_my_center_item,parent));
             case 3:
-                return new ContactServiceViewHolder(View.inflate(ctx, R.layout.item_contact_service, null));
+                return new ContactServiceViewHolder(getView(R.layout.item_contact_service,parent));
             case 4:
-                return new TitleViewHolder(View.inflate(ctx, R.layout.item_title, null));
+                return new TitleViewHolder(getView(R.layout.item_title,parent));
             case 5:
-                return new TitleContentViewHolder(View.inflate(ctx, R.layout.item_title_content, null));
+                return new TitleContentViewHolder(getView(R.layout.item_title_content,parent));
             case 6:
-                return new TitleContentGoViewHolder(View.inflate(ctx, R.layout.item_title_content_go, null));
+                return new TitleContentGoViewHolder(getView(R.layout.item_title_content_go,parent));
             case 7:
-                return new PeosonSetHeadViewHolder(View.inflate(ctx, R.layout.item_person_head, null));
+                return new PeosonSetHeadViewHolder(getView(R.layout.item_person_head,parent));
             case 8:
-                return new PeosonSetTitleViewHolder(View.inflate(ctx, R.layout.item_peoson_set_title, null));
+                return new PeosonSetTitleViewHolder(getView(R.layout.item_peoson_set_title,parent));
             case 9:
-                return new MessageSetViewHolder(View.inflate(ctx, R.layout.item_message_set, null));
+                return new MessageSetViewHolder(getView(R.layout.item_message_set,parent));
             case 10:
-                return new PerfectRegChooseUserInfoViewHolder(View.inflate(ctx, R.layout.item_perfect_reg_userinfo, null));
+                return new PerfectRegChooseUserInfoViewHolder(getView(R.layout.item_perfect_reg_userinfo,parent));
             case 11:
-                return new PerfectRegWriteUserInfoViewHolder(View.inflate(ctx, R.layout.item_perfect_reg_write_userinfo, null));
+                return new PerfectRegWriteUserInfoViewHolder(getView(R.layout.item_perfect_reg_write_userinfo,parent));
         }
         return null;
     }

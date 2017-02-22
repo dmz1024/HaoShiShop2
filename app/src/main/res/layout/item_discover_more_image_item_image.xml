@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:paddingRight="@dimen/size10"
+    android:background="#fff"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <ImageView
+        android:id="@+id/iv_img"
+        android:scaleType="fitXY"
+        android:layout_width="@dimen/size115"
+        android:layout_height="@dimen/size90" />
+</FrameLayout>

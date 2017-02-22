@@ -11,12 +11,15 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import base.bean.rxbus.AddFragmentBean;
 import base.fragment.NotNetWorkBaseFragment;
 import butterknife.BindView;
 import butterknife.OnClick;
 import client.R;
 import client.adapter.GeneralAdapter;
 import client.bean.GeneralBean;
+import client.fragment.friend.RegFriendRecommendFragment;
+import util.RxBus;
 import view.DefaultTitleBarView;
 
 /**
@@ -84,7 +87,7 @@ public class PerfectRegWriteUserInfoFragment extends NotNetWorkBaseFragment {
 
     @OnClick(R.id.bt_choose)
     void choose() {
-
+        RxBus.get().post("addFragment",new AddFragmentBean(new RegFriendRecommendFragment()));
     }
 
 

@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.mall.naiqiao.mylibrary.R;
 
 import interfaces.OnTitleBarListener;
+import util.DrawableUtil;
 
 /**
  * Created by dengmingzhi on 2016/11/22.
@@ -74,6 +75,11 @@ public class DefaultTitleBarView extends FrameLayout implements View.OnClickList
         return this;
     }
 
+    public DefaultTitleBarView setRightImage(@DrawableRes int rid){
+        title_bar_tv_right.setCompoundDrawables(null,null, DrawableUtil.setBounds(getResources().getDrawable(rid)),null);
+        return this;
+    }
+
 
     public DefaultTitleBarView setRightContent(String content) {
         title_bar_tv_right.setText(content);
@@ -114,5 +120,6 @@ public class DefaultTitleBarView extends FrameLayout implements View.OnClickList
         title_bar_fg_left.setVisibility(visi);
         return this;
     }
+
 
 }

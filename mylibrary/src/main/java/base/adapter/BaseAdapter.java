@@ -2,6 +2,9 @@ package base.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +23,11 @@ public abstract class BaseAdapter<D> extends RecyclerView.Adapter<RecyclerView.V
     public BaseAdapter(Context ctx, ArrayList<D> list) {
         this(list);
         this.ctx = ctx;
+    }
+
+
+    public View getView(int rid,ViewGroup parent){
+        return LayoutInflater.from(ctx).inflate(rid,parent,false);
     }
 
 

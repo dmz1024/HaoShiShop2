@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:background="#f5f5f5"
+    android:padding="@dimen/size10"
+    android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_gravity="center"
+        android:text="未来科技"
+        android:paddingLeft="@dimen/size10"
+        android:paddingRight="@dimen/size10"
+        android:paddingBottom="@dimen/size8"
+        android:paddingTop="@dimen/size8"
+        android:background="@drawable/rectangle_fff_e2e2e2"
+        style="@style/TextSize13Color333" />
+</FrameLayout>

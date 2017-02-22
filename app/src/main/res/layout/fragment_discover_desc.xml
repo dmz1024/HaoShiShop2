@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/ll_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size55"
+        android:layout_alignParentBottom="true"
+        android:background="#ee9821"
+        android:orientation="horizontal"
+        android:weightSum="7">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:background="#fff" />
+
+        <TextView
+            android:id="@+id/tv_phone"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="2"
+            android:drawablePadding="@dimen/size3"
+            android:drawableTop="@mipmap/phone"
+            android:gravity="center"
+            android:text="电话咨询"
+            android:textColor="#fff"
+            android:textSize="@dimen/sp11" />
+
+        <View
+            android:layout_width="@dimen/size0.5"
+            android:layout_height="match_parent"
+            android:background="#fff" />
+
+        <TextView
+            android:id="@+id/tv_online"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="2"
+            android:drawablePadding="@dimen/size3"
+            android:drawableTop="@mipmap/zixun"
+            android:gravity="center"
+            android:text="在线沟通"
+            android:textColor="#fff"
+            android:textSize="@dimen/sp11" />
+    </LinearLayout>
+
+    <ScrollView
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/ll_bottom"
+        android:layout_alignParentTop="true">
+
+        <LinearLayout
+            android:paddingBottom="@dimen/size30"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.jude.rollviewpager.RollPagerView
+                android:id="@+id/rpv_content"
+                android:layout_width="match_parent"
+                android:layout_height="180dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#fff"
+                android:padding="@dimen/size10">
+
+                <TextView
+                    android:id="@+id/tv_collect"
+                    style="@style/TextSize11Color666"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/size5"
+                    android:drawablePadding="@dimen/size5"
+                    android:drawableTop="@mipmap/shoucang_weidainji"
+                    android:gravity="center_horizontal"
+                    android:text="收藏" />
+
+                <View
+                    android:id="@+id/view_collect"
+                    android:layout_width="@dimen/size0.5"
+                    android:layout_height="@dimen/size33"
+                    android:layout_marginRight="@dimen/size15"
+                    android:layout_toLeftOf="@id/tv_collect"
+                    android:background="#f5f5f5" />
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    style="@style/TextSize14Color666"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginRight="@dimen/size10"
+                    android:layout_toLeftOf="@id/view_collect"
+                    android:lineSpacingExtra="@dimen/size5"
+                    android:maxLines="2"
+                    android:text="四惠地铁旁 三室一厅四惠四惠地铁旁四惠地铁旁地铁旁 三室惠地" />
+
+                <TextView
+                    android:id="@+id/tv_time"
+                    style="@style/TextSize13Color999"
+                    android:layout_below="@id/view_collect"
+                    android:layout_marginTop="@dimen/size10"
+                    android:drawableLeft="@mipmap/time"
+                    android:drawablePadding="@dimen/size3"
+                    android:gravity="center_vertical"
+                    android:text="3小时前发布" />
+            </RelativeLayout>
+
+            <TextView
+                style="@style/TextSize15Color333"
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/size10"
+                android:background="#fff"
+                android:drawableBottom="@drawable/line_999"
+                android:drawablePadding="@dimen/size10"
+                android:gravity="center"
+                android:padding="@dimen/size10"
+                android:text="基本信息" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                style="@style/TextSize15Color333"
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/size10"
+                android:background="#fff"
+                android:drawableBottom="@drawable/line_999"
+                android:drawablePadding="@dimen/size10"
+                android:gravity="center"
+                android:padding="@dimen/size10"
+                android:text="详细介绍" />
+
+            <TextView
+                android:id="@+id/tv_desc"
+                style="@style/TextSize14Color666"
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/size0.5"
+                android:background="#fff"
+                android:lineSpacingExtra="@dimen/size3"
+                android:padding="@dimen/size10"
+                android:text="1格局：南北通透，小区四面不临街 安静舒适环境好\n21格局：南北通透，小区四面不临街 安静舒适环境好\n31格局：南北通透，小区四面不临街 安静舒适环境好" />
+
+            <TextView
+                style="@style/TextSize15Color333"
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/size10"
+                android:background="#fff"
+                android:drawableBottom="@drawable/line_999"
+                android:drawablePadding="@dimen/size10"
+                android:gravity="center"
+                android:padding="@dimen/size10"
+                android:text="网友评论" />
+
+            <include
+                android:id="@+id/ic_comment"
+                layout="@layout/item_all_discover_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size0.5" />
+
+            <TextView
+                style="@style/TextSize12Color666"
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/size0.5"
+                android:background="#fff"
+                android:gravity="center"
+                android:padding="@dimen/size10"
+                android:text="全部评论(10)" />
+            <RelativeLayout
+                android:background="#fff"
+                android:padding="@dimen/size10"
+                android:layout_marginTop="@dimen/size10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.recker.flyshapeimageview.ShapeImageView
+                    android:id="@+id/iv_discover_person"
+                    android:layout_width="@dimen/size50"
+                    android:layout_height="@dimen/size50"
+                    android:scaleType="fitXY"
+                    app:shape_mode="circle" />
+                <TextView
+                    android:id="@+id/tv_discover_person"
+                    android:layout_width="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="邓如果\n\n金30天发布99条"
+                    android:drawableRight="@mipmap/wode_back"
+                    android:layout_marginTop="@dimen/size2"
+                    android:layout_toRightOf="@id/iv_discover_person"
+                    android:layout_marginLeft="@dimen/size10"
+                    style="@style/TextSize14Color666" />
+
+            </RelativeLayout>
+
+            <TextView
+                style="@style/TextSize15Color333"
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/size10"
+                android:background="#fff"
+                android:drawableBottom="@drawable/line_999"
+                android:drawablePadding="@dimen/size10"
+                android:gravity="center"
+                android:padding="@dimen/size10"
+                android:text="相关推荐" />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_recommend"
+                android:layout_marginTop="@dimen/size0.5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                style="@style/TextSize12Color666"
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/size0.5"
+                android:background="#fff"
+                android:gravity="center"
+                android:padding="@dimen/size10"
+                android:text="更多推荐" />
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

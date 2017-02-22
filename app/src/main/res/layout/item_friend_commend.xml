@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="135dp"
+    android:layout_height="wrap_content"
+    android:background="#fff"
+    android:paddingBottom="@dimen/size10"
+    android:paddingRight="@dimen/size1"
+    android:paddingTop="@dimen/size1"
+    android:paddingLeft="@dimen/size10">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rectangle_fff_e2e2e2"
+        android:orientation="vertical"
+        android:padding="@dimen/size10">
+
+        <ImageView
+            android:id="@+id/iv_head"
+            android:layout_width="@dimen/size60"
+            android:layout_height="@dimen/size60"
+            android:layout_gravity="center_horizontal"
+            android:src="@mipmap/zhuce_xingbie" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            style="@style/TextSize12Color333"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/size7"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="河南老乡群" />
+
+        <TextView
+            android:id="@+id/tv_say_count"
+            style="@style/TextSize11Color666"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/size7"
+            android:text="近7日发言99次" />
+
+        <Button
+            android:id="@+id/bt_add"
+            android:layout_width="@dimen/size60"
+            android:layout_height="@dimen/size25"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/size7"
+            android:background="@drawable/rectangle_fff_e2e2e2"
+            android:text="添加"
+            android:textColor="#333"
+            android:textSize="@dimen/sp13" />
+    </LinearLayout>
+</RelativeLayout>

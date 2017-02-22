@@ -11,8 +11,8 @@
 
         <ImageView
             android:id="@+id/title_bar_iv_left"
-            android:layout_width="@dimen/size12"
-            android:layout_height="@dimen/size20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:scaleType="fitXY"
             android:src="@mipmap/icon_left" />

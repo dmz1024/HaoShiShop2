@@ -5,5 +5,5 @@ package constant;
  */
 
 public class PhotoIndex {
-    public static int index = -1;
+    public static int INDEX = -1;
 }

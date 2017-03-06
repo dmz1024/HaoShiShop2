@@ -11,6 +11,8 @@ import butterknife.OnClick;
 import client.CeshiUrl;
 import client.R;
 import client.bean.DiscoverDescBean;
+import client.pop.PopContactDiscoverPerson;
+import client.pop.PopDiscoverShare;
 import interfaces.OnTitleBarListener;
 import util.RxBus;
 import view.DefaultTitleBarView;
@@ -56,6 +58,13 @@ public class DiscoverDescFragment extends SingleNetWorkBaseFragment<DiscoverDesc
                 .setOnTitleBarListener(this);
     }
 
+
+    @OnClick(R.id.tv_phone)
+    void phone() {
+        new PopContactDiscoverPerson(getContext()).showAtLocation(true);
+    }
+
+
     @Override
     protected boolean isCanRefresh() {
         return false;
@@ -68,7 +77,7 @@ public class DiscoverDescFragment extends SingleNetWorkBaseFragment<DiscoverDesc
 
     @Override
     public void right() {
-
+        new PopDiscoverShare(getContext()).showAtLocation(false);
     }
 
     @Override

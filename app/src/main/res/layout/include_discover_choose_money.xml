@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size38"
+        android:background="@drawable/rectangle_fff"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/size25"
+        android:paddingLeft="@dimen/size10"
+        android:paddingRight="@dimen/size10"
+        android:paddingTop="@dimen/size60">
+        <TextView
+            android:id="@+id/tv_money"
+            android:text="￥0.99"
+            android:textSize="@dimen/sp24"
+            android:layout_gravity="center_horizontal"
+            android:textColor="#e83029"
+            style="@style/TextSize15Color333" />
+        <TextView
+            android:id="@+id/tv_update_money"
+            android:text="修改金额"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/size15"
+            android:textColor="#838383"
+            style="@style/TextSize12Color333" />
+        <LinearLayout
+            android:id="@+id/ll_choose_money"
+            android:visibility="gone"
+            android:paddingLeft="@dimen/size10"
+            android:paddingRight="@dimen/size10"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size30"
+            android:orientation="horizontal"
+            android:weightSum="7">
+
+            <TextView
+                android:id="@+id/tv_money_1"
+                style="@style/TextSize11Color666"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:background="@drawable/rectangle_00000000_ee9821"
+                android:gravity="center"
+                android:text="0.99"
+                android:textColor="#ee9821" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="0.5" />
+
+            <TextView
+                android:id="@+id/tv_money_2"
+                style="@style/TextSize11Color666"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:background="@drawable/rectangle_fff_e2e2e2"
+                android:gravity="center"
+                android:text="6.66" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="0.5" />
+
+            <TextView
+                android:id="@+id/tv_money_3"
+                style="@style/TextSize11Color666"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:background="@drawable/rectangle_fff_e2e2e2"
+                android:gravity="center"
+                android:text="8.88" />
+
+            <!--<View-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="1dp"-->
+                <!--android:layout_weight="0.33" />-->
+
+            <!--<EditText-->
+                <!---->
+                <!--style="@style/TextSize11Color666"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_weight="2"-->
+                <!--android:background="@drawable/rectangle_fff_e2e2e2"-->
+                <!--android:gravity="center"-->
+                <!--android:hint="手动输入"-->
+                <!--android:textColorHint="#999" />-->
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/bt_pay"
+            android:layout_width="@dimen/size170"
+            android:layout_height="@dimen/size40"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/size25"
+            android:background="@drawable/hs_shape_ee9821_radius_3"
+            android:text="赏"
+            android:textColor="#fff"
+            android:textSize="@dimen/sp15" />
+
+        <TextView
+            style="@style/TextSize12Color999"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/size10"
+            android:text="打赏郝氏后查看对方的联系电话" />
+
+        <TextView
+            android:id="@+id/tv_contact"
+            style="@style/TextSize15Color999"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/size15"
+            android:text="直接联系"
+            android:textColor="#ee9821" />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="@dimen/size76"
+        android:layout_height="@dimen/size76"
+        android:layout_centerHorizontal="true"
+        android:src="@mipmap/logo" />
+
+</RelativeLayout>

@@ -9,6 +9,7 @@ import butterknife.OnClick;
 import client.R;
 import client.fragment.index.IndexFragment;
 import client.fragment.reg.PerfectRegChooseUserInfoFragment;
+import client.fragment.reg.RegFragment;
 import interfaces.OnTitleBarListener;
 import util.RxBus;
 import view.DefaultTitleBarView;
@@ -46,7 +47,7 @@ public class LoginFragment extends NotNetWorkBaseFragment implements OnTitleBarL
     @Override
     public void right() {
         //TODO 注册
-        RxBus.get().post("addFragment",new AddFragmentBean(new PerfectRegChooseUserInfoFragment()));
+        RxBus.get().post("addFragment",new AddFragmentBean(new RegFragment()));
     }
 
     @Override

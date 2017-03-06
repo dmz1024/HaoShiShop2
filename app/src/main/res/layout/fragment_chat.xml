@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/rl_root"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/ll_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ececec"
+            android:padding="@dimen/size8">
+
+            <ImageView
+                android:id="@+id/iv_mode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/shangcheng_yuyin" />
+
+            <ImageView
+                android:id="@+id/iv_send"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/zqh_gengduo" />
+
+            <EditText
+                android:id="@+id/et_content"
+                android:textCursorDrawable="@null"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/size5"
+                android:layout_marginRight="@dimen/size5"
+                android:layout_toLeftOf="@id/iv_send"
+                android:layout_toRightOf="@id/iv_mode"
+                android:background="@drawable/rectangle_fff"
+                android:gravity="left"
+                android:imeOptions="actionSend"
+                android:maxLines="15"
+                android:minHeight="@dimen/size35"
+                android:padding="@dimen/size5"
+                android:textColor="#666"
+                android:textSize="@dimen/sp14" />
+
+            <view.MyButton
+                android:id="@+id/bt_send"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size35"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/size5"
+                android:layout_marginRight="@dimen/size5"
+                android:layout_toLeftOf="@id/iv_send"
+                android:layout_toRightOf="@id/iv_mode"
+                android:background="@drawable/rectangle_fff"
+                android:text="按住 说话"
+                android:textColor="#666"
+                android:textSize="@dimen/sp14"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_send"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#f5f5f5"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/size15"
+            android:paddingTop="@dimen/size15"
+            android:visibility="gone"
+            android:weightSum="4">
+
+            <TextView
+                android:id="@+id/tv_picture"
+                style="@style/TextSize11Color666"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:drawablePadding="@dimen/size5"
+                android:drawableTop="@mipmap/shangcheng_photo"
+                android:gravity="center"
+                android:text="照片" />
+
+            <TextView
+                android:id="@+id/tv_photo"
+                style="@style/TextSize11Color666"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:drawablePadding="@dimen/size5"
+                android:drawableTop="@mipmap/shangcheng_paizhao"
+                android:gravity="center"
+                android:text="拍照" />
+
+            <TextView
+                android:id="@+id/tv_file"
+                style="@style/TextSize11Color666"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:drawablePadding="@dimen/size5"
+                android:drawableTop="@mipmap/shangcheng_wenjian"
+                android:gravity="center"
+                android:text="文件" />
+
+            <TextView
+                android:id="@+id/tv_send"
+                style="@style/TextSize11Color666"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:drawablePadding="@dimen/size5"
+                android:drawableTop="@mipmap/zqh_fabu"
+                android:gravity="center"
+                android:text="已发布" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/ll_bottom"
+        android:layout_alignParentTop="true" />
+</RelativeLayout>

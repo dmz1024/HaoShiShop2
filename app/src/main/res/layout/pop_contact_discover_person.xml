@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/size30"
+    android:paddingRight="@dimen/size30">
+
+    <include
+        android:id="@+id/in_safe_tips"
+        layout="@layout/include_discover_safe_tips"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ViewStub
+        android:id="@+id/sb_choose_money"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inflatedId="@+id/rl_choose_money"
+        android:layout="@layout/include_discover_choose_money" />
+
+    <ViewStub
+        android:id="@+id/sb_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inflatedId="@+id/rl_phone"
+        android:layout="@layout/include_discover_phone" />
+
+    <View
+        android:layout_width="@dimen/size0.5"
+        android:layout_height="@dimen/size30"
+        android:layout_gravity="center_horizontal"
+        android:background="#f5f5f5" />
+
+    <ImageView
+        android:id="@+id/iv_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:src="@mipmap/cancel_fenxianglide" />
+</LinearLayout>

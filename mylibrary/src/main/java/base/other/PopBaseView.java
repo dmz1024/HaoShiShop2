@@ -49,6 +49,11 @@ public abstract class PopBaseView implements PopupWindow.OnDismissListener {
         return 100;
     }
 
+    public PopupWindow getPopupWindow() {
+        return popupWindow;
+    }
+
+
     private void creatPop(boolean cancel) {
         popupWindow = new PopupWindow((view = getView()), Util.getWidth() - width(), height(), true);
         if (!cancel) {
@@ -129,7 +134,7 @@ public abstract class PopBaseView implements PopupWindow.OnDismissListener {
     }
 
     public void dismiss() {
-        if (popupWindow != null) {
+        if (popupWindow != null &&popupWindow.isShowing()) {
             popupWindow.dismiss();
         }
     }

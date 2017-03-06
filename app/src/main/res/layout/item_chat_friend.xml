@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/size10"
+    >
+
+    <com.recker.flyshapeimageview.ShapeImageView
+        android:id="@+id/iv_head"
+        android:layout_width="@dimen/size45"
+        android:layout_height="@dimen/size45"
+        android:scaleType="fitXY"
+        app:shape_mode="circle" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        style="@style/TextSize15Color333"
+        android:layout_alignBottom="@id/iv_head"
+        android:layout_alignTop="@id/iv_head"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="@dimen/size14"
+        android:layout_toRightOf="@id/iv_head"
+        android:ellipsize="end"
+        android:maxLines="1" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size0.5"
+        android:layout_below="@id/iv_head"
+        android:layout_marginTop="@dimen/size7"
+        android:background="#e2e2e2" />
+</RelativeLayout>

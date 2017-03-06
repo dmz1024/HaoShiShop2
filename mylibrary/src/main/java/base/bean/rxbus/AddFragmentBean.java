@@ -7,6 +7,9 @@ import android.support.v4.app.Fragment;
  */
 
 public class AddFragmentBean {
+
+
+
     private static int backTag = 0;
     private String backName = "backName" + (backTag = backTag + 1);
     private Fragment fragment;

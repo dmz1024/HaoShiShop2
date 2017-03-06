@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size38"
+        android:background="@drawable/rectangle_fff"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/size25"
+        android:paddingLeft="@dimen/size10"
+        android:paddingRight="@dimen/size10"
+        android:paddingTop="@dimen/size50">
+
+        <TextView
+            android:id="@+id/tv_phone_name"
+            style="@style/TextSize15Color333"
+            android:layout_gravity="center_horizontal"
+            android:text="邓如果(个人)"
+            android:textColor="#838383" />
+
+        <TextView
+            android:id="@+id/tv_phone_num"
+            style="@style/TextSize12Color333"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/size15"
+            android:text="18326167257"
+            android:textSize="@dimen/sp24" />
+
+        <LinearLayout
+            android:id="@+id/ll_phone"
+
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/size40"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/size35">
+
+            <TextView
+                android:id="@+id/tv_call_sms"
+                style="@style/TextSize15Color333"
+                android:layout_width="@dimen/size120"
+                android:layout_height="match_parent"
+                android:background="@drawable/hs_shape_e8e8e8_radius_3"
+                android:gravity="center"
+                android:text="短信" />
+
+            <TextView
+                android:id="@+id/tv_call_phone"
+                style="@style/TextSize15Colorfff"
+                android:layout_width="@dimen/size120"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/size15"
+                android:background="@drawable/hs_shape_ee9821_radius_3"
+                android:gravity="center"
+                android:text="电话" />
+        </LinearLayout>
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/tv_call_comment"
+            style="@style/TextSize15Colorfff"
+            android:layout_width="@dimen/size170"
+            android:layout_height="@dimen/size40"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/size35"
+            android:background="@drawable/hs_shape_ee9821_radius_3"
+            android:gravity="center"
+            android:text="去评价" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_phone_head"
+        android:layout_width="@dimen/size76"
+        android:layout_height="@dimen/size76"
+        android:layout_centerHorizontal="true"
+        android:src="@mipmap/logo" />
+
+</RelativeLayout>

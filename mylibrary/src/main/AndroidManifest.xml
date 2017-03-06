@@ -9,6 +9,13 @@
         <activity android:name="com.canyinghao.canphotos.CanPhotoActivity" />
         <activity android:name="com.canyinghao.canphotos.CanPicturesActivity" />
         <activity android:name="com.canyinghao.canphotos.CanViewPagerActivity" />
+
+        <activity
+            android:name="com.yanzhenjie.album.AlbumActivity"
+            android:label="图库"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden|stateHidden" />
     </application>
 
 </manifest>

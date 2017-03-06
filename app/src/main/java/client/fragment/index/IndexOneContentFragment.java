@@ -6,9 +6,14 @@ import android.view.View;
 
 import java.util.ArrayList;
 
+import base.bean.rxbus.AddFragmentBean;
 import base.fragment.NotNetWorkBaseFragment;
 import butterknife.BindView;
 import client.R;
+import client.fragment.chat.ChatFlockFragment;
+import client.fragment.chat.ChatViewFragment;
+import client.fragment.chat.ChatFriendFragment;
+import client.fragment.chat.ChatMessageFragment;
 import rx.Observable;
 import rx.functions.Action1;
 import util.RxBus;
@@ -37,10 +42,9 @@ public class IndexOneContentFragment extends NotNetWorkBaseFragment {
     @Override
     protected void initData() {
         fragments = new ArrayList<>();
-        fragments.add(new Fragment());
-        fragments.add(new Fragment());
-        fragments.add(new Fragment());
-        fragments.add(new Fragment());
+        fragments.add(new ChatMessageFragment());
+        fragments.add(new ChatFlockFragment());
+        fragments.add(new ChatFriendFragment());
         vp_content.setOffscreenPageLimit(fragments.size());
         vp_content.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
             @Override
@@ -63,7 +67,12 @@ public class IndexOneContentFragment extends NotNetWorkBaseFragment {
         indexOneTabChange.subscribe(new Action1<Integer>() {
             @Override
             public void call(Integer integer) {
-                vp_content.setCurrentItem(integer, false);
+                if(integer!=3){
+                    vp_content.setCurrentItem(integer, false);
+                }else {
+                    RxBus.get().post("addFragment",new AddFragmentBean(new Fragment()));
+                }
+
             }
         });
     }

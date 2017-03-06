@@ -30,7 +30,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);//防止编辑框被键盘遮住
+//        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);//防止编辑框被键盘遮住
         ContextUtil.setContext(this);
         ContextUtil.setActivity(this);
         setContentView(R.layout.activity_main);
@@ -85,6 +85,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                 // 点击的是输入框区域，保留点击EditText的事件
                 return false;
             } else {
+                v.clearFocus();
                 return true;
             }
         }

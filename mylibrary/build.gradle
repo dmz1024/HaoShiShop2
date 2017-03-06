@@ -61,4 +61,10 @@ dependencies {
     compile 'com.mikepenz:itemanimators:0.5.0@aar'
     //https://github.com/ToxicBakery/ViewPagerTransforms
     compile 'com.ToxicBakery.viewpager.transforms:view-pager-transforms:1.2.32@aar'
+    //https://github.com/yanzhenjie/album
+    compile 'com.yanzhenjie:album:1.0.0'
+    //
+    compile 'com.yanzhenjie:permission:1.0.5'
+    //https://github.com/lovedise/PermissionGen
+    compile 'com.lovedise:permissiongen:0.0.6'
 }

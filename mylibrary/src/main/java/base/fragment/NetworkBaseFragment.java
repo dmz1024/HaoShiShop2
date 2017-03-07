@@ -112,6 +112,10 @@ public abstract class NetworkBaseFragment<D extends BaseBean> extends RefreshBas
                 return shouldCache();
             }
 
+            @Override
+            protected boolean getCanDis() {
+                return getDis();
+            }
         }.setOnRequestListeren(new OnSingleRequestListener<D>() {
             @Override
             public void succes(boolean isWrite, D bean) {
@@ -151,6 +155,10 @@ public abstract class NetworkBaseFragment<D extends BaseBean> extends RefreshBas
             }
         }
 
+    }
+
+    protected boolean getDis() {
+        return true;
     }
 
     protected TipLoadingBean getTipLoadingBeanForListNet() {

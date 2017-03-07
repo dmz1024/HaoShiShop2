@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import base.fragment.NotNetWorkBaseFragment;
 import butterknife.BindView;
 import client.R;
+import client.fragment.shop.IndexTwoFragment;
 import rx.Observable;
 import rx.functions.Action1;
 import util.RxBus;
@@ -38,8 +39,8 @@ public class IndexContentFragment extends NotNetWorkBaseFragment {
     protected void initData() {
         fragments = new ArrayList<>();
         fragments.add(new IndexOneFragment());
-        fragments.add(new Fragment());
         fragments.add(new IndexTwoFragment());
+        fragments.add(new IndexThreeFragment());
         fragments.add(new Fragment());
         fragments.add(new IndexFiveFragment());
         vp_content.setOffscreenPageLimit(fragments.size());

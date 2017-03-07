@@ -23,13 +23,25 @@ import client.bean.FriendBean;
  */
 
 public class FlockRecommendAdapter extends BaseAdapter<FlockBean> {
+    private int type = 0;
+
     public FlockRecommendAdapter(Context ctx, ArrayList<FlockBean> list) {
         super(ctx, list);
     }
 
+    public FlockRecommendAdapter(Context ctx, ArrayList<FlockBean> list, int type) {
+        this(ctx, list);
+        this.type = type;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return type;
+    }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(getView(R.layout.item_flock_commend,parent));
+        return new ViewHolder(getView(type == 0 ? R.layout.item_flock_commend : R.layout.item_sex_flock, parent));
     }
 
     @Override

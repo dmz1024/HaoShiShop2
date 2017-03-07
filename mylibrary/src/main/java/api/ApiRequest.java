@@ -26,7 +26,8 @@ import view.pop.TipLoading;
  */
 
 public abstract class ApiRequest<T extends BaseBean> {
-    private static Handler mHandler=new Handler();
+    private static Handler mHandler = new Handler();
+
     protected abstract Map<String, String> getMap();
 
     protected abstract String getUrl();
@@ -55,6 +56,10 @@ public abstract class ApiRequest<T extends BaseBean> {
 
     protected Object getSign() {
         return getClx();
+    }
+
+    protected boolean getCanDis() {
+        return true;
     }
 
     public ApiRequest get() {
@@ -101,7 +106,7 @@ public abstract class ApiRequest<T extends BaseBean> {
         TipLoading tipLoading = null;
         if (tip != null) {
             tipLoading = getLoading();
-            tipLoading.showAtLocation(false);
+            tipLoading.showAtLocation(getCanDis());
             tipLoading.setLoadingContent(tip.getLoading());
         }
 

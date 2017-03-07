@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<view.ScrollChangeScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:id="@+id/ll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.jude.rollviewpager.RollPagerView
+            android:id="@+id/rpv_ad"
+            android:layout_width="match_parent"
+            android:layout_height="180dp">
+
+        </com.jude.rollviewpager.RollPagerView>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_menu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size10"
+            android:background="#fff"
+            android:paddingBottom="@dimen/size10" />
+
+
+        <com.jude.rollviewpager.RollPagerView
+            android:id="@+id/rpv_activity"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_marginTop="@dimen/size10">
+
+        </com.jude.rollviewpager.RollPagerView>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</view.ScrollChangeScrollView>

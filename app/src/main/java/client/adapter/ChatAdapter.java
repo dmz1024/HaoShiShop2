@@ -24,12 +24,15 @@ import api.TestConstant;
 import audio.MediaPlayerUtils;
 import base.adapter.BaseAdapter;
 import base.adapter.BaseViewHolder;
+import base.bean.rxbus.AddFragmentBean;
 import butterknife.BindView;
 import client.R;
 import client.bean.chat.PhotoBean;
 import client.bean.chat.TextBean;
 import client.bean.chat.dao.ChatViewBean;
+import client.fragment.zongqinghui.FriendInfoFragment;
 import util.MyToast;
+import util.RxBus;
 import util.TimeUtils;
 
 
@@ -126,9 +129,7 @@ public class ChatAdapter extends BaseAdapter<ChatViewBean> {
 
     private int level = 0;
 
-    public class SoundHolder extends BaseViewHolder {
-        @BindView(R.id.iv_head)
-        ShapeImageView iv_head;
+    public class SoundHolder extends ChatBaseHolder {
         @BindView(R.id.iv_sound)
         ImageView iv_sound;
         @BindView(R.id.tv_sound_time)
@@ -212,11 +213,9 @@ public class ChatAdapter extends BaseAdapter<ChatViewBean> {
 
     private CountDownTimer timer;
 
-    public class TextHolder extends BaseViewHolder {
+    public class TextHolder extends ChatBaseHolder {
         @BindView(R.id.tv_content)
         TextView tv_content;
-        @BindView(R.id.iv_head)
-        ShapeImageView iv_head;
         @BindView(R.id.tv_time)
         TextView tv_time;
 
@@ -226,7 +225,7 @@ public class ChatAdapter extends BaseAdapter<ChatViewBean> {
 
     }
 
-    public class FileHolder extends BaseViewHolder {
+    public class FileHolder extends ChatBaseHolder {
         TextView tv_content;
 
         public FileHolder(View itemView) {
@@ -243,11 +242,9 @@ public class ChatAdapter extends BaseAdapter<ChatViewBean> {
         }
     }
 
-    public class PhotoHolder extends BaseViewHolder {
+    public class PhotoHolder extends ChatBaseHolder {
         @BindView(R.id.tv_time)
         TextView tv_time;
-        @BindView(R.id.iv_head)
-        ShapeImageView iv_head;
         @BindView(R.id.iv_img)
         ImageView iv_img;
 
@@ -255,6 +252,25 @@ public class ChatAdapter extends BaseAdapter<ChatViewBean> {
             super(itemView);
         }
 
+    }
+
+    public class ChatBaseHolder extends BaseViewHolder {
+        @BindView(R.id.iv_head)
+        ShapeImageView iv_head;
+
+        public ChatBaseHolder(View itemView) {
+            super(itemView);
+            iv_head.setOnClickListener(this);
+        }
+
+        @Override
+        protected void itemOnclick(int id, int layoutPosition) {
+            switch (id) {
+                case R.id.iv_head:
+                    RxBus.get().post("addFragment", new AddFragmentBean(new FriendInfoFragment()));
+                    break;
+            }
+        }
     }
 
 
@@ -275,5 +291,6 @@ public class ChatAdapter extends BaseAdapter<ChatViewBean> {
             MyToast.showToast("无法打开后缀名为." + ext + "的文件！");
         }
     }
+
 
 }

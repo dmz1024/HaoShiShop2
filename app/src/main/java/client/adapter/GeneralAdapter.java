@@ -77,6 +77,8 @@ public class GeneralAdapter extends BaseAdapter<GeneralBean> {
                 return new PerfectRegChooseUserInfoViewHolder(getView(R.layout.item_perfect_reg_userinfo,parent));
             case 11:
                 return new PerfectRegWriteUserInfoViewHolder(getView(R.layout.item_perfect_reg_write_userinfo,parent));
+            case 12:
+                return new ShopIndexMenuViewHolder(getView(R.layout.item_contact_service,parent));
         }
         return null;
     }
@@ -144,6 +146,11 @@ public class GeneralAdapter extends BaseAdapter<GeneralBean> {
                 PerfectRegWriteUserInfoViewHolder writeUserInfoViewHolder = (PerfectRegWriteUserInfoViewHolder) holder;
                 perfectWriteUserInfo(writeUserInfoViewHolder.et_content, data, position);
                 break;
+            case 12:
+                ShopIndexMenuViewHolder shopIndexMenuViewHolder = ((ShopIndexMenuViewHolder) holder);
+                shopIndexMenuViewHolder.tv_title.setText(data.title);
+                shopIndexMenuViewHolder.tv_title.setCompoundDrawables(null, DrawableUtil.setBounds(ctx.getResources().getDrawable(data.rid)), null, null);
+                break;
         }
     }
 
@@ -192,6 +199,15 @@ public class GeneralAdapter extends BaseAdapter<GeneralBean> {
         TextView tv_title;
 
         public ContactServiceViewHolder(View itemView) {
+            super(itemView);
+            tv_title = (TextView) itemView;
+        }
+    }
+
+    public class ShopIndexMenuViewHolder extends BaseViewHolder {
+        TextView tv_title;
+
+        public ShopIndexMenuViewHolder(View itemView) {
             super(itemView);
             tv_title = (TextView) itemView;
         }

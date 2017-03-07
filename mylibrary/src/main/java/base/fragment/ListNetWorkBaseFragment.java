@@ -213,22 +213,16 @@ public abstract class ListNetWorkBaseFragment<D extends ListBaseBean> extends Ne
 //
                 // 当不滚动时
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    if (isRefresh || isLoading || !getLoadMore() || !isSlidingToLast) {
-                        return;
+
+                    if(!isSlidingToLast){
+                       return;
                     }
-//
+
                     //获取最后一个完全显示的ItemPosition,进行加载更多
                     int lastVisibleItem = layoutManager.findLastVisibleItemPosition();
                     int totalItemCount = layoutManager.getItemCount();
-                    if (lastVisibleItem >= (totalItemCount - getSize()) && currentPage < totalPage) {
-                        isLoading = true;
-                        setRefresh(false);
-//                        view.loadMore();
-                        currentPage = page;
-                        page += 1;
-                        currentType = RequestType.LOAD_MORE;
-//                    layoutManager.scrollToPosition(totalList.size() - 1);
-                        getData();
+                    if (lastVisibleItem >= (totalItemCount - getSize())) {
+                        moreData();
                     }
                 }
 
@@ -236,6 +230,21 @@ public abstract class ListNetWorkBaseFragment<D extends ListBaseBean> extends Ne
             }
         });
         return (View) view;
+    }
+
+    protected void moreData(){
+        if (isRefresh || isLoading || !getLoadMore()  ||currentPage > totalPage) {
+            return;
+
+        }
+        isLoading = true;
+        setRefresh(false);
+//                        view.loadMore();
+        currentPage = page;
+        page += 1;
+        currentType = RequestType.LOAD_MORE;
+//                    layoutManager.scrollToPosition(totalList.size() - 1);
+        getData();
     }
 
 

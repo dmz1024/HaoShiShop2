@@ -1,0 +1,181 @@
+<view.CustomScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_above="@id/ll_bottom"
+    android:layout_alignParentTop="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/size30">
+
+        <com.jude.rollviewpager.RollPagerView
+            android:id="@+id/rpv_content"
+            android:layout_width="match_parent"
+            android:layout_height="180dp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#fff"
+            android:padding="@dimen/size10">
+
+            <TextView
+                android:id="@+id/tv_collect"
+                style="@style/TextSize11Color666"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/size5"
+                android:drawablePadding="@dimen/size5"
+                android:drawableTop="@mipmap/shoucang_weidainji"
+                android:gravity="center_horizontal"
+                android:text="收藏" />
+
+            <View
+                android:id="@+id/view_collect"
+                android:layout_width="@dimen/size0.5"
+                android:layout_height="@dimen/size33"
+                android:layout_marginRight="@dimen/size15"
+                android:layout_toLeftOf="@id/tv_collect"
+                android:background="#f5f5f5" />
+
+            <TextView
+                android:id="@+id/tv_name"
+                style="@style/TextSize14Color666"
+                android:layout_alignParentLeft="true"
+                android:layout_marginRight="@dimen/size10"
+                android:layout_toLeftOf="@id/view_collect"
+                android:lineSpacingExtra="@dimen/size5"
+                android:maxLines="2"
+                android:text="四惠地铁旁 三室一厅四惠四惠地铁旁四惠地铁旁地铁旁 三室惠地" />
+
+            <TextView
+                android:id="@+id/tv_introduce"
+                style="@style/TextSize13Color999"
+                android:layout_alignLeft="@id/tv_name"
+                android:layout_below="@id/view_collect"
+                android:layout_marginTop="@dimen/size10"
+                android:layout_toLeftOf="@id/view_collect"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:maxLines="2"
+                android:text="七匹狼成品授权，品质保证，顺丰包邮" />
+
+            <TextView
+                android:id="@+id/tv_price_type"
+                style="@style/TextSize11Colorfff"
+                android:layout_alignLeft="@id/tv_name"
+                android:layout_below="@id/tv_introduce"
+                android:layout_marginTop="@dimen/size10"
+                android:background="@drawable/hs_shape_f00_radius_2"
+                android:paddingBottom="@dimen/size2"
+                android:paddingLeft="@dimen/size3"
+                android:paddingRight="@dimen/size3"
+                android:paddingTop="@dimen/size2"
+                android:text="团购价" />
+
+            <TextView
+                android:id="@+id/tv_price"
+                style="@style/TextSize13Color333"
+                android:layout_alignBottom="@id/tv_price_type"
+                android:layout_marginLeft="@dimen/size15"
+                android:layout_toRightOf="@id/tv_price_type"
+                android:text="￥150"
+                android:textColor="#f00" />
+
+            <TextView
+                android:id="@+id/tv_old_price"
+                style="@style/TextSize12Color999"
+                android:layout_alignBottom="@id/tv_price_type"
+                android:layout_marginLeft="@dimen/size5"
+                android:layout_toRightOf="@id/tv_price"
+                android:text="￥150" />
+
+            <TextView
+                android:id="@+id/tv_count"
+                style="@style/TextSize12Color999"
+                android:layout_alignBottom="@id/tv_price_type"
+                android:layout_alignParentRight="true"
+                android:text="已售100笔" />
+
+        </RelativeLayout>
+
+        <TextView
+            style="@style/TextSize15Color333"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/size10"
+            android:background="#fff"
+            android:drawableBottom="@drawable/line_999"
+            android:drawablePadding="@dimen/size10"
+            android:gravity="center"
+            android:padding="@dimen/size10"
+            android:text="商品规格" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            style="@style/TextSize15Color333"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/size10"
+            android:background="#fff"
+            android:drawableBottom="@drawable/line_999"
+            android:drawablePadding="@dimen/size10"
+            android:gravity="center"
+            android:padding="@dimen/size10"
+            android:text="商品评价" />
+
+        <include
+            android:id="@+id/ic_comment"
+            layout="@layout/item_all_discover_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size0.5" />
+
+        <TextView
+            style="@style/TextSize12Color666"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/size0.5"
+            android:background="#fff"
+            android:gravity="center"
+            android:padding="@dimen/size10"
+            android:text="全部评价(10)" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size10"
+            android:background="#fff"
+            android:padding="@dimen/size10">
+
+            <com.recker.flyshapeimageview.ShapeImageView
+                android:id="@+id/iv_discover_person"
+                android:layout_width="@dimen/size50"
+                android:layout_height="@dimen/size50"
+                android:scaleType="fitXY"
+                app:shape_mode="circle" />
+
+            <TextView
+                android:id="@+id/tv_discover_person"
+                style="@style/TextSize14Color666"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="@dimen/size10"
+                android:layout_marginTop="@dimen/size2"
+                android:layout_toRightOf="@id/iv_discover_person"
+                android:drawableRight="@mipmap/wode_back"
+                android:gravity="center_vertical"
+                android:text="邓如果\n\n金30天发布99条" />
+
+        </RelativeLayout>
+
+        <TextView
+            style="@style/TextSize12Color666"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/size20"
+            android:gravity="center"
+            android:text="继续拖动，查看图文详情" />
+    </LinearLayout>
+</view.CustomScrollView>

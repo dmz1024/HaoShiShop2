@@ -39,8 +39,8 @@ public class ChatFriendAdapter extends BaseAdapter<ChatFriendBean> {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ChatFriendBean data = list.get(position);
         ViewHolder viewHolder = (ViewHolder) holder;
-        viewHolder.tv_name.setText(data.getName());
-        Glide.with(ctx).load(data.getHeader()).into(viewHolder.iv_head);
+//        viewHolder.tv_name.setText(data.getName());
+//        Glide.with(ctx).load(data.getHeader()).into(viewHolder.iv_head);
     }
 
     public class ViewHolder extends BaseViewHolder {

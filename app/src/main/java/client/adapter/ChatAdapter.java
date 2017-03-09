@@ -34,6 +34,7 @@ import client.fragment.zongqinghui.FriendInfoFragment;
 import util.MyToast;
 import util.RxBus;
 import util.TimeUtils;
+import view.ChatImageView;
 
 
 /**
@@ -171,7 +172,6 @@ public class ChatAdapter extends BaseAdapter<ChatViewBean> {
                         timer = new CountDownTimer(60000, 500) {
                             @Override
                             public void onTick(long l) {
-                                Log.d("走", "这里");
                                 level += 1;
                                 if (level > 3) {
                                     level = 1;
@@ -225,7 +225,7 @@ public class ChatAdapter extends BaseAdapter<ChatViewBean> {
 
     }
 
-    public class FileHolder extends ChatBaseHolder {
+    public class FileHolder extends BaseViewHolder {
         TextView tv_content;
 
         public FileHolder(View itemView) {

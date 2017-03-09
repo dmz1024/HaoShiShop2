@@ -34,4 +34,10 @@ public class ChatFriendGroupImpl extends ChatBaseBean<ChatFriendGroupBean, ChatF
         setDao(getDaoSession().getChatFriendGroupBeanDao());
     }
 
+
+    @Override
+    protected List<ChatFriendGroupBean> getAll() {
+        getDaoSession().getChatFriendGroupBeanDao().detachAll();
+        return super.getAll();
+    }
 }

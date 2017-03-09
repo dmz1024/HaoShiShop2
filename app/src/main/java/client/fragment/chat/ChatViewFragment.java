@@ -42,6 +42,7 @@ import client.bean.chat.SoundBean;
 import client.bean.chat.TextBean;
 import client.bean.chat.dao.ChatMessageBean;
 import client.bean.chat.dao.ChatViewBean;
+import client.bean.chat.impl.FileImpl;
 import client.bean.chat.impl.PhotoImpl;
 import client.bean.chat.impl.SoundImpl;
 import client.bean.chat.impl.TextImpl;
@@ -165,9 +166,16 @@ public class ChatViewFragment extends NotNetWorkBaseFragment implements MyButton
                 @Override
                 public void call(ChooseFileRxBus chooseFileRxBus) {
                     if (chooseFileRxBus.index == 0) {
-
+                        ll_send.setVisibility(View.GONE);
+                        String sign = Util.MD5(friend.getUid() + "1" + System.currentTimeMillis());
+                        FileBean fileBean = new FileBean(sign, chooseFileRxBus.result, "1");
+                        FileImpl.getInstance(getContext()).add(fileBean);
+                        ChatViewsImpl.getInstance(getContext())
+                                .add(new ChatViewBean(sign, friend.getUid(), "1", 3, System.currentTimeMillis(), 1, 2));
+                        toBottom();
+                        initDatas();
                     }
-                    toBottom();
+
                 }
             });
         }
@@ -208,7 +216,7 @@ public class ChatViewFragment extends NotNetWorkBaseFragment implements MyButton
             et_content.setText("");
             if (content.length() > 0) {
                 String sign = Util.MD5(friend.getUid() + "1" + System.currentTimeMillis());
-                TextBean textBean = new TextBean(sign,content);
+                TextBean textBean = new TextBean(sign, content);
                 TextImpl.getInstance(getContext()).add(textBean);
                 ChatViewsImpl.getInstance(getContext())
                         .add(new ChatViewBean(sign, friend.getUid(), "1", 2, System.currentTimeMillis(), 1, 2));
@@ -238,7 +246,7 @@ public class ChatViewFragment extends NotNetWorkBaseFragment implements MyButton
             @Override
             public void filePath(String path) {
                 String sign = Util.MD5(friend.getUid() + "1" + System.currentTimeMillis());
-                SoundBean soundBean = new SoundBean(sign,path,10,1);
+                SoundBean soundBean = new SoundBean(sign, path, 10, 1);
                 SoundImpl.getInstance(getContext()).add(soundBean);
                 ChatViewsImpl.getInstance(getContext())
                         .add(new ChatViewBean(sign, friend.getUid(), "1", 1, System.currentTimeMillis(), 1, 2));

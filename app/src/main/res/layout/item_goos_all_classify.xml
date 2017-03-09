@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#fff"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/size3"
+    android:paddingRight="@dimen/size3"
+    android:paddingTop="@dimen/size17">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="@dimen/size57"
+            android:layout_height="@dimen/size0.5"
+            android:background="#e2e2e2" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            style="@style/TextSize15Color666"
+            android:paddingLeft="@dimen/size2"
+            android:paddingRight="@dimen/size2"
+            android:text="女人分类" />
+
+        <View
+            android:layout_width="@dimen/size57"
+            android:layout_height="@dimen/size0.5"
+            android:background="#e2e2e2" />
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size10" />
+    <View
+        android:layout_marginLeft="@dimen/size3"
+        android:layout_marginRight="@dimen/size3"
+        android:background="#f6f6f6"
+        android:layout_marginTop="@dimen/size10"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size1"/>
+</LinearLayout>

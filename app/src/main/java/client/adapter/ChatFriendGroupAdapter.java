@@ -19,6 +19,7 @@ import client.bean.ZanBean;
 import client.bean.chat.dao.ChatFriendBean;
 import client.bean.chat.dao.ChatFriendGroupBean;
 import util.DrawableUtil;
+import util.ListUtils;
 
 
 /**
@@ -46,7 +47,7 @@ public class ChatFriendGroupAdapter extends BaseAdapter<ChatFriendGroupBean> {
 
     private void initFriend(RecyclerView rv_friend, ChatFriendGroupBean data) {
         LinearLayoutManager manager = new LinearLayoutManager(ctx);
-        ChatFriendAdapter mAdapter = new ChatFriendAdapter(ctx, data.getFds());
+        ChatFriendAdapter mAdapter = new ChatFriendAdapter(ctx, ListUtils.list2Array(data.getFbs()));
         rv_friend.setLayoutManager(manager);
         rv_friend.setAdapter(mAdapter);
         rv_friend.setVisibility(data.isShow() ? View.VISIBLE : View.GONE);

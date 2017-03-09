@@ -210,6 +210,12 @@ public class GeneralAdapter extends BaseAdapter<GeneralBean> {
         public ShopIndexMenuViewHolder(View itemView) {
             super(itemView);
             tv_title = (TextView) itemView;
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        protected void onClick(int layoutPosition) {
+            RxBus.get().post("addFragment",new AddFragmentBean(list.get(layoutPosition).fragment));
         }
     }
 

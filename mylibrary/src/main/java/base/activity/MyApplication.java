@@ -1,8 +1,13 @@
 package base.activity;
 
 import android.app.Application;
+import android.content.Context;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.yanzhenjie.nohttp.OkHttpNetworkExecutor;
 import com.yolanda.nohttp.NoHttp;
 import com.yolanda.nohttp.cache.DBCacheStore;
@@ -22,6 +27,7 @@ public class MyApplication extends Application {
         JLogUtils.setDebug(true);
         Util.setApplication(this);
         Fresco.initialize(this);
+        initImageLoader(getApplicationContext());
     }
 
     //网络框架初始化
@@ -49,6 +55,20 @@ public class MyApplication extends Application {
 
 //        Logger.setDebug(true);
 //        Logger.setTag("NoHttp数据");
+    }
+
+
+    public static void initImageLoader(Context context) {
+        ImageLoaderConfiguration.Builder config = new ImageLoaderConfiguration.Builder(context);
+        config.threadPriority(Thread.NORM_PRIORITY - 2);
+//        config.denyCacheImageMultipleSizesInMemory();//不会在内存中缓存多个大小的图片
+        config.diskCacheFileNameGenerator(new Md5FileNameGenerator());//为了保证图片名称唯一
+//        config.diskCacheSize(50 * 1024 * 1024); // 50 MiB
+        //内存缓存大小默认是：app可用内存的1/8
+        config.tasksProcessingOrder(QueueProcessingType.LIFO);
+        config.writeDebugLogs(); // Remove for release app
+        // Initialize ImageLoader with configuration.
+        ImageLoader.getInstance().init(config.build());
     }
 
 

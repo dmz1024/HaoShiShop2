@@ -26,76 +26,24 @@ public class ChatFriendGroupBean {
     private String uid;//用户id
 
     private String name;//组名称
-    @ToMany(referencedJoinProperty="gid")
+    @ToMany(referencedJoinProperty = "gid")
     private List<ChatFriendBean> fbs;
-    @Transient
-    private int count=1;//分组下好友数量
 
-    @Transient
-    private ArrayList<ChatFriendBean> fds;
+
     @Transient
     private boolean isShow;
 
-    /** Used for active entity operations. */
-    @Generated(hash = 1830010625)
-    private transient ChatFriendGroupBeanDao myDao;
-
-    /** Used to resolve relations */
-    @Generated(hash = 2040040024)
-    private transient DaoSession daoSession;
+    public int getCount() {
+        return getFbs().size();
+    }
 
     public boolean isShow() {
         return isShow;
     }
 
-    public void setShow(boolean show) {
+    public ChatFriendGroupBean setShow(boolean show) {
         isShow = show;
-    }
-
-    public String getName() {
-        return this.name;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
-    public String getUid() {
-        return this.uid;
-    }
-    public void setUid(String uid) {
-        this.uid = uid;
-    }
-    public String getGid() {
-        return this.gid;
-    }
-    public void setGid(String gid) {
-        this.gid = gid;
-    }
-
-    @Generated(hash = 1449896052)
-    public ChatFriendGroupBean(String gid, String uid, String name) {
-        this.gid = gid;
-        this.uid = uid;
-        this.name = name;
-    }
-
-    @Generated(hash = 948431386)
-    public ChatFriendGroupBean() {
-    }
-
-    public int getCount() {
-        return count;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
-    }
-
-    public ArrayList<ChatFriendBean> getFds() {
-        return fds;
-    }
-
-    public void setFds(ArrayList<ChatFriendBean> fds) {
-        this.fds = fds;
+        return this;
     }
 
     /**
@@ -134,7 +82,9 @@ public class ChatFriendGroupBean {
         myDao.delete(this);
     }
 
-    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
+    /**
+     * Resets a to-many relationship, making the next get call to query for a fresh result.
+     */
     @Generated(hash = 1715778137)
     public synchronized void resetFbs() {
         fbs = null;
@@ -154,7 +104,7 @@ public class ChatFriendGroupBean {
             ChatFriendBeanDao targetDao = daoSession.getChatFriendBeanDao();
             List<ChatFriendBean> fbsNew = targetDao._queryChatFriendGroupBean_Fbs(gid);
             synchronized (this) {
-                if(fbs == null) {
+                if (fbs == null) {
                     fbs = fbsNew;
                 }
             }
@@ -162,13 +112,61 @@ public class ChatFriendGroupBean {
         return fbs;
     }
 
-    /** called by internal mechanisms, do not call yourself. */
+    /**
+     * called by internal mechanisms, do not call yourself.
+     */
     @Generated(hash = 184987862)
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getChatFriendGroupBeanDao() : null;
     }
 
+    /**
+     * Used for active entity operations.
+     */
+    @Generated(hash = 1830010625)
+    private transient ChatFriendGroupBeanDao myDao;
+
+    /**
+     * Used to resolve relations
+     */
+    @Generated(hash = 2040040024)
+    private transient DaoSession daoSession;
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getUid() {
+        return this.uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public String getGid() {
+        return this.gid;
+    }
+
+    public void setGid(String gid) {
+        this.gid = gid;
+    }
+
+    @Generated(hash = 1449896052)
+    public ChatFriendGroupBean(String gid, String uid, String name) {
+        this.gid = gid;
+        this.uid = uid;
+        this.name = name;
+    }
+
+    @Generated(hash = 948431386)
+    public ChatFriendGroupBean() {
+    }
 
 
 }

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ll_top"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size40"
+        android:background="#fff">
+
+        <FrameLayout
+            android:id="@+id/fg_filter"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/tv_filter"
+                style="@style/TextSize15Color333"
+                android:layout_gravity="center"
+                android:drawableLeft="@mipmap/shangcheng_fenlei2"
+                android:drawablePadding="@dimen/size5"
+                android:gravity="center"
+                android:text="分类" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/fg_count"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/tv_count"
+                style="@style/TextSize15Color333"
+                android:layout_gravity="center"
+                android:drawablePadding="@dimen/size5"
+                android:drawableRight="@mipmap/shangcheng_iconfont_icon08"
+                android:gravity="center"
+                android:text="销量" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/fg_price"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/tv_price"
+                style="@style/TextSize15Color333"
+                android:layout_gravity="center"
+                android:drawablePadding="@dimen/size5"
+                android:drawableRight="@mipmap/shangcheng_iconfont_icon09"
+                android:gravity="center"
+                android:text="价格" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/fg_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/ll_top" />
+
+    <ImageView
+        android:id="@+id/iv_buy_car"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="@dimen/size20"
+        android:scaleType="fitXY"
+        android:src="@mipmap/shangcheng_gouwuche_xuanfu" />
+</RelativeLayout>

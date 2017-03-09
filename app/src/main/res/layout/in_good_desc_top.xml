@@ -136,6 +136,7 @@
             android:layout_marginTop="@dimen/size0.5" />
 
         <TextView
+            android:id="@+id/tv_all_evaluate"
             style="@style/TextSize12Color666"
             android:layout_width="match_parent"
             android:layout_marginTop="@dimen/size0.5"

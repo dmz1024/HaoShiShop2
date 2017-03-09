@@ -1,11 +1,9 @@
 package client.fragment.shop;
 
 import android.graphics.Color;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -15,14 +13,11 @@ import com.jude.rollviewpager.RollPagerView;
 import com.jude.rollviewpager.hintview.ColorPointHintView;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 import base.adapter.MyLoopPagerAdapter;
 import base.bean.TipLoadingBean;
 import base.fragment.ListNetWorkBaseFragment;
-import base.fragment.SingleNetWorkBaseFragment;
-import client.CeshiUrl;
+import client.ImageTestFragment;
 import client.R;
 import client.adapter.GeneralAdapter;
 import client.adapter.ShopIndexGoodsAdapter;
@@ -50,7 +45,7 @@ public class IndexTwoFragment extends ListNetWorkBaseFragment<ShopIndexBean> imp
 
     @Override
     protected int getSize() {
-        return 5;
+        return 2;
     }
 
     @Override
@@ -112,10 +107,10 @@ public class IndexTwoFragment extends ListNetWorkBaseFragment<ShopIndexBean> imp
     private void initMenu(RecyclerView rv_menu) {
         ArrayList<GeneralBean> datas = new ArrayList<>();
 //        String title, int rid, Fragment fragment, int type
-        datas.add(new GeneralBean("团购活动", R.mipmap.shangcheng_rementuangou, new Fragment(), 12));
-        datas.add(new GeneralBean("商家精选", R.mipmap.shangcheng_jingxuan, new Fragment(), 12));
-        datas.add(new GeneralBean("购物车", R.mipmap.gouwuche, new Fragment(), 12));
-        datas.add(new GeneralBean("全部分类", R.mipmap.shangcheng_fenlei, new Fragment(), 12));
+        datas.add(new GeneralBean("团购活动", R.mipmap.shangcheng_rementuangou, new GoodsIndexRootFragment(), 12));
+        datas.add(new GeneralBean("商家精选", R.mipmap.shangcheng_jingxuan, new MerchantSiftFragment(), 12));
+        datas.add(new GeneralBean("购物车", R.mipmap.gouwuche, new ImageTestFragment(), 12));
+        datas.add(new GeneralBean("全部分类", R.mipmap.shangcheng_fenlei, new GoodAllClassifyFragment(), 12));
         GridLayoutManager manager = new GridLayoutManager(getContext(), 4);
         GeneralAdapter mAdapter = new GeneralAdapter(getContext(), datas);
         rv_menu.setLayoutManager(manager);

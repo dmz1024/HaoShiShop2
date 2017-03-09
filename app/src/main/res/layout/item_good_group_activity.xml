@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/size10">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        android:padding="@dimen/size10">
+
+        <ImageView
+            android:id="@+id/iv_head"
+            android:layout_width="@dimen/size113"
+            android:layout_height="@dimen/size113"
+            android:scaleType="fitXY" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            style="@style/TextSize14Color333"
+            android:layout_marginLeft="@dimen/size20"
+            android:layout_toRightOf="@id/iv_head"
+            android:ellipsize="end"
+            android:lineSpacingExtra="@dimen/size4"
+            android:maxLines="2"
+            android:paddingRight="@dimen/size10"
+            android:text="的放到货到付款就当减肥还记得快恢复健康的健康恢复" />
+
+        <TextView
+            android:id="@+id/tv_a"
+            style="@style/TextSize11Color333"
+            android:layout_alignLeft="@id/tv_name"
+            android:layout_below="@id/tv_name"
+            android:layout_marginTop="@dimen/size14"
+            android:text="￥"
+            android:textColor="#ee9821" />
+
+        <TextView
+            android:id="@+id/tv_price"
+            style="@style/TextSize15Color333"
+            android:layout_alignBottom="@id/tv_a"
+            android:layout_marginTop="@dimen/size10"
+            android:layout_toRightOf="@id/tv_a"
+            android:text="985"
+            android:textColor="#ee9821"
+            android:textSize="@dimen/sp17" />
+
+        <TextView
+            android:id="@+id/tv_old_price"
+            style="@style/TextSize14Color999"
+            android:layout_alignBottom="@id/tv_price"
+            android:layout_marginLeft="@dimen/size20"
+            android:layout_toRightOf="@id/tv_price"
+            android:text="￥1230" />
+
+        <TextView
+            android:id="@+id/tv_count"
+            style="@style/TextSize13Color666"
+            android:layout_alignBottom="@id/iv_head"
+            android:layout_alignLeft="@id/tv_name"
+            android:text="还差3人即可成团|10人已购买(已结束)" />
+    </RelativeLayout>
+</FrameLayout>

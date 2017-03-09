@@ -28,6 +28,7 @@
             android:background="#e2e2e2" />
 
         <TextView
+            android:id="@+id/tv_shop"
             style="@style/TextSize11Color666"
             android:layout_width="0dp"
             android:layout_gravity="center_vertical"

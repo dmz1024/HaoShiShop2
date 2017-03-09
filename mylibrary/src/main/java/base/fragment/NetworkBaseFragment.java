@@ -181,7 +181,7 @@ public abstract class NetworkBaseFragment<D extends BaseBean> extends RefreshBas
      * @return
      */
     protected int time() {
-        return 500;
+        return 100;
     }
 
 
@@ -426,6 +426,10 @@ public abstract class NetworkBaseFragment<D extends BaseBean> extends RefreshBas
     @Override
     public void onDestroy() {
         super.onDestroy();
+        if (root != null) {
+            root.removeAllViews();
+            isFirst = true;
+        }
         CallServer.getInstance().cancelBySign(getTClass());
     }
 

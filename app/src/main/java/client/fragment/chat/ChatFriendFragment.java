@@ -30,21 +30,15 @@ public class ChatFriendFragment extends NotNetWorkBaseFragment implements OnTitl
     private ArrayList<ChatFriendGroupBean> datas;
     private ChatFriendGroupAdapter mAdapter;
 
-    private int fCount = 0;
 
     @Override
     protected void initData() {
         datas = ChatFriendGroupImpl.getInstance(getContext()).getDatas();
-        count = datas.size();
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         mAdapter = new ChatFriendGroupAdapter(getContext(), datas) {
             @Override
             protected void edit(int layoutPosition) {
-                fCount = 0;
-                for (ChatFriendGroupBean f : datas) {
-                    fCount += f.getCount();
-                }
-                ChatFriendsImpl.getInstance(getContext()).add(new ChatFriendBean(fCount + "", "好友+" + fCount, TestConstant.IMAGE, "好友+" + fCount, datas.get(layoutPosition).getGid(), 1));
+                ChatFriendsImpl.getInstance(getContext()).add(new ChatFriendBean(System.currentTimeMillis() + "", "好友" , TestConstant.IMAGE, "好友+", datas.get(layoutPosition).getGid(), 1));
                 datas = ChatFriendGroupImpl.getInstance(getContext()).getDatas();
                 notifyDataSetChanged();
             }
@@ -52,8 +46,6 @@ public class ChatFriendFragment extends NotNetWorkBaseFragment implements OnTitl
         rv_content.setLayoutManager(manager);
         rv_content.setAdapter(mAdapter);
     }
-
-    int count = 0;
 
     @Override
     protected int getRId() {
@@ -74,8 +66,7 @@ public class ChatFriendFragment extends NotNetWorkBaseFragment implements OnTitl
 
     @Override
     public void right() {
-        count = count + 1;
-        ChatFriendGroupImpl.getInstance(getContext()).add(new ChatFriendGroupBean(count + "", "1", "分组+" + count));
+        ChatFriendGroupImpl.getInstance(getContext()).add(new ChatFriendGroupBean(System.currentTimeMillis() + "", "1", "分组"));
         datas = ChatFriendGroupImpl.getInstance(getContext()).getDatas();
         mAdapter.notifyDataSetChanged();
     }

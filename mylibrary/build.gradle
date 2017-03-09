@@ -67,4 +67,5 @@ dependencies {
     compile 'com.yanzhenjie:permission:1.0.5'
     //https://github.com/lovedise/PermissionGen
     compile 'com.lovedise:permissiongen:0.0.6'
+    compile files('libs/universal-image-loader-1.9.5.jar')
 }

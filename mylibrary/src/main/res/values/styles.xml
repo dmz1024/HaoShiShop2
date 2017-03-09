@@ -1,14 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+
+
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
         <!-- 状态栏颜色 -->
         <item name="colorPrimaryDark">#f5f5f5</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <!--<item name="android:windowBackground">@drawable/splash_screen</item>-->
+        <!--<item name="android:windowContentOverlay">@null</item>-->
+        <!--<item name="android:windowBackground">@drawable/write</item>-->
+        <!--windowContentOverlay-->
     </style>
+
+    <!--<style name="BigImage" parent="Theme.">-->
+        <!--<item name="windowNoTitle">true</item>-->
+    <!--</style>-->
+
 
     <style name="popwin_anim_style">
         <item name="android:windowEnterAnimation">@anim/form_2_up</item>
@@ -213,4 +222,17 @@
         <item name="android:textColor">#51b338</item>
     </style>
 
+
+
+    <style name="dialog_common" parent="Base.Theme.AppCompat.Light.Dialog.FixedSize">
+        <item name="android:windowBackground">@color/bgcolor</item>
+    </style>
+    <style name="quick_option_dialog" parent="@style/dialog_common">
+        <item name="android:windowAnimationStyle">@style/dialog_animation</item>
+    </style>
+
+    <style name="dialog_animation" parent="android:Animation">
+        <item name="@android:windowEnterAnimation">@anim/dialog_enter</item>
+        <item name="@android:windowExitAnimation">@anim/dialog_exit</item>
+    </style>
 </resources>

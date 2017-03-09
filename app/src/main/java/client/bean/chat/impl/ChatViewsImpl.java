@@ -59,4 +59,6 @@ public class ChatViewsImpl extends ChatBaseBean<ChatViewBean, ChatViewBeanDao> {
                 .build().list();
     }
 
+
+
 }

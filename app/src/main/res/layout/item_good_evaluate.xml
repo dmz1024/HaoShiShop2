@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#fff"
+    android:paddingLeft="@dimen/size10"
+    android:paddingRight="@dimen/size10"
+    android:paddingTop="@dimen/size15">
+
+    <ImageView
+        android:id="@+id/iv_head"
+        android:layout_width="@dimen/size47"
+        android:layout_height="@dimen/size47"
+        android:scaleType="fitXY" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        style="@style/TextSize14Color333"
+
+        android:layout_marginLeft="@dimen/size7"
+        android:layout_toRightOf="@id/iv_head"
+        android:text="邓如果" />
+
+    <view.XLHRatingBar
+        android:id="@+id/ratingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/tv_name"
+        android:layout_below="@id/tv_name"
+        android:layout_marginTop="@dimen/size5"
+        app:canEdit="false"
+        app:countSelected="2"
+        app:differentSize="false"
+        app:dividerWidth="0.5dp"
+        app:starCount="5"
+        app:stateResId="@drawable/comment_ratingbar_selector"
+        app:widthAndHeight="15dp" />
+
+    <TextView
+        android:id="@+id/tv_score"
+        style="@style/TextSize12Color999"
+        android:layout_alignBottom="@id/ratingBar"
+        android:layout_marginLeft="@dimen/size1"
+        android:layout_toRightOf="@id/ratingBar"
+        android:text="5.0" />
+
+    <TextView
+        android:id="@+id/tv_time"
+        style="@style/TextSize11Color999"
+        android:layout_alignParentRight="true"
+        android:text="2016-08-07 15:30" />
+    <TextView
+        android:id="@+id/tv_content"
+        style="@style/TextSize12Color666"
+        android:layout_below="@id/iv_head"
+        android:layout_alignLeft="@id/tv_name"
+        android:text="商品不错，很不错的店铺，下次还会再来的" />
+    <View
+        android:background="#e2e2e2"
+        android:layout_below="@id/tv_content"
+        android:layout_marginTop="@dimen/size14"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size0.5"/>
+</RelativeLayout>

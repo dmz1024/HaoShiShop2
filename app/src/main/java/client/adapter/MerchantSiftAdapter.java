@@ -14,10 +14,13 @@ import java.util.ArrayList;
 
 import base.adapter.BaseAdapter;
 import base.adapter.BaseViewHolder;
+import base.bean.rxbus.AddFragmentBean;
 import butterknife.BindView;
 import client.R;
 import client.bean.ZanBean;
 import client.bean.shop.MerchantSiftBean;
+import client.fragment.shop.ShopInfoFragment;
+import util.RxBus;
 import util.Util;
 import view.XLHRatingBar;
 
@@ -33,7 +36,7 @@ public class MerchantSiftAdapter extends BaseAdapter<MerchantSiftBean.Data> {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(View.inflate(ctx, R.layout.item_merchant_sift, null));
+        return new ViewHolder(getView(R.layout.item_merchant_sift, parent));
     }
 
     @Override
@@ -44,13 +47,13 @@ public class MerchantSiftAdapter extends BaseAdapter<MerchantSiftBean.Data> {
         Glide.with(ctx).load(data.shopImg).into(mHolder.iv_head);
         mHolder.tv_attr.setText("主营：" + data.catshops);
         mHolder.ratingBar.setCountSelected(data.totalScore);
-        mHolder.tv_count.setText(data.appraisesCount + "人已评价");
+        mHolder.tv_count.setText(data.totalUsers + "人已评价");
         initType(mHolder.ll_type, data.accreds);
-    }
+    }//13311580155
 
     private void initType(LinearLayout ll_type, ArrayList<MerchantSiftBean.Data.AccredsBean> accreds) {
         ll_type.removeAllViews();
-        for (int i = 0; i < accreds.size(); i++) {
+        for (int i = 0; accreds != null && i < accreds.size(); i++) {
             ImageView iv = new ImageView(ctx);
             ll_type.addView(iv);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(Util.dp2Px(14), Util.dp2Px(14));
@@ -77,6 +80,12 @@ public class MerchantSiftAdapter extends BaseAdapter<MerchantSiftBean.Data> {
 
         public ViewHolder(View itemView) {
             super(itemView);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        protected void onClick(int layoutPosition) {
+            RxBus.get().post("addFragment", new AddFragmentBean(ShopInfoFragment.getInstance(list.get(layoutPosition).shopId)));
         }
     }
 }

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/size102"
+    android:background="#fff"
+    android:paddingLeft="@dimen/size13">
+
+    <ImageView
+        android:id="@+id/iv_choose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:scaleType="fitXY"
+        android:src="@mipmap/shangcheng_piont2" />
+
+    <ImageView
+        android:id="@+id/iv_head"
+        android:layout_width="@dimen/size82"
+        android:layout_height="@dimen/size82"
+        android:layout_marginBottom="@dimen/size10"
+        android:layout_marginLeft="@dimen/size10"
+        android:layout_marginTop="@dimen/size10"
+        android:layout_toRightOf="@id/iv_choose" />
+
+    <TextView
+        android:id="@+id/tv_delete"
+        style="@style/TextSize15Colorfff"
+        android:layout_width="@dimen/size53"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:background="#ee9821"
+        android:gravity="center"
+        android:text="删除"
+        android:textSize="@dimen/sp17" />
+
+    <LinearLayout
+        android:id="@+id/ll_count"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size35"
+        android:layout_marginRight="@dimen/size10"
+        android:layout_marginTop="@dimen/size10"
+        android:layout_toLeftOf="@id/tv_delete"
+        android:layout_toRightOf="@id/iv_head"
+        android:background="@drawable/rectangle_fff_e2e2e2"
+        android:weightSum="4">
+
+        <FrameLayout
+            android:id="@+id/fg_jian"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <View
+                android:layout_width="@dimen/size13"
+                android:layout_height="@dimen/size1"
+                android:layout_gravity="center"
+                android:background="#666666" />
+        </FrameLayout>
+
+        <View
+            android:layout_width="@dimen/size0.5"
+            android:layout_height="match_parent"
+            android:background="#e2e2e2" />
+
+        <TextView
+            android:id="@+id/tv_zhi"
+            style="@style/TextSize15Color666"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="5" />
+
+        <View
+            android:layout_width="@dimen/size0.5"
+            android:layout_height="match_parent"
+            android:background="#e2e2e2" />
+
+        <FrameLayout
+            android:id="@+id/fg_add"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <View
+                android:layout_width="@dimen/size13"
+                android:layout_height="@dimen/size1"
+                android:layout_gravity="center"
+                android:background="#666666" />
+
+            <View
+                android:layout_width="@dimen/size1"
+                android:layout_height="@dimen/size13"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/size0.5"
+                android:background="#666666" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_count_attr"
+        style="@style/TextSize13Color666"
+        android:layout_alignLeft="@id/ll_count"
+        android:layout_below="@id/ll_count"
+        android:layout_marginTop="@dimen/size15"
+        android:ellipsize="middle"
+        android:maxLines="1"
+        android:text="主营：男装、鞋子" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size0.5"
+        android:layout_alignLeft="@id/iv_head"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@id/tv_delete"
+        android:background="#f6f6f6" />
+</RelativeLayout>

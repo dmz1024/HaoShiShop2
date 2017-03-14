@@ -2,11 +2,15 @@ package client.fragment.chat;
 
 import android.content.Context;
 import android.graphics.Rect;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -22,9 +26,13 @@ import android.widget.RelativeLayout;
 import com.yanzhenjie.album.Album;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
+import api.ApiRequest;
 import api.TestConstant;
 import audio.MediaPlayerUtils;
+import base.bean.SingleBaseBean;
 import base.bean.rxbus.ChooseFileRxBus;
 import base.bean.rxbus.PhotoRxbus;
 import base.fragment.NotNetWorkBaseFragment;
@@ -32,6 +40,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import client.R;
 import client.adapter.ChatAdapter;
+import client.bean.chat.ChatViewMessageBean;
 import client.bean.chat.dao.ChatFriendBean;
 import client.bean.chat.impl.ChatFriendsImpl;
 import client.bean.chat.impl.ChatMessagesImpl;
@@ -46,11 +55,15 @@ import client.bean.chat.impl.FileImpl;
 import client.bean.chat.impl.PhotoImpl;
 import client.bean.chat.impl.SoundImpl;
 import client.bean.chat.impl.TextImpl;
+import client.constant.ApiConstant;
+import client.constant.UserInfo;
 import constant.ChooseFileIndex;
 import constant.ConstantForResult;
 import constant.PhotoIndex;
+import interfaces.OnSingleRequestListener;
 import rx.Observable;
 import rx.functions.Action1;
+import util.JsonUtil;
 import util.RxBus;
 import util.Util;
 import view.DefaultTitleBarView;
@@ -84,6 +97,68 @@ public class ChatViewFragment extends NotNetWorkBaseFragment implements MyButton
 
     private ChatFriendBean friend;
     private ChatFriendBean user;
+    private Observable<String> message;
+
+    private void initMessageRxBus() {
+        message = RxBus.get().register("message", String.class);
+        message.subscribe(new Action1<String>() {
+            @Override
+            public void call(String s) {
+                ChatViewMessageBean bean = JsonUtil.json2Bean(s, ChatViewMessageBean.class);
+                if (TextUtils.equals(bean.type, "say") && TextUtils.equals(bean.touid, UserInfo.userId)) {
+
+                    Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                    Ringtone r = RingtoneManager.getRingtone(getContext(), notification);
+                    r.play();
+
+                    String sign = Util.MD5(bean.uid + UserInfo.userId + System.currentTimeMillis());
+                    TextBean textBean = new TextBean(sign, bean.content);
+                    TextImpl.getInstance(getContext()).add(textBean);
+                    ChatViewsImpl.getInstance(getContext())
+                            .add(new ChatViewBean(sign, bean.uid, UserInfo.userId, 11, System.currentTimeMillis(), 1, 2));
+                    initDatas();
+                    manager.scrollToPosition(datas.size() - 1);
+                }
+            }
+        });
+    }
+
+    private void sendContent(final String content) {
+        new ApiRequest<SingleBaseBean>() {
+            @Override
+            protected Map<String, String> getMap() {
+                Map<String, String> map = new HashMap<>();
+                map.put("uid", UserInfo.userId);
+                map.put("token", UserInfo.token);
+                map.put("touid", "33");
+                map.put("groupid", "");
+                map.put("content", content);
+                map.put("type", "1");
+                return map;
+            }
+
+            @Override
+            protected String getUrl() {
+                return ApiConstant.SEND_MESSAGE;
+            }
+
+            @Override
+            protected Class<SingleBaseBean> getClx() {
+                return SingleBaseBean.class;
+            }
+        }.setOnRequestListeren(new OnSingleRequestListener<SingleBaseBean>() {
+            @Override
+            public void succes(boolean isWrite, SingleBaseBean bean) {
+
+            }
+
+            @Override
+            public void error(boolean isWrite, SingleBaseBean bean, String msg) {
+
+            }
+
+        }).post();
+    }
 
     public static ChatViewFragment getInstance(String fid) {
         ChatViewFragment chatViewFragment = new ChatViewFragment();
@@ -98,13 +173,14 @@ public class ChatViewFragment extends NotNetWorkBaseFragment implements MyButton
         super.onCreate(savedInstanceState);
         Bundle bundle = getArguments();
         if (bundle != null) {
-            friend = ChatFriendsImpl.getInstance(getContext()).select(bundle.getString("fid"));
+//            friend = ChatFriendsImpl.getInstance(getContext()).select(bundle.getString("33"));
         }
     }
 
     @Override
     protected void initData() {
-        datas = ChatViewsImpl.getInstance(getContext()).setFid(friend.getUid()).setUid("1").getDatas();
+        initMessageRxBus();
+        datas = ChatViewsImpl.getInstance(getContext()).setFid("33").setUid(UserInfo.userId).getDatas();
         manager = new LinearLayoutManager(getContext());
         mAdapter = new ChatAdapter(getContext(), datas);
         rv_content.setLayoutManager(manager);
@@ -125,7 +201,7 @@ public class ChatViewFragment extends NotNetWorkBaseFragment implements MyButton
 
     @Override
     protected void initTitleView() {
-        ((DefaultTitleBarView) getTitleBar()).setTitleContent(friend.getName());
+//        ((DefaultTitleBarView) getTitleBar()).setTitleContent(friend.getName());
     }
 
 
@@ -215,21 +291,12 @@ public class ChatViewFragment extends NotNetWorkBaseFragment implements MyButton
             String content = et_content.getText().toString();
             et_content.setText("");
             if (content.length() > 0) {
-                String sign = Util.MD5(friend.getUid() + "1" + System.currentTimeMillis());
+                sendContent(content);
+                String sign = Util.MD5("33" + UserInfo.userId + System.currentTimeMillis());
                 TextBean textBean = new TextBean(sign, content);
                 TextImpl.getInstance(getContext()).add(textBean);
                 ChatViewsImpl.getInstance(getContext())
-                        .add(new ChatViewBean(sign, friend.getUid(), "1", 2, System.currentTimeMillis(), 1, 2));
-
-//                ChatMessageBean chatMessageBean = ChatMessagesImpl.getInstance(getContext()).select(friend.getUid());
-//                if (chatMessageBean != null) {
-//                    chatMessageBean.setContent(textBean.content);
-//                    chatMessageBean.setTime(System.currentTimeMillis());
-//                    ChatMessagesImpl.getInstance(getContext()).update(chatMessageBean);
-//                } else {
-//                    ChatMessagesImpl.getInstance(getContext()).add(new ChatMessageBean(null, "1", TestConstant.IMAGE, name, textBean.content, System.currentTimeMillis(), fid));
-//                }
-//                RxBus.get().post("message", "1");
+                        .add(new ChatViewBean(sign, "33", UserInfo.userId, 10, System.currentTimeMillis(), 1, 2));
                 initDatas();
                 toBottom();
                 hideInput();
@@ -258,7 +325,7 @@ public class ChatViewFragment extends NotNetWorkBaseFragment implements MyButton
     }
 
     private void initDatas() {
-        datas = ChatViewsImpl.getInstance(getContext()).setFid(friend.getUid()).setUid("1").getDatas();
+        datas = ChatViewsImpl.getInstance(getContext()).setFid("33").setUid(UserInfo.userId).getDatas();
         mAdapter.notifyDataSetChanged();
     }
 

@@ -12,6 +12,7 @@
         android:background="#fff">
 
         <TextView
+
             style="@style/TextSize15Color333"
             android:layout_gravity="center_vertical"
             android:padding="@dimen/size12"
@@ -19,6 +20,7 @@
             android:text="我的订单" />
 
         <TextView
+            android:id="@+id/tv_my_order"
             style="@style/TextSize14Color999"
             android:layout_gravity="right|center_vertical"
             android:drawablePadding="@dimen/size10"

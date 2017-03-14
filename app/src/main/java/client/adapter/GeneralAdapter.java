@@ -79,6 +79,8 @@ public class GeneralAdapter extends BaseAdapter<GeneralBean> {
                 return new PerfectRegWriteUserInfoViewHolder(getView(R.layout.item_perfect_reg_write_userinfo,parent));
             case 12:
                 return new ShopIndexMenuViewHolder(getView(R.layout.item_contact_service,parent));
+            case 13:
+                return new IndexFourViewHolder(getView(R.layout.item_my_center_item,parent));
         }
         return null;
     }
@@ -151,6 +153,11 @@ public class GeneralAdapter extends BaseAdapter<GeneralBean> {
                 shopIndexMenuViewHolder.tv_title.setText(data.title);
                 shopIndexMenuViewHolder.tv_title.setCompoundDrawables(null, DrawableUtil.setBounds(ctx.getResources().getDrawable(data.rid)), null, null);
                 break;
+            case 13:
+                IndexFourViewHolder indexFourViewHolder = ((IndexFourViewHolder) holder);
+                indexFourViewHolder.tv_title.setText(data.title);
+                indexFourViewHolder.iv_img.setImageResource(data.rid);
+                break;
         }
     }
 
@@ -216,6 +223,26 @@ public class GeneralAdapter extends BaseAdapter<GeneralBean> {
         @Override
         protected void onClick(int layoutPosition) {
             RxBus.get().post("addFragment",new AddFragmentBean(list.get(layoutPosition).fragment));
+        }
+    }
+
+    public class IndexFourViewHolder extends BaseViewHolder {
+        @BindView(R.id.tv_title)
+        TextView tv_title;
+        @BindView(R.id.iv_img)
+        ImageView iv_img;
+
+        public IndexFourViewHolder(View itemView) {
+            super(itemView);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        protected void onClick(int layoutPosition) {
+            if(list.get(layoutPosition).fragment!=null){
+                RxBus.get().post("addFragment",new AddFragmentBean(list.get(layoutPosition).fragment));
+            }
+
         }
     }
 

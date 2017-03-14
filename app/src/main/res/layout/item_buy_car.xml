@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/size10"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        android:paddingBottom="@dimen/size13"
+        android:paddingLeft="@dimen/size10"
+        android:paddingRight="@dimen/size10"
+        android:paddingTop="@dimen/size13">
+
+        <ImageView
+            android:id="@+id/iv_choose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:scaleType="fitXY"
+            android:src="@mipmap/shangcheng_piont2" />
+
+        <TextView
+            android:id="@+id/tv_shop_name"
+            style="@style/TextSize14Color333"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/size10"
+            android:layout_toRightOf="@id/iv_choose"
+            android:drawablePadding="@dimen/size7"
+            android:drawableRight="@mipmap/shangcheng_back"
+            android:gravity="center_vertical"
+            android:text="海南之家旗舰店" />
+    </RelativeLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_content"
+        android:layout_marginTop="@dimen/size0.5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

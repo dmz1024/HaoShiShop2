@@ -14,7 +14,7 @@ import base.bean.ListBaseBean;
 public class MerchantSiftBean extends ListBaseBean<ArrayList<MerchantSiftBean.Data>> {
 
     public static class Data {
-        public int shopId;
+        public String shopId;
         public String shopImg;
         public String shopName;
         public String shopCompany;

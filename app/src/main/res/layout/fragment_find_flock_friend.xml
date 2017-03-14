@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        android:paddingBottom="@dimen/size15"
+        android:paddingLeft="@dimen/size10"
+        android:paddingRight="@dimen/size10"
+        android:paddingTop="@dimen/size15">
+
+        <ImageView
+            android:id="@+id/iv_head"
+            android:layout_width="@dimen/size45"
+            android:layout_height="@dimen/size45"
+            android:scaleType="fitXY" />
+
+        <TextView
+            android:id="@+id/tv_nick_name"
+            style="@style/TextSize15Color333"
+            android:layout_alignTop="@id/iv_head"
+            android:layout_marginLeft="@dimen/size13"
+            android:layout_toRightOf="@id/iv_head"
+            android:gravity="center_vertical"
+            android:text="小峰" />
+
+        <ImageView
+            android:id="@+id/iv_go"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/zqh_more2" />
+
+        <TextView
+            android:id="@+id/tv_info"
+            style="@style/TextSize13Color999"
+            android:layout_alignLeft="@id/tv_nick_name"
+            android:layout_below="@id/tv_nick_name"
+            android:layout_marginRight="@dimen/size5"
+            android:layout_marginTop="@dimen/size10"
+            android:layout_toLeftOf="@id/iv_mode"
+            android:ellipsize="middle"
+            android:maxLines="1"
+            android:text="我已完善：性别/爱好/老家" />
+    </RelativeLayout>
+
+    <view.NoScrollViewPager
+        android:id="@+id/vp_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

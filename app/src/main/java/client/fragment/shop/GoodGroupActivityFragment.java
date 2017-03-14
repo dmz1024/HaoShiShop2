@@ -2,6 +2,7 @@ package client.fragment.shop;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -29,13 +30,23 @@ import view.DefaultTitleBarView;
 public class GoodGroupActivityFragment extends ListNetWorkBaseFragment<GoodGroupActivityBean> {
     private Map<String, String> filterMap;
 
-    public static GoodGroupActivityFragment getInstance(SerializableMap Sfilter) {
+    public static GoodGroupActivityFragment getInstance(SerializableMap Sfilter, boolean isCanFirst, boolean isShowTip) {
         GoodGroupActivityFragment fragment = new GoodGroupActivityFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable("Sfilter", Sfilter);
+        bundle.putBoolean("isCanFirst", isCanFirst);
+        bundle.putBoolean("isShowTip", isShowTip);
         fragment.setArguments(bundle);
         return fragment;
     }
+
+    public static GoodGroupActivityFragment getInstance(SerializableMap Sfilter) {
+        return getInstance(Sfilter, true, true);
+    }
+
+
+    private boolean isCanFirst;
+    private boolean isShowTip = true;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,10 +54,35 @@ public class GoodGroupActivityFragment extends ListNetWorkBaseFragment<GoodGroup
         Bundle bundle = getArguments();
         if (bundle != null) {
             SerializableMap sfilter = (SerializableMap) bundle.getSerializable("Sfilter");
-            filterMap = sfilter.getMap();
-        }else {
-            filterMap=new HashMap<>();
+            if (sfilter != null) {
+                filterMap = sfilter.getMap();
+            }
+            isCanFirst = bundle.getBoolean("isCanFirst");
+            isShowTip = bundle.getBoolean("isShowTip", true);
         }
+        if (filterMap == null) {
+            filterMap = new HashMap<>();
+        }
+    }
+
+    @Override
+    protected LinearLayoutManager getLayoutManager() {
+        return new LinearLayoutManager(getContext()) {
+            @Override
+            public boolean canScrollVertically() {
+                return a == null ? super.canScrollVertically() : a.a();
+            }
+        };
+    }
+
+    public interface A {
+        boolean a();
+    }
+
+    private A a;
+
+    public void setA(A a) {
+        this.a = a;
     }
 
     @Override
@@ -66,7 +102,7 @@ public class GoodGroupActivityFragment extends ListNetWorkBaseFragment<GoodGroup
     }
 
     public void setFileter(Map<String, String> filter) {
-        if(filter!=null){
+        if (filter != null) {
             map.clear();
             filterMap.clear();
             filterMap.putAll(filter);
@@ -81,12 +117,12 @@ public class GoodGroupActivityFragment extends ListNetWorkBaseFragment<GoodGroup
 
     @Override
     protected ShowCurrentViewENUM getDefaultView() {
-        return ShowCurrentViewENUM.VIEW_HAVE_DATA;
+        return isShowTip ? ShowCurrentViewENUM.VIEW_HAVE_DATA : super.getDefaultView();
     }
 
     @Override
     protected TipLoadingBean getTipLoadingBean() {
-        return new TipLoadingBean("加载中...", "", "");
+        return isShowTip ? new TipLoadingBean("加载中...", "", "") : null;
     }
 
     @Override
@@ -102,5 +138,15 @@ public class GoodGroupActivityFragment extends ListNetWorkBaseFragment<GoodGroup
     @Override
     protected View getTitleBarView() {
         return null;
+    }
+
+    @Override
+    protected boolean isCanFirstInitData() {
+        return isCanFirst;
+    }
+
+    @Override
+    protected boolean isOnlyInitOne() {
+        return true;
     }
 }

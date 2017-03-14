@@ -1,18 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <RelativeLayout
         android:id="@+id/rl_top"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/size180" />
+        android:layout_height="@dimen/size190">
+
+        <ImageView
+            android:id="@+id/iv_bg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY" />
+        <View
+            android:background="#771a1b1a"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <com.recker.flyshapeimageview.ShapeImageView
+            android:id="@+id/iv_head"
+            android:layout_width="@dimen/size65"
+            android:layout_height="@dimen/size65"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/size12"
+            android:scaleType="fitXY"
+            app:frame_width="@dimen/size2"
+            app:frame_color="#ffffff"
+            app:shape_mode="circle" />
+
+        <RelativeLayout
+            android:id="@+id/rl_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_head"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/size8">
+
+            <TextView
+                android:id="@+id/tv_name"
+                style="@style/TextSize14Colorfff"
+                android:maxLines="1"
+                android:text="海南之海南之家品牌男装家品牌男装"
+                android:textSize="@dimen/size14" />
+
+            <LinearLayout
+                android:id="@+id/ll_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/tv_name"
+                android:layout_alignTop="@id/tv_name"
+                android:layout_toRightOf="@id/tv_name"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"/>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_content"
+            style="@style/TextSize11Colorfff"
+            android:layout_below="@id/rl_name"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/size6"
+            android:ellipsize="middle"
+            android:gravity="center"
+            android:maxLines="2"
+            android:paddingLeft="@dimen/size10"
+            android:paddingRight="@dimen/size10"
+            android:text="海南之海南之家海南之海南之家品牌男装家品牌男装品牌男装家品牌男装" />
+
+        <TextView
+            android:id="@+id/tv_chat"
+            style="@style/TextSize13Colorfff"
+            android:layout_below="@id/tv_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/size8"
+            android:background="@drawable/hs_shape_ee9821_radius_10"
+            android:paddingBottom="@dimen/size5"
+            android:paddingLeft="@dimen/size25"
+            android:paddingRight="@dimen/size25"
+            android:paddingTop="@dimen/size5"
+            android:text="聊聊" />
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/ll_tab"
         android:layout_width="match_parent"
         android:layout_height="@dimen/size40"
-        android:layout_marginTop="@dimen/size180"
+        android:layout_marginTop="@dimen/size190"
         android:background="#fff"
         android:weightSum="3">
 
@@ -26,6 +101,12 @@
             android:text="团购促销"
             android:textColor="#ee9821" />
 
+        <View
+            android:layout_width="@dimen/size0.5"
+            android:layout_height="@dimen/size17"
+            android:layout_gravity="center_vertical"
+            android:background="#e2e2e2" />
+
         <TextView
             android:id="@+id/tv_all_good"
             style="@style/TextSize15Color333"
@@ -34,6 +115,12 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="全部商品" />
+
+        <View
+            android:layout_width="@dimen/size0.5"
+            android:layout_height="@dimen/size17"
+            android:layout_gravity="center_vertical"
+            android:background="#e2e2e2" />
 
         <TextView
             android:id="@+id/tv_evaluate"
@@ -49,7 +136,7 @@
         android:id="@+id/fg_view"
         android:layout_width="@dimen/size100"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/size218">
+        android:layout_marginTop="@dimen/size228">
 
         <View
             android:layout_width="@dimen/size60"
@@ -60,7 +147,7 @@
 
     <android.support.v4.view.ViewPager
         android:id="@+id/vp_content"
-        android:layout_marginTop="@dimen/size220"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/size230" />
 </RelativeLayout>

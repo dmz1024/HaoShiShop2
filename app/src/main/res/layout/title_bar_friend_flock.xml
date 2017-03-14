@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
+    android:background="#f5f5f5">
+
+    <FrameLayout
+        android:id="@+id/title_bar_fg_left"
+        android:layout_width="45dp"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/title_bar_iv_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:scaleType="fitXY"
+            android:src="@mipmap/icon_left" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/title_bar_tv_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/size12"
+        android:textColor="#666"
+        android:textSize="@dimen/sp14" />
+
+    <LinearLayout
+        android:id="@+id/title_bar_ll_title"
+        android:layout_width="@dimen/size100"
+        android:layout_height="@dimen/size30"
+        android:layout_centerInParent="true"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <TextView
+            android:id="@+id/title_bar_tv_flock"
+            style="@style/TextSize13Colorfff"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/hs_shape_666_left_radius_5"
+            android:gravity="center"
+            android:text="群组" />
+
+        <TextView
+            android:id="@+id/title_bar_tv_friend"
+            style="@style/TextSize13Color333"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/hs_shape_fff_right_radius_5"
+            android:gravity="center"
+            android:text="亲友"
+            android:textColor="#393934" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/title_bar_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size0.5"
+        android:layout_alignParentBottom="true"
+        android:background="#e1e1e1" />
+</RelativeLayout>

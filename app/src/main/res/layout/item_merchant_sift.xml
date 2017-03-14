@@ -23,7 +23,6 @@
             android:layout_marginLeft="@dimen/size20"
             android:layout_toRightOf="@id/iv_head"
             android:ellipsize="middle"
-            android:lineSpacingExtra="@dimen/size4"
             android:maxEms="13"
             android:textSize="@dimen/size14"
             android:maxLines="1"

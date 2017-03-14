@@ -25,7 +25,8 @@
         android:drawablePadding="@dimen/size16"
         android:gravity="center_vertical"
         android:background="@null"
-        android:hint="用户名/手机号/邮箱"
+        android:hint="手机号"
+        android:inputType="number"
         android:textColor="#666"
         android:textColorHint="#c3c3c3"
         android:textSize="@dimen/sp14" />
@@ -40,6 +41,7 @@
 
     <EditText
         android:id="@+id/et_password"
+        android:inputType="textPassword"
         android:layout_width="match_parent"
         android:layout_height="@dimen/size40"
         android:layout_below="@id/et_name"
@@ -75,6 +77,7 @@
         android:drawablePadding="@dimen/size16"
         android:gravity="center_vertical"
         android:background="@null"
+        android:inputType="textPassword"
         android:hint="重复密码"
         android:textColor="#666"
         android:textColorHint="#c3c3c3"
@@ -110,6 +113,7 @@
             style="@style/TextSize14Color51B338" />
         <EditText
             android:id="@+id/et_code"
+            android:inputType="number"
             android:layout_width="match_parent"
             android:background="@null"
             android:layout_height="@dimen/size40"

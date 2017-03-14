@@ -19,6 +19,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import client.adapter.GeneralAdapter;
 import client.bean.GeneralBean;
+import client.fragment.shop.MyOrderRootFragment;
 import client.pop.PopRenZTip;
 import client.R;
 import util.RxBus;
@@ -108,6 +109,12 @@ public class IndexFiveFragment extends NotNetWorkBaseFragment {
         GeneralAdapter mAdatpter = new GeneralAdapter(getContext(), datas);
         rv_item.setAdapter(mAdatpter);
         rv_item.setLayoutManager(manager);
+    }
+
+
+    @OnClick(R.id.tv_my_order)
+    void myOrder(){
+        RxBus.get().post("addFragment",new AddFragmentBean(new MyOrderRootFragment()));
     }
 
 

@@ -2,6 +2,7 @@ package client.fragment.chat;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ public class ChatMessageFragment extends NotNetWorkBaseFragment {
     RecyclerView rv_content;
     private ArrayList<ChatMessageBean> datas;
     ChatMessageAdapter mAdapter;
+
 
     @Override
     protected void initData() {

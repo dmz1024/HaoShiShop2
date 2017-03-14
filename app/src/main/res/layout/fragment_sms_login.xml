@@ -25,7 +25,7 @@
         android:drawablePadding="@dimen/size16"
         android:gravity="center_vertical"
         android:background="@null"
-        android:hint="用户名/手机号/邮箱"
+        android:hint="手机号"
         android:textColor="#666"
         android:textColorHint="#c3c3c3"
         android:textSize="@dimen/sp14" />
@@ -70,6 +70,7 @@
             android:drawablePadding="@dimen/size16"
             android:gravity="center_vertical"
             android:hint="输入验证码"
+            android:inputType="number"
             android:textColor="#666"
             android:textColorHint="#c3c3c3"
             android:textSize="@dimen/sp14" />

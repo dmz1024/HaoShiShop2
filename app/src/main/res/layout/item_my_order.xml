@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/size10">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        android:paddingBottom="@dimen/size13"
+        android:paddingLeft="@dimen/size10"
+        android:paddingRight="@dimen/size10"
+        android:paddingTop="@dimen/size13">
+
+        <TextView
+            android:id="@+id/tv_shop_name"
+            style="@style/TextSize14Color333"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/size10"
+            android:layout_toRightOf="@id/iv_choose"
+            android:drawablePadding="@dimen/size7"
+            android:drawableRight="@mipmap/shangcheng_back"
+            android:gravity="center_vertical"
+            android:text="海南之家旗舰店" />
+
+        <TextView
+            android:id="@+id/tv_status"
+            style="@style/TextSize14Color333"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="待付款"
+            android:textColor="#ee9821" />
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size0.5" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size50"
+        android:layout_marginTop="@dimen/size0.5"
+        android:background="#fff"
+        android:paddingLeft="@dimen/size10"
+        android:paddingRight="@dimen/size10">
+
+        <TextView
+            android:id="@+id/tv_a"
+            style="@style/TextSize13Color333"
+            android:layout_centerVertical="true"
+            android:text="合计：" />
+
+        <TextView
+            android:id="@+id/tv_b"
+            style="@style/TextSize13Color333"
+            android:layout_alignBottom="@id/tv_a"
+            android:layout_toRightOf="@id/tv_a"
+            android:text="￥"
+            android:textColor="#f00" />
+
+        <TextView
+            android:id="@+id/tv_price"
+            style="@style/TextSize15Color333"
+            android:layout_alignBottom="@id/tv_a"
+            android:layout_toRightOf="@id/tv_b"
+            android:text="150"
+            android:textColor="#f00" />
+
+
+        <TextView
+            android:id="@+id/tv_right"
+            style="@style/TextSize13Colorfff"
+            android:layout_width="@dimen/size70"
+            android:layout_height="@dimen/size28"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="@dimen/size10"
+            android:layout_marginTop="@dimen/size10"
+            android:background="@drawable/hs_shape_ee9821_radius_3"
+            android:gravity="center"
+            android:text="付款" />
+
+        <TextView
+            android:id="@+id/tv_left"
+            style="@style/TextSize13Color666"
+            android:layout_width="@dimen/size70"
+            android:layout_height="@dimen/size28"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/size5"
+            android:layout_toLeftOf="@id/tv_right"
+            android:background="@drawable/rectangle_fff_e2e2e2"
+            android:gravity="center"
+            android:text="删除订单" />
+    </RelativeLayout>
+</LinearLayout>

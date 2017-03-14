@@ -16,6 +16,7 @@
     <EditText
         android:id="@+id/et_name"
         android:background="@null"
+        android:text="18326167257"
         android:layout_width="match_parent"
         android:layout_height="@dimen/size40"
         android:layout_below="@id/tv_logo"
@@ -40,7 +41,9 @@
 
     <EditText
         android:id="@+id/et_password"
+        android:inputType="textPassword"
         android:background="@null"
+        android:text="101292"
         android:layout_width="match_parent"
         android:layout_height="@dimen/size40"
         android:layout_below="@id/et_name"

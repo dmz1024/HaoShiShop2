@@ -89,7 +89,7 @@ public abstract class ApiRequest<T extends BaseBean> {
 
 
     protected int getTime() {
-        return 500;
+        return 0;
     }
 
     private void creatRequest(final JavaBeanRequest<T> request, final TipLoadingBean tip) {

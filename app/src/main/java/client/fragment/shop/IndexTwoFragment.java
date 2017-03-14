@@ -109,7 +109,7 @@ public class IndexTwoFragment extends ListNetWorkBaseFragment<ShopIndexBean> imp
 //        String title, int rid, Fragment fragment, int type
         datas.add(new GeneralBean("团购活动", R.mipmap.shangcheng_rementuangou, new GoodsIndexRootFragment(), 12));
         datas.add(new GeneralBean("商家精选", R.mipmap.shangcheng_jingxuan, new MerchantSiftFragment(), 12));
-        datas.add(new GeneralBean("购物车", R.mipmap.gouwuche, new ImageTestFragment(), 12));
+        datas.add(new GeneralBean("购物车", R.mipmap.gouwuche, new BuyCarRootFragment(), 12));
         datas.add(new GeneralBean("全部分类", R.mipmap.shangcheng_fenlei, new GoodAllClassifyFragment(), 12));
         GridLayoutManager manager = new GridLayoutManager(getContext(), 4);
         GeneralAdapter mAdapter = new GeneralAdapter(getContext(), datas);

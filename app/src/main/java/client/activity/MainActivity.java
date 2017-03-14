@@ -2,6 +2,7 @@ package client.activity;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.text.TextUtils;
 
 import com.canyinghao.canphotos.CanPhotoHelper;
 import com.yanzhenjie.album.Album;
@@ -10,6 +11,8 @@ import base.activity.BaseActivity;
 import base.bean.rxbus.AddFragmentBean;
 import base.bean.rxbus.ChooseFileRxBus;
 import base.bean.rxbus.PhotoRxbus;
+import client.constant.UserInfo;
+import client.fragment.index.IndexFragment;
 import client.fragment.login.LoginFragment;
 import constant.ChooseFileIndex;
 import constant.ConstantForResult;
@@ -22,11 +25,12 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initData() {
+        UserInfo.getUserInfo();
         sendFragment();
     }
 
     private void sendFragment() {
-        AddFragmentBean addFragmentBean = new AddFragmentBean(new LoginFragment());
+        AddFragmentBean addFragmentBean = new AddFragmentBean(TextUtils.isEmpty(UserInfo.userId) ? new LoginFragment() : new IndexFragment());
         addFragmentBean.setAddBack(true);
         addFragmentBean.setHaveAnima(true);
         RxBus.get().post("addFragment", addFragmentBean);

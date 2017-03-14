@@ -41,7 +41,7 @@ public class IndexContentFragment extends NotNetWorkBaseFragment {
         fragments.add(new IndexOneFragment());
         fragments.add(new IndexTwoFragment());
         fragments.add(new IndexThreeFragment());
-        fragments.add(new Fragment());
+        fragments.add(new IndexFourFragment());
         fragments.add(new IndexFiveFragment());
         vp_content.setOffscreenPageLimit(fragments.size());
         vp_content.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {

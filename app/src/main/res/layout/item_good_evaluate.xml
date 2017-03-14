@@ -8,10 +8,11 @@
     android:paddingRight="@dimen/size10"
     android:paddingTop="@dimen/size15">
 
-    <ImageView
+    <com.recker.flyshapeimageview.ShapeImageView
         android:id="@+id/iv_head"
         android:layout_width="@dimen/size47"
         android:layout_height="@dimen/size47"
+        app:shape_mode="circle"
         android:scaleType="fitXY" />
 
     <TextView

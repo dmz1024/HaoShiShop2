@@ -43,19 +43,13 @@ public class GoodsIndexRootFragment extends SingleNetWorkBaseFragment<GoodAllCla
     private SerializableMap serializableMap;
 
     public static GoodsIndexRootFragment getInstance(SerializableMap Sfilter) {
-        return getInstance(Sfilter, 0);
-    }
-
-    public static GoodsIndexRootFragment getInstance(SerializableMap Sfilter, int type) {
         GoodsIndexRootFragment fragment = new GoodsIndexRootFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable("Sfilter", Sfilter);
-        bundle.putInt("type", type);
         fragment.setArguments(bundle);
         return fragment;
     }
 
-    private int type = 0;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,7 +57,6 @@ public class GoodsIndexRootFragment extends SingleNetWorkBaseFragment<GoodAllCla
         Bundle bundle = getArguments();
         if (bundle != null) {
             serializableMap = (SerializableMap) bundle.getSerializable("Sfilter");
-            type = bundle.getInt("type");
         }
 
         if (serializableMap == null) {
@@ -72,10 +65,6 @@ public class GoodsIndexRootFragment extends SingleNetWorkBaseFragment<GoodAllCla
         }
     }
 
-    @Override
-    protected View getTitleBarView() {
-        return type == 0 ? super.getTitleBarView() : null;
-    }
 
     @Override
     protected void initTitleView() {
@@ -250,5 +239,10 @@ public class GoodsIndexRootFragment extends SingleNetWorkBaseFragment<GoodAllCla
     public void onDestroy() {
         super.onDestroy();
         allBean = null;
+    }
+
+    @Override
+    protected boolean isOnlyInitOne() {
+        return true;
     }
 }

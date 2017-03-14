@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 
 import base.adapter.BaseAdapter;
@@ -33,7 +35,15 @@ public class GoodEvaluateAdapter extends BaseAdapter<GoodEvaluateBean.Data> {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
+        ViewHolder mHolder = (ViewHolder) holder;
+        GoodEvaluateBean.Data data = list.get(position);
+        Glide.with(ctx).load(data.userPhoto).into(mHolder.iv_head);
+        mHolder.tv_name.setText(data.loginName);
+        mHolder.tv_content.setText(data.content);
+        mHolder.tv_time.setText(data.createTime);
+        int score = (data.goodsScore + data.timeScore + data.serviceScore) / 3;
+        mHolder.ratingBar.setCountSelected(score);
+        mHolder.tv_score.setText(score + ".0");
     }
 
     public class ViewHolder extends BaseViewHolder {
@@ -45,6 +55,8 @@ public class GoodEvaluateAdapter extends BaseAdapter<GoodEvaluateBean.Data> {
         TextView tv_time;
         @BindView(R.id.tv_content)
         TextView tv_content;
+        @BindView(R.id.tv_score)
+        TextView tv_score;
         @BindView(R.id.ratingBar)
         XLHRatingBar ratingBar;
 

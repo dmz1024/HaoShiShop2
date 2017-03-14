@@ -4,9 +4,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.mikepenz.itemanimators.SlideInOutBottomAnimator;
-import com.mikepenz.itemanimators.SlideLeftAlphaAnimator;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -173,6 +170,7 @@ public abstract class ListNetWorkBaseFragment<D extends ListBaseBean> extends Ne
     protected LinearLayoutManager layoutManager;
     private OnShowListDataListener view;
     protected RecyclerView recyclerView;
+
     @Override
     protected View getHaveDataView() {
         view = showListView();
@@ -194,13 +192,21 @@ public abstract class ListNetWorkBaseFragment<D extends ListBaseBean> extends Ne
         }
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            //用来标记是否正在向最后一个滑动
+            //用来标记是否正在向下一个滑动
             boolean isSlidingToLast = false;
 
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 isSlidingToLast = dy > 0;
+                if (onScrollListener != null) {
+                    if (isSlidingToLast) {
+                        onScrollListener.toDown(dy, layoutManager.findFirstCompletelyVisibleItemPosition() == 0);
+                    } else {
+                        onScrollListener.toTop(dy, layoutManager.findFirstCompletelyVisibleItemPosition() == 0);
+                    }
+                }
+
             }
 
             @Override
@@ -214,8 +220,8 @@ public abstract class ListNetWorkBaseFragment<D extends ListBaseBean> extends Ne
                 // 当不滚动时
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
 
-                    if(!isSlidingToLast){
-                       return;
+                    if (!isSlidingToLast) {
+                        return;
                     }
 
                     //获取最后一个完全显示的ItemPosition,进行加载更多
@@ -232,8 +238,20 @@ public abstract class ListNetWorkBaseFragment<D extends ListBaseBean> extends Ne
         return (View) view;
     }
 
-    protected void moreData(){
-        if (isRefresh || isLoading || !getLoadMore()  ||currentPage > totalPage) {
+    public interface OnListBaseScrollListener {
+        void toDown(int dy, boolean firstShow);
+
+        void toTop(int dy, boolean firstShow);
+    }
+
+    private OnListBaseScrollListener onScrollListener;
+
+    public void setOnScrollListener(OnListBaseScrollListener onScrollListener) {
+        this.onScrollListener = onScrollListener;
+    }
+
+    protected void moreData() {
+        if (isRefresh || isLoading || !getLoadMore() || currentPage > totalPage) {
             return;
 
         }

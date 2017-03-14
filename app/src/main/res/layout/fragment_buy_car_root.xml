@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/rl_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size60"
+        android:layout_alignParentBottom="true"
+        android:background="#fff"
+        android:padding="@dimen/size10">
+
+        <TextView
+            android:id="@+id/tv_choose"
+            style="@style/TextSize15Color666"
+            android:layout_centerVertical="true"
+            android:drawableLeft="@mipmap/shangcheng_piont2"
+            android:drawablePadding="@dimen/size10"
+            android:gravity="center_vertical"
+            android:text="全选" />
+
+        <TextView
+            android:id="@+id/tv_pay"
+            style="@style/TextSize15Colorfff"
+            android:layout_width="@dimen/size120"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/hs_shape_ee9821_radius_3"
+            android:gravity="center"
+            android:text="去结算（1）" />
+
+        <TextView
+            android:id="@+id/tv_price"
+            style="@style/TextSize15Color999"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/size15"
+            android:layout_toLeftOf="@id/tv_pay"
+            android:text="150"
+            android:textColor="#f00" />
+
+        <TextView
+            android:id="@+id/tv_a"
+            style="@style/TextSize12Color999"
+            android:layout_alignBottom="@id/tv_price"
+            android:layout_marginRight="@dimen/size1"
+            android:layout_toLeftOf="@id/tv_price"
+            android:text="￥"
+            android:textColor="#f00" />
+
+        <TextView
+            style="@style/TextSize14Color666"
+            android:layout_alignBottom="@id/tv_price"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/size1"
+            android:layout_toLeftOf="@id/tv_a"
+            android:text="合计：" />
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/fg_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/rl_bottom"
+        android:layout_alignParentTop="true" />
+</RelativeLayout>

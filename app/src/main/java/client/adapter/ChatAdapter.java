@@ -57,6 +57,11 @@ public class ChatAdapter extends BaseAdapter<ChatViewBean> {
                 return new FileHolder(getView(android.R.layout.simple_list_item_1, parent));
             case 4:
                 return new PhotoHolder(getView(R.layout.item_chat_view_left_image, parent));
+            case 10:
+                return new TextHolder(getView(R.layout.item_chat_view_right_text, parent));
+            case 11:
+                return new TextHolder(getView(R.layout.item_chat_view_left_text, parent));
+
 
         }
         return new SoundHolder(View.inflate(ctx, android.R.layout.simple_list_item_1, null));
@@ -75,7 +80,8 @@ public class ChatAdapter extends BaseAdapter<ChatViewBean> {
             case 1:
                 sound(((SoundHolder) holder), position);
                 break;
-            case 2:
+            case 10:
+            case 11:
                 text(((TextHolder) holder), position);
                 break;
             case 3:
@@ -124,7 +130,7 @@ public class ChatAdapter extends BaseAdapter<ChatViewBean> {
         holder.tv_time.setText(TimeUtils.formatTime(data.getTime()));
         TextBean textBean = data.getTextBean();
         holder.tv_content.setText(textBean.getContent());
-        Glide.with(ctx).load(data.getFUser().getHeader()).into(holder.iv_head);
+//        Glide.with(ctx).load(data.getFUser().getHeader()).into(holder.iv_head);
         holder.tv_time.setText(TimeUtils.formatTime(data.getTime()));
     }
 

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/fg_search"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size30"
+        android:layout_margin="@dimen/size12"
+        android:background="@drawable/rectangle_fff_ra10">
+
+        <TextView
+            style="@style/TextSize13Color333"
+            android:layout_gravity="center"
+            android:drawableLeft="@mipmap/zqh_search"
+            android:drawablePadding="@dimen/size10"
+            android:gravity="center"
+            android:text="群组名称/群号"
+            android:textColor="#aaaaaa" />
+    </FrameLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:background="#fff" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size40"
+        android:layout_marginTop="@dimen/size10"
+        android:background="#fff">
+
+        <TextView
+            style="@style/TextSize15Color333"
+            android:layout_gravity="center_vertical"
+            android:padding="@dimen/size10"
+            android:text="推荐群组" />
+
+        <TextView
+            android:id="@+id/tv_more"
+            style="@style/TextSize14Color999"
+            android:layout_gravity="center_vertical|right"
+            android:drawablePadding="@dimen/size10"
+            android:drawableRight="@mipmap/zqh_more2"
+            android:padding="@dimen/size10"
+            android:text="更多" />
+
+    </FrameLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_content"
+        android:paddingBottom="@dimen/size10"
+        android:paddingTop="@dimen/size10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size0.5"
+        android:background="#fff" />
+</LinearLayout>

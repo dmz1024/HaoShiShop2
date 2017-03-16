@@ -45,8 +45,8 @@ public class SendDiscoverAdapter extends BaseAdapter<DiscoverTabBean.Data> {
         ViewHolder viewHolder = (ViewHolder) holder;
         if (position != list.size()) {
             DiscoverTabBean.Data data = list.get(position);
-            Glide.with(ctx).load(data.url).into(viewHolder.iv_icon);
-            viewHolder.tv_title.setText(data.title);
+            Glide.with(ctx).load(data.catImg).into(viewHolder.iv_icon);
+            viewHolder.tv_title.setText(data.catName);
         } else {
             viewHolder.iv_icon.setImageResource(R.mipmap.leimu);
             viewHolder.tv_title.setText("自定义分类");

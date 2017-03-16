@@ -63,9 +63,15 @@ public class DiscoverFragment extends ListNetWorkBaseFragment<DiscoverBean> {
         return DiscoverBean.class;
     }
 
+//    @Override
+//    protected boolean isCanRefresh() {
+//        return false;
+//    }
+
+
     @Override
-    protected boolean isCanRefresh() {
-        return false;
+    protected boolean isOnlyInitOne() {
+        return true;
     }
 
     @Override

@@ -54,33 +54,33 @@ public class GeneralAdapter extends BaseAdapter<GeneralBean> {
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         switch (viewType) {
             case 0:
-                return new Viewf5f5f5ViewHolder(getView(R.layout.item_view,parent));
+                return new Viewf5f5f5ViewHolder(getView(R.layout.item_view, parent));
             case 1:
-                return new MyOrderNumViewHolder(getView(R.layout.item_my_order_num,parent));
+                return new MyOrderNumViewHolder(getView(R.layout.item_my_order_num, parent));
             case 2:
-                return new MyItemViewHolder(getView(R.layout.item_my_center_item,parent));
+                return new MyItemViewHolder(getView(R.layout.item_my_center_item, parent));
             case 3:
-                return new ContactServiceViewHolder(getView(R.layout.item_contact_service,parent));
+                return new ContactServiceViewHolder(getView(R.layout.item_contact_service, parent));
             case 4:
-                return new TitleViewHolder(getView(R.layout.item_title,parent));
+                return new TitleViewHolder(getView(R.layout.item_title, parent));
             case 5:
-                return new TitleContentViewHolder(getView(R.layout.item_title_content,parent));
+                return new TitleContentViewHolder(getView(R.layout.item_title_content, parent));
             case 6:
-                return new TitleContentGoViewHolder(getView(R.layout.item_title_content_go,parent));
+                return new TitleContentGoViewHolder(getView(R.layout.item_title_content_go, parent));
             case 7:
-                return new PeosonSetHeadViewHolder(getView(R.layout.item_person_head,parent));
+                return new PeosonSetHeadViewHolder(getView(R.layout.item_person_head, parent));
             case 8:
-                return new PeosonSetTitleViewHolder(getView(R.layout.item_peoson_set_title,parent));
+                return new PeosonSetTitleViewHolder(getView(R.layout.item_peoson_set_title, parent));
             case 9:
-                return new MessageSetViewHolder(getView(R.layout.item_message_set,parent));
+                return new MessageSetViewHolder(getView(R.layout.item_message_set, parent));
             case 10:
-                return new PerfectRegChooseUserInfoViewHolder(getView(R.layout.item_perfect_reg_userinfo,parent));
+                return new PerfectRegChooseUserInfoViewHolder(getView(R.layout.item_perfect_reg_userinfo, parent));
             case 11:
-                return new PerfectRegWriteUserInfoViewHolder(getView(R.layout.item_perfect_reg_write_userinfo,parent));
+                return new PerfectRegWriteUserInfoViewHolder(getView(R.layout.item_perfect_reg_write_userinfo, parent));
             case 12:
-                return new ShopIndexMenuViewHolder(getView(R.layout.item_contact_service,parent));
+                return new ShopIndexMenuViewHolder(getView(R.layout.item_contact_service, parent));
             case 13:
-                return new IndexFourViewHolder(getView(R.layout.item_my_center_item,parent));
+                return new IndexFourViewHolder(getView(R.layout.item_my_center_item, parent));
         }
         return null;
     }
@@ -222,7 +222,7 @@ public class GeneralAdapter extends BaseAdapter<GeneralBean> {
 
         @Override
         protected void onClick(int layoutPosition) {
-            RxBus.get().post("addFragment",new AddFragmentBean(list.get(layoutPosition).fragment));
+            RxBus.get().post("addFragment", new AddFragmentBean(list.get(layoutPosition).fragment));
         }
     }
 
@@ -239,8 +239,8 @@ public class GeneralAdapter extends BaseAdapter<GeneralBean> {
 
         @Override
         protected void onClick(int layoutPosition) {
-            if(list.get(layoutPosition).fragment!=null){
-                RxBus.get().post("addFragment",new AddFragmentBean(list.get(layoutPosition).fragment));
+            if (list.get(layoutPosition).fragment != null) {
+                RxBus.get().post("addFragment", new AddFragmentBean(list.get(layoutPosition).fragment));
             }
 
         }
@@ -262,6 +262,8 @@ public class GeneralAdapter extends BaseAdapter<GeneralBean> {
         protected void itemOnclick(int id, int layoutPosition) {
             if (layoutPosition == list.size() - 1) {
                 new PopContactService(ctx).showAtLocation(false);
+            } else if (list.get(layoutPosition).fragment != null) {
+                RxBus.get().post("addFragment", new AddFragmentBean(list.get(layoutPosition).fragment));
             }
         }
     }

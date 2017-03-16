@@ -1,6 +1,7 @@
 package client.constant;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.util.Map;
 
@@ -34,6 +35,7 @@ public class UserInfo {
             token = loginInfo.get("token");
             userName = loginInfo.get("name");
             userPhone = loginInfo.get("phone");
+            Log.d("用户信息", userId + "--" + token + "--" + userName + "--" + userPhone);
         }
     }
 }

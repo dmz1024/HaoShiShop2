@@ -13,18 +13,21 @@ import base.fragment.ListNetWorkBaseFragment;
 import client.CeshiUrl;
 import client.adapter.DiscoverAdapter;
 import client.bean.DiscoverBean;
+import client.constant.ApiConstant;
 
 /**
  * Created by dengmingzhi on 2017/2/21.
  */
 
 public class DiscoverFragment extends ListNetWorkBaseFragment<DiscoverBean> {
-    private String type;
+    private String catId;
+    private boolean isFirst;
 
-    public static DiscoverFragment getInstance(String type) {
+    public static DiscoverFragment getInstance(String catId, boolean isFirst) {
         DiscoverFragment fragment = new DiscoverFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("type", type);
+        bundle.putString("catId", catId);
+        bundle.putBoolean("isFirst", isFirst);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -34,7 +37,8 @@ public class DiscoverFragment extends ListNetWorkBaseFragment<DiscoverBean> {
         super.onCreate(savedInstanceState);
         Bundle bundle = getArguments();
         if (bundle != null) {
-            type = bundle.getString("type");
+            catId = bundle.getString("catId");
+            isFirst = bundle.getBoolean("isFirst");
         }
     }
 
@@ -45,12 +49,12 @@ public class DiscoverFragment extends ListNetWorkBaseFragment<DiscoverBean> {
 
     @Override
     protected String url() {
-        return CeshiUrl.TEST;
+        return ApiConstant.LISTQUERY;
     }
 
     @Override
     protected Map<String, String> map() {
-        map.put("act", "discoves");
+        map.put("catId", catId);
         return super.map();
     }
 
@@ -66,7 +70,7 @@ public class DiscoverFragment extends ListNetWorkBaseFragment<DiscoverBean> {
 
     @Override
     protected boolean isCanFirstInitData() {
-        return TextUtils.equals("first", type);
+        return isFirst;
     }
 
     @Override

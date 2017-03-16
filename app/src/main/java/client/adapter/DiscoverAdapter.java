@@ -121,7 +121,6 @@ public class DiscoverAdapter extends BaseAdapter<DiscoverBean.Data> {
         TextView tv_content;
         public ViewOneImageHolder(View itemView) {
             super(itemView);
-
         }
     }
 

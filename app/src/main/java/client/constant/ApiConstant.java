@@ -21,4 +21,7 @@ public interface ApiConstant {
     String BIND_UID = BASE + "app.php/home/evn/binduid";
     String SEND_MESSAGE = BASE + "app.php/home/evn/send_message";
     String ADD_SUBGROUP = BASE + "app.php/home/evn/add_subgroup";
+    String LISTGOODSQUERY = BASE + "app.php/home/Favorites/LISTGOODSQUERY";
+    String ONEARTICLE = BASE + "app.php/home/Helpcenter/oneArticle";
+    String LISTQUERY = BASE + "app.php/home/Helpcenter/listQuery";
 }

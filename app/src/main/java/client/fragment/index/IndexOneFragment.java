@@ -58,7 +58,7 @@ public class IndexOneFragment extends NotNetWorkBaseFragment implements OnTitleB
                 if (position == 0) {
                     RxBus.get().post("indexBottomTabChangeFromOther", 3);
                 } else {
-                    new PopAddFriendGroup(getContext()).showAtLocation(true);
+                    new PopAddFriendGroup(getContext()).showAtLocation(false);
                 }
             }
         }.showAtLocation(false);

@@ -19,6 +19,8 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import client.adapter.GeneralAdapter;
 import client.bean.GeneralBean;
+import client.fragment.discover.DiscoverCollectRootFragment;
+import client.fragment.shop.GoodCollectFragment;
 import client.fragment.shop.MyOrderRootFragment;
 import client.pop.PopRenZTip;
 import client.R;
@@ -95,7 +97,8 @@ public class IndexFiveFragment extends NotNetWorkBaseFragment {
     private void initItem() {
         ArrayList<GeneralBean> datas = new ArrayList<>();
         datas.add(new GeneralBean("我已发布", R.mipmap.wode_roll, null, 2));
-        datas.add(new GeneralBean("我的收藏", R.mipmap.wode_xihuan, null, 2));
+        datas.add(new GeneralBean("我的商品收藏", R.mipmap.shop, new GoodCollectFragment(), 2));
+        datas.add(new GeneralBean("我的发现收藏", R.mipmap.find, new DiscoverCollectRootFragment(), 2));
         datas.add(new GeneralBean("我的打赏", R.mipmap.wode_jilu, null, 2));
         datas.add(new GeneralBean("申请建群", R.mipmap.wode_jiaqun, null, 2));
         datas.add(new GeneralBean("用户协议", R.mipmap.wode_xieyi, null, 2));

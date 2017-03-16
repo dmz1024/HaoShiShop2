@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/size102"
+    android:background="#fff"
+    android:paddingBottom="@dimen/size10"
+    android:paddingLeft="@dimen/size10"
+    >
+
+    <ImageView
+        android:layout_marginTop="@dimen/size10"
+        android:id="@+id/iv_head"
+        android:layout_width="@dimen/size82"
+        android:layout_height="@dimen/size82"
+        />
+    <TextView
+        android:id="@+id/tv_delete"
+        android:background="#ee9821"
+        android:textColor="#fff"
+        android:textSize="@dimen/sp16"
+        android:gravity="center"
+        android:text="删除"
+        android:layout_alignParentRight="true"
+        android:layout_width="@dimen/size55"
+        android:layout_height="match_parent" />
+    <TextView
+        android:layout_toLeftOf="@id/tv_delete"
+        android:layout_marginRight="@dimen/size10"
+        android:id="@+id/tv_name"
+        style="@style/TextSize13Color333"
+        android:layout_marginLeft="@dimen/size10"
+        android:layout_marginTop="@dimen/size12"
+        android:layout_toRightOf="@id/iv_head"
+        android:ellipsize="end"
+        android:lineSpacingExtra="@dimen/size5"
+        android:maxLines="2"
+
+        android:text="海南之海南之家品牌男装家品牌男装" />
+
+    <TextView
+        android:id="@+id/tv_a"
+        android:text="￥"
+        android:textColor="#ee9821"
+        android:layout_alignLeft="@id/tv_name"
+        android:layout_below="@id/tv_name"
+        android:layout_marginTop="@dimen/size10"
+        style="@style/TextSize13Color999" />
+    <TextView
+        android:id="@+id/tv_price"
+        style="@style/TextSize15Color333"
+        android:layout_alignBottom="@id/tv_a"
+        android:layout_toRightOf="@id/tv_a"
+        android:text="985"
+        android:textColor="#ee9821"
+        android:textSize="@dimen/sp17" />
+
+    <TextView
+        android:id="@+id/tv_old_price"
+        style="@style/TextSize14Color999"
+        android:layout_alignBottom="@id/tv_price"
+        android:layout_marginLeft="@dimen/size20"
+        android:layout_toRightOf="@id/tv_price"
+        android:text="￥1230" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size0.5"
+        android:layout_alignLeft="@id/iv_head"
+        android:layout_alignParentBottom="true"
+        android:background="#f6f6f6" />
+</RelativeLayout>

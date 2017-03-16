@@ -7,6 +7,7 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.Map;
 
+import base.bean.rxbus.AddFragmentBean;
 import base.fragment.SingleNetWorkBaseFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,6 +20,7 @@ import client.adapter.GeneralAdapter;
 import client.bean.GeneralBean;
 import client.bean.zongqinghui.IndexFourFlockBean;
 import client.bean.zongqinghui.IndexFourFriendBean;
+import util.RxBus;
 
 /**
  * Created by dengmingzhi on 2017/3/14.
@@ -99,7 +101,7 @@ public class IndexFourFriendFragment extends SingleNetWorkBaseFragment<IndexFour
 
     @OnClick(R.id.fg_search)
     void search() {
-
+        RxBus.get().post("addFragment",new AddFragmentBean(new SearchFriendFragment()));
     }
 
     @Override

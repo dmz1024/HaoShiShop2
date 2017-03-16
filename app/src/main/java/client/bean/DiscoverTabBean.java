@@ -1,6 +1,9 @@
 package client.bean;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
+import java.util.List;
 
 import base.bean.BaseBean;
 
@@ -9,16 +12,10 @@ import base.bean.BaseBean;
  */
 
 public class DiscoverTabBean extends BaseBean<ArrayList<DiscoverTabBean.Data>> {
-    public static class Data{
-        public String title;
-        public String url;
-
-        public Data(String title, String url) {
-            this.title = title;
-            this.url = url;
-        }
-
-        public Data() {
-        }
+    public static class Data {
+        public String catId;
+        public String parentId;
+        public String catName;
+        public String catImg;
     }
 }

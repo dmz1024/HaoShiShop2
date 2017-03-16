@@ -16,6 +16,7 @@ import butterknife.OnClick;
 import client.CeshiUrl;
 import client.R;
 import client.bean.DiscoverTabBean;
+import client.constant.ApiConstant;
 import client.fragment.discover.DiscoverFragment;
 import client.pop.PopSendDiscover;
 import interfaces.OnTitleBarListener;
@@ -33,14 +34,9 @@ public class IndexThreeFragment extends SingleNetWorkBaseFragment<DiscoverTabBea
 
     @Override
     protected String url() {
-        return CeshiUrl.TEST;
+        return ApiConstant.ONEARTICLE;
     }
 
-    @Override
-    protected Map<String, String> map() {
-        map.put("act", "discove");
-        return super.map();
-    }
 
     @Override
     protected Class<DiscoverTabBean> getTClass() {
@@ -62,7 +58,7 @@ public class IndexThreeFragment extends SingleNetWorkBaseFragment<DiscoverTabBea
         this.bean = bean;
         final ArrayList<Fragment> fragments = new ArrayList<>();
         for (int i = 0; i < bean.data.size(); i++) {
-            fragments.add(DiscoverFragment.getInstance(i == 0 ? "first" : "other"));
+            fragments.add(DiscoverFragment.getInstance(bean.data.get(i).catId, i == 0));
         }
         vp_content.setOffscreenPageLimit(fragments.size());
         vp_content.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
@@ -78,7 +74,7 @@ public class IndexThreeFragment extends SingleNetWorkBaseFragment<DiscoverTabBea
 
             @Override
             public CharSequence getPageTitle(int position) {
-                return bean.data.get(position).title;
+                return bean.data.get(position).catName;
             }
         });
 

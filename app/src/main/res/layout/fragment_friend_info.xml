@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -12,7 +13,8 @@
         android:paddingLeft="@dimen/size10"
         android:paddingTop="@dimen/size15">
 
-        <ImageView
+        <com.recker.flyshapeimageview.ShapeImageView
+            app:shape_mode="circle"
             android:id="@+id/iv_head"
             android:layout_width="@dimen/size45"
             android:layout_height="@dimen/size45"
@@ -27,11 +29,11 @@
             android:layout_alignTop="@id/iv_head"
             android:layout_marginLeft="@dimen/size13"
             android:layout_toRightOf="@id/iv_head"
-            android:text="小峰" />
+           />
         <TextView
             android:id="@+id/tv_name"
             android:layout_alignLeft="@id/tv_nick_name"
-            android:text="会员名：小峰"
+
             android:layout_below="@id/tv_nick_name"
             android:layout_marginTop="@dimen/size10"
             style="@style/TextSize13Color999" />
@@ -50,8 +52,9 @@
             style="@style/TextSize15Color333" />
         <TextView
             android:id="@+id/tv_group"
-            android:text="大家庭"
             android:drawablePadding="@dimen/size5"
+            android:minWidth="@dimen/size150"
+            android:gravity="right"
             android:drawableRight="@mipmap/zqh_more2"
             android:layout_alignParentRight="true"
             style="@style/TextSize14Color999" />
@@ -63,13 +66,14 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/size0.5"/>
         <TextView
-            android:text="设置备注"
             android:layout_marginTop="@dimen/size15"
             android:layout_below="@id/view"
+            android:text="备注"
             style="@style/TextSize15Color333" />
         <TextView
             android:id="@+id/tv_beizhu"
-            android:text="小峰"
+            android:minWidth="@dimen/size150"
+            android:gravity="right"
             android:layout_below="@id/view"
             android:layout_marginTop="@dimen/size15"
             android:drawablePadding="@dimen/size5"
@@ -99,6 +103,18 @@
         android:textSize="@dimen/sp15"
         android:layout_marginTop="@dimen/size7"
         android:background="@drawable/rectangle_fff_ra3"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size40" />
+
+    <Button
+        android:id="@+id/bt_delete"
+        android:layout_marginLeft="@dimen/size10"
+        android:layout_marginRight="@dimen/size10"
+        android:text="删除好友"
+        android:textColor="#fff"
+        android:textSize="@dimen/sp15"
+        android:layout_marginTop="@dimen/size7"
+        android:background="@drawable/rectangle_f00_ra3"
         android:layout_width="match_parent"
         android:layout_height="@dimen/size40" />
 </LinearLayout>

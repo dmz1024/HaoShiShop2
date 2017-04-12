@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/size10"
+    android:paddingRight="@dimen/size10"
+    android:paddingTop="@dimen/size10">
+
+    <com.recker.flyshapeimageview.ShapeImageView
+        android:id="@+id/iv_head"
+        android:layout_width="@dimen/size45"
+        android:layout_height="@dimen/size45"
+        android:layout_centerVertical="true"
+        android:scaleType="fitXY"
+        android:src="@mipmap/touxiang"
+        app:shape_mode="circle" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        style="@style/TextSize14Color333"
+        android:layout_marginLeft="@dimen/size10"
+        android:layout_marginTop="@dimen/size2"
+        android:layout_toRightOf="@id/iv_head"
+        android:text="邓如果" />
+
+    <TextView
+        android:id="@+id/tv_phone"
+        style="@style/TextSize12Color999"
+        android:layout_alignBottom="@id/iv_head"
+        android:layout_alignLeft="@id/tv_name"
+        android:layout_marginBottom="@dimen/size2" />
+
+    <Button
+        android:id="@+id/bt_add"
+        android:layout_width="@dimen/size70"
+        android:layout_height="@dimen/size30"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/hs_shape_ee9821_radius_3"
+        android:text="添加好友"
+        android:textColor="#fff"
+        android:textSize="@dimen/sp13" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size0.5"
+        android:layout_below="@id/iv_head"
+        android:layout_marginTop="@dimen/size10"
+        android:background="#f6f6f6" />
+</RelativeLayout>

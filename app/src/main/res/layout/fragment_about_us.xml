@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            android:layout_marginTop="@dimen/size20">
+
+            <TextView
+                style="@style/TextSize13Color666"
+                android:lineSpacingExtra="@dimen/size3"
+                android:padding="@dimen/size10"
+                android:text="    郝氏联众（北京）科技股份有限公司是一家集研发、营销、服务为一体的综合性电子商务企业。一家隶属于郝家人自己的网上商城。公司采用先进的网络技术与严谨的管理制度，坚持以“让郝家人满意，为郝家人创造财富”为服务宗旨。通过互联网技术将天下郝家人、郝家人企业连接起来。通过整合商业资源、共享商业资源、使天下郝家人达成合作共赢。公司始终以“为天下郝家人服务，为振兴郝氏家族”为使命追求。" />
+        </ScrollView>
+
+        <TextView
+            style="@style/TextSize12Color999"
+            android:layout_alignParentBottom="true"
+            android:lineSpacingExtra="@dimen/sp2"
+            android:gravity="center_horizontal"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/size10"
+            android:text="Copyright©2016 - 2017\n郝氏联众（北京）科技股份有限公司" />
+    </RelativeLayout>
+
+</ScrollView>

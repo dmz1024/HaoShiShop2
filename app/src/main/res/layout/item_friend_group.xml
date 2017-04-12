@@ -5,10 +5,11 @@
     android:background="#fff"
     android:orientation="vertical"
     android:paddingTop="@dimen/size10"
-    android:paddingLeft="@dimen/size10"
-    android:paddingRight="@dimen/size10"
+
     >
     <RelativeLayout
+        android:paddingLeft="@dimen/size10"
+        android:paddingRight="@dimen/size10"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -42,6 +43,8 @@
     </RelativeLayout>
 
     <View
+        android:paddingLeft="@dimen/size10"
+        android:paddingRight="@dimen/size10"
         android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="@dimen/size0.5"

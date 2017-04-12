@@ -15,6 +15,7 @@
         android:layout_height="wrap_content">
 
         <com.recker.flyshapeimageview.ShapeImageView
+            app:shape_mode="circle"
             android:id="@+id/iv_head"
             android:layout_width="@dimen/size85"
             android:layout_height="@dimen/size85"
@@ -24,10 +25,10 @@
             android:src="@mipmap/touxiang"
             app:frame_color="#55ffffff"
             app:frame_width="@dimen/size4"
-            app:shape_mode="circle" />
+             />
 
         <!--<ImageView-->
-            <!--android:id="@+id/iv_head"-->
+            <!--android:ID="@+ID/iv_head"-->
             <!--android:layout_width="@dimen/size85"-->
             <!--android:layout_height="@dimen/size85"-->
             <!--android:layout_centerHorizontal="true"-->

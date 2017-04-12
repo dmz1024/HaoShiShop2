@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/ll_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size10"
+        android:background="#fff"
+        android:divider="@drawable/linear_f5f5f5_shpe"
+        android:orientation="vertical"
+        android:showDividers="middle"
+        android:weightSum="7">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/size10">
+
+            <TextView
+                style="@style/TextSize15Color333"
+                android:layout_gravity="center_vertical"
+                android:text="收货人    " />
+
+            <EditText
+                android:id="@+id/et_name"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size30"
+                android:layout_marginLeft="@dimen/size20"
+                android:background="@null"
+                android:textColor="#666"
+                android:textSize="@dimen/sp15" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/size10">
+
+            <TextView
+                style="@style/TextSize15Color333"
+                android:layout_gravity="center_vertical"
+                android:text="联系电话" />
+
+            <EditText
+                android:id="@+id/et_tel"
+                android:inputType="phone"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size30"
+                android:layout_marginLeft="@dimen/size20"
+                android:background="@null"
+                android:textColor="#666"
+                android:textSize="@dimen/sp15" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/size10">
+
+            <TextView
+                style="@style/TextSize15Color333"
+                android:layout_gravity="center_vertical"
+                android:text="所在地区" />
+
+            <TextView
+                android:id="@+id/tv_address"
+                style="@style/TextSize15Color666"
+
+                android:layout_width="match_parent"
+                android:layout_gravity="center_vertical"
+                android:drawablePadding="@dimen/size5"
+                android:drawableRight="@mipmap/wode_back_setting"
+                android:gravity="right"
+                 />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/et_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:gravity="left"
+            android:hint="详细地址"
+            android:minHeight="@dimen/size80"
+            android:padding="@dimen/size10"
+            android:textColor="#666"
+            android:textColorHint="#666"
+            android:textSize="@dimen/sp15" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_default"
+        style="@style/TextSize15Color333"
+        android:layout_width="match_parent"
+        android:layout_below="@id/ll_address"
+        android:layout_marginTop="@dimen/size10"
+        android:background="#fff"
+        android:drawableRight="@mipmap/shangcheng_choose"
+        android:padding="@dimen/size10"
+        android:text="设置为默认收货地址" />
+
+    <Button
+        android:id="@+id/bt_submit"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size40"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/size15"
+        android:layout_marginLeft="@dimen/size10"
+        android:layout_marginRight="@dimen/size10"
+        android:background="#ee9821"
+        android:text="保存"
+        android:textColor="#fff"
+        android:textSize="@dimen/sp15" />
+</RelativeLayout>

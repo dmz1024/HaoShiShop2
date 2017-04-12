@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/et_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        android:gravity="left"
+        android:hint="亲,快来评价下吧"
+        android:minHeight="@dimen/size130"
+        android:padding="@dimen/size5"
+        android:textColor="#666"
+        android:textColorHint="#999"
+        android:textSize="@dimen/sp14" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size10"
+        android:background="#fff"
+        android:padding="@dimen/size10">
+
+        <TextView
+            style="@style/TextSize15Color333"
+            android:layout_centerVertical="true"
+            android:text="店铺评分" />
+
+        <TextView
+            android:id="@+id/tv_count"
+            style="@style/TextSize15Color333"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="5.0分"
+            android:textColor="#888888" />
+
+        <view.XLHRatingBar
+            android:id="@+id/ratingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/size45"
+            app:canEdit="true"
+            app:countSelected="5"
+            app:differentSize="false"
+            app:dividerWidth="3dp"
+            app:starCount="5"
+            app:stateResId="@drawable/comment_ratingbar_selector"
+            app:widthAndHeight="23dp" />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/bt_submit"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size35"
+        android:layout_marginLeft="@dimen/size10"
+        android:layout_marginRight="@dimen/size10"
+        android:layout_marginTop="@dimen/size30"
+        android:background="@drawable/hs_shape_ee9821_radius_3"
+        android:text="发表评论"
+        android:textSize="@dimen/sp14" />
+</LinearLayout>

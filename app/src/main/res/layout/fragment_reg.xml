@@ -117,6 +117,7 @@
             android:layout_width="match_parent"
             android:background="@null"
             android:layout_height="@dimen/size40"
+
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@id/tv_send"
             android:layout_marginRight="@dimen/size10"

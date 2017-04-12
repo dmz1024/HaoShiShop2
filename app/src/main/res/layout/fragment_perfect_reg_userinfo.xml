@@ -30,8 +30,8 @@
         android:textColor="#fff"
         android:textSize="@dimen/sp14" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_content"
+    <FrameLayout
+        android:id="@+id/fg_content"
         android:layout_above="@id/bt_choose"
         android:layout_marginBottom="@dimen/size5"
         android:layout_width="match_parent"

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="180dp"
     android:layout_height="wrap_content"
     android:background="#fff"
@@ -66,8 +67,10 @@
             android:text="99人已加入" />
     </LinearLayout>
 
-    <ImageView
+    <com.recker.flyshapeimageview.ShapeImageView
+        app:shape_mode="circle"
         android:id="@+id/iv_head"
+
         android:layout_width="@dimen/size60"
         android:layout_height="@dimen/size60"
         android:layout_centerHorizontal="true"

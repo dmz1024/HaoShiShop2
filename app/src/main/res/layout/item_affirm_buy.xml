@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/tv_shop_name"
+        android:background="#fff"
+        android:layout_width="match_parent"
+        android:padding="@dimen/size10"
+        android:text="海南之家旗舰店"
+        style="@style/TextSize14Color333" />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_content"
+        android:layout_marginTop="@dimen/size0.5"
+        android:background="#fff"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size10"
+        android:background="#fff"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/size10"
+        android:paddingRight="@dimen/size10">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                style="@style/TextSize14Color333"
+                android:paddingBottom="@dimen/size15"
+                android:paddingTop="@dimen/size15"
+                android:text="商品金额" />
+
+            <TextView
+                android:id="@+id/tv_shop_price"
+                style="@style/TextSize14Color333"
+                android:layout_alignParentRight="true"
+                android:paddingBottom="@dimen/size15"
+                android:paddingTop="@dimen/size15"
+                android:text="150元" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size0.5"
+            android:background="#f6f6f6" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                style="@style/TextSize14Color333"
+                android:paddingBottom="@dimen/size15"
+                android:paddingTop="@dimen/size15"
+                android:text="运费" />
+
+            <TextView
+                android:id="@+id/tv_postage"
+                style="@style/TextSize14Color333"
+                android:layout_alignParentRight="true"
+                android:paddingBottom="@dimen/size15"
+                android:paddingTop="@dimen/size15"
+                android:text="免邮" />
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="#fff"
+    android:padding="@dimen/size10"
+    android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/tv_left"
+        android:text="商品总额\n\n运费"
+        style="@style/TextSize14Color333"/>
+    <TextView
+        android:id="@+id/tv_right"
+        android:gravity="right"
+        android:text="￥150\n\n￥0"
+        android:layout_alignParentRight="true"
+        android:textColor="#eb3027"
+        style="@style/TextSize14Color333"/>
+    <View
+        android:id="@+id/view"
+        android:background="#f6f6f6"
+        android:layout_below="@id/tv_left"
+        android:layout_marginTop="@dimen/size10"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size0.5"/>
+    <TextView
+        android:id="@+id/tv_total_price"
+        android:layout_below="@id/view"
+        android:layout_marginTop="@dimen/size10"
+        android:text="￥150"
+        android:layout_alignParentRight="true"
+        android:textColor="#eb3027"
+        style="@style/TextSize14Color999"/>
+    <TextView
+        android:text="合计："
+        android:layout_toLeftOf="@id/tv_total_price"
+        android:layout_alignBottom="@id/tv_total_price"
+        style="@style/TextSize13Color333" />
+</RelativeLayout>

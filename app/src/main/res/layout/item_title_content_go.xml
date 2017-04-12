@@ -11,7 +11,7 @@
         android:paddingBottom="@dimen/size10"
         android:paddingRight="@dimen/size10"
         android:paddingTop="@dimen/size10"
-        android:text="我已发布" />
+         />
 
     <TextView
         android:id="@+id/tv_content"
@@ -21,7 +21,7 @@
         android:paddingRight="@dimen/size10"
         android:drawableRight="@mipmap/wode_back_setting"
         android:drawablePadding="@dimen/size10"
-        android:text="20M" />
+         />
 
     <View
         android:layout_width="match_parent"

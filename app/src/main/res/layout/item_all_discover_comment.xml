@@ -44,13 +44,12 @@
     <TextView
         android:id="@+id/tv_time"
         style="@style/TextSize11Color999"
-        android:layout_below="@id/tv_content"
-        android:layout_marginTop="@dimen/size12"
-        android:layout_alignLeft="@id/tv_name"
+        android:layout_alignParentRight="true"
         android:text="2016-08-07 15:30" />
 
     <TextView
         android:id="@+id/tv_zan"
+        android:visibility="gone"
         android:layout_alignParentRight="true"
         android:text="100"
         android:gravity="center_vertical"
@@ -61,7 +60,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/size0.5"
-        android:layout_below="@id/tv_time"
+        android:layout_below="@id/tv_content"
         android:background="#f5f5f5"
         android:layout_marginTop="@dimen/size10" />
 </RelativeLayout>

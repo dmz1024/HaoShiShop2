@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/size100">
+
+        <RelativeLayout
+            android:id="@+id/rl_top"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size150">
+
+            <ImageView
+                android:id="@+id/iv_bg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#771a1b1a" />
+
+            <com.recker.flyshapeimageview.ShapeImageView
+                android:id="@+id/iv_head"
+                android:layout_width="@dimen/size65"
+                android:layout_height="@dimen/size65"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/size12"
+                android:scaleType="fitXY"
+                app:frame_color="#ffffff"
+                app:frame_width="@dimen/size1"
+                app:shape_mode="circle" />
+
+
+            <TextView
+                android:id="@+id/tv_name"
+                style="@style/TextSize14Colorfff"
+                android:layout_below="@id/iv_head"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/size8"
+                android:gravity="center"
+                android:text="邓如果"
+                android:textSize="@dimen/size14" />
+
+            <TextView
+                android:id="@+id/tv_content"
+                style="@style/TextSize11Colorfff"
+                android:layout_below="@id/tv_name"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/size6"
+                android:ellipsize="middle"
+                android:gravity="center"
+                android:paddingLeft="@dimen/size10"
+                android:paddingRight="@dimen/size10"
+                android:text="近7日发言99次" />
+
+        </RelativeLayout>
+
+        <TextView
+            style="@style/TextSize15Color333"
+            android:layout_width="match_parent"
+            android:background="#fff"
+            android:padding="@dimen/size10"
+            android:text="群介绍" />
+
+        <TextView
+            android:id="@+id/tv_desc"
+            style="@style/TextSize13Color666"
+            android:layout_width="match_parent"
+            android:background="#fff"
+            android:lineSpacingExtra="@dimen/size3"
+            android:padding="@dimen/size10"
+            android:text="群介群介绍群介绍群介绍群介绍群介绍群介绍群介绍群介绍群介绍群介绍群介绍群介绍群介绍群介绍绍" />
+
+        <TextView
+            android:id="@+id/tv_count"
+            style="@style/TextSize15Color333"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/size10"
+            android:background="#fff"
+            android:padding="@dimen/size10"
+            android:text="群成员(12人)" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#fff"
+            android:paddingBottom="@dimen/size5"
+            android:paddingLeft="@dimen/size10"
+            android:paddingRight="@dimen/size10" />
+
+        <Button
+            android:id="@+id/bt_exit"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size45"
+            android:layout_margin="@dimen/size15"
+            android:background="@drawable/hs_shape_ee9821_radius_3"
+            android:text="删除并退出"
+            android:textColor="#fff"
+            android:textSize="@dimen/sp15" />
+    </LinearLayout>
+</ScrollView>

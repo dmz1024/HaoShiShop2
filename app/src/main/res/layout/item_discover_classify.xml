@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#fff"
+    android:paddingTop="@dimen/size5"
+    android:paddingBottom="@dimen/size5"
+    android:paddingLeft="@dimen/size10"
+    android:paddingRight="@dimen/size10">
+
+    <com.recker.flyshapeimageview.ShapeImageView
+        app:shape_mode="circle"
+        android:id="@+id/iv_icon"
+        android:layout_width="@dimen/size20"
+        android:layout_height="@dimen/size20"
+        android:scaleType="fitXY" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        style="@style/TextSize14Color333"
+        android:layout_marginLeft="@dimen/size5"
+        android:layout_alignBottom="@id/iv_icon"
+        android:layout_alignTop="@id/iv_icon"
+        android:layout_toRightOf="@id/iv_icon"
+        android:gravity="center"
+        android:text="资源对接" />
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_title"
+        android:layout_marginTop="@dimen/size10" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size0.5"
+        android:layout_below="@id/rv_content"
+        android:layout_marginTop="@dimen/size10"
+        android:background="#e2e2e2" />
+</RelativeLayout>

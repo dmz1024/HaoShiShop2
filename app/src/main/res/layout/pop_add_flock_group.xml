@@ -9,6 +9,7 @@
     android:padding="@dimen/size15">
 
     <TextView
+
         style="@style/TextSize15Color333"
         android:layout_gravity="center_horizontal"
         android:text="添加分组"

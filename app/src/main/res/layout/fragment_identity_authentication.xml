@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_geren"
+            style="@style/TextSize14Color333"
+            android:layout_marginTop="@dimen/size30"
+            android:drawablePadding="@dimen/size10"
+            android:drawableTop="@mipmap/wode_gerenrenzheng"
+            android:text="个人认证" />
+
+        <TextView
+            style="@style/TextSize12Color999"
+            android:layout_margin="@dimen/size12"
+            android:lineSpacingExtra="@dimen/size5"
+            android:text="个个人认证个人认证个人认证个人认证个人认证个人认证个人认证个人认证个人认证个人认证人认证个人认证" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size10"
+        android:background="#fff"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_qiye"
+            style="@style/TextSize14Color333"
+            android:layout_marginTop="@dimen/size30"
+            android:drawablePadding="@dimen/size10"
+            android:drawableTop="@mipmap/wode_qiyerenzheng"
+            android:text="企业认证" />
+
+        <TextView
+            style="@style/TextSize12Color999"
+            android:layout_margin="@dimen/size12"
+            android:lineSpacingExtra="@dimen/size5"
+            android:text="企业认证企业认证企业认证企业认证企业认证企业认证企业认证企业认证企业认证" />
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/bt_send"
+
+        android:layout_width="@dimen/size150"
+        android:layout_height="@dimen/size40"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/size10"
+        android:background="@drawable/hs_shape_ee9821_radius_3"
+        android:text="发布内容"
+        android:textColor="#fff"
+        android:textSize="@dimen/sp14" />
+
+    <ScrollView
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bt_send">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_img"
+                android:padding="@dimen/size10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#fff" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rv_img"
+                android:layout_marginTop="@dimen/size10"
+                android:background="#fff" />
+
+            <TextView
+                android:id="@+id/tv_desc"
+                android:visibility="gone"
+                style="@style/TextSize14Color333"
+                android:layout_width="match_parent"
+                android:layout_below="@id/rv_info"
+                android:layout_marginTop="@dimen/size10"
+                android:background="#fff"
+                android:drawableRight="@mipmap/wode_back_setting"
+                android:padding="@dimen/size10"
+                android:text="描述信息" />
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

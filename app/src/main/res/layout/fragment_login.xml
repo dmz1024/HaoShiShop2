@@ -43,7 +43,7 @@
         android:id="@+id/et_password"
         android:inputType="textPassword"
         android:background="@null"
-        android:text="101292"
+        android:text="123456"
         android:layout_width="match_parent"
         android:layout_height="@dimen/size40"
         android:layout_below="@id/et_name"

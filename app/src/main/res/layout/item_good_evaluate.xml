@@ -18,7 +18,6 @@
     <TextView
         android:id="@+id/tv_name"
         style="@style/TextSize14Color333"
-
         android:layout_marginLeft="@dimen/size7"
         android:layout_toRightOf="@id/iv_head"
         android:text="邓如果" />

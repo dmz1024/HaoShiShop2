@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff">
+
+    <TextView
+        android:id="@+id/tv_logo"
+        style="@style/TextSize15Color666"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/size25"
+        android:drawablePadding="@dimen/size10"
+        android:drawableTop="@mipmap/logo"
+        android:text="聚郝氏  融天下" />
+
+    <EditText
+        android:id="@+id/et_name"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size40"
+        android:layout_below="@id/tv_logo"
+        android:layout_marginLeft="@dimen/size30"
+        android:layout_marginRight="@dimen/size30"
+        android:layout_marginTop="@dimen/size42"
+        android:drawableLeft="@mipmap/zhuce_phone"
+        android:drawablePadding="@dimen/size16"
+        android:gravity="center_vertical"
+        android:background="@null"
+        android:inputType="number"
+        android:hint="手机号"
+        android:textColor="#666"
+        android:textColorHint="#c3c3c3"
+        android:textSize="@dimen/sp14" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size0.5"
+        android:layout_alignLeft="@id/et_name"
+        android:layout_alignRight="@id/et_name"
+        android:layout_below="@id/et_name"
+        android:background="#dadada" />
+
+    <RelativeLayout
+        android:id="@+id/rl_code"
+        android:layout_marginLeft="@dimen/size30"
+        android:layout_marginRight="@dimen/size30"
+        android:layout_marginTop="@dimen/size10"
+        android:layout_below="@id/et_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:paddingLeft="@dimen/size10"
+            android:paddingRight="@dimen/size10"
+            android:paddingTop="@dimen/size5"
+            android:paddingBottom="@dimen/size5"
+            android:background="@drawable/rectangle_00000000_ee9821"
+            android:id="@+id/tv_send"
+            android:textColor="#ee9821"
+            android:text="发送验证码"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            style="@style/TextSize14Color51B338" />
+        <EditText
+            android:id="@+id/et_code"
+            android:layout_width="match_parent"
+            android:background="@null"
+            android:layout_height="@dimen/size40"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/tv_send"
+            android:layout_marginRight="@dimen/size10"
+            android:drawableLeft="@mipmap/zhuce_safe"
+            android:drawablePadding="@dimen/size16"
+            android:gravity="center_vertical"
+            android:hint="输入验证码"
+            android:inputType="number"
+            android:textColor="#666"
+            android:textColorHint="#c3c3c3"
+            android:textSize="@dimen/sp14" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size0.5"
+        android:layout_alignLeft="@id/et_name"
+        android:layout_alignRight="@id/et_name"
+        android:layout_below="@id/rl_code"
+        android:background="#dadada" />
+
+    <Button
+        android:id="@+id/bt_login"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size40"
+        android:layout_alignLeft="@id/et_name"
+        android:layout_alignRight="@id/et_name"
+        android:layout_below="@id/rl_code"
+        android:layout_marginTop="@dimen/size31"
+        android:background="@drawable/hs_shape_ee9821_radius_3"
+        android:text="绑定手机号"
+        android:textColor="#fff"
+        android:textSize="@dimen/sp16" />
+</RelativeLayout>

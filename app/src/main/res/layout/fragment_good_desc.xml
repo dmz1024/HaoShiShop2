@@ -49,6 +49,7 @@
             android:layout_weight="2">
 
             <TextView
+                android:id="@+id/tv_add_car"
                 style="@style/TextSize15Colorfff"
                 android:layout_width="@dimen/size105"
                 android:layout_height="@dimen/size34"
@@ -69,6 +70,7 @@
             android:layout_weight="2">
 
             <TextView
+                android:id="@+id/tv_buy"
                 style="@style/TextSize15Colorfff"
                 android:layout_width="@dimen/size105"
                 android:layout_height="@dimen/size34"

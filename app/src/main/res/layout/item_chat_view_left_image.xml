@@ -31,8 +31,8 @@
     <ImageView
         android:id="@+id/iv_img"
         android:scaleType="fitXY"
+        android:layout_width="@dimen/size120"
         android:layout_alignTop="@id/iv_head"
-        android:layout_width="@dimen/size100"
         android:layout_height="@dimen/size150"
         android:layout_marginLeft="@dimen/size10"
         android:layout_toRightOf="@id/iv_head" />

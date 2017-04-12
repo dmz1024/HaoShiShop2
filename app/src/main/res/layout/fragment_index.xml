@@ -17,13 +17,4 @@
         android:layout_above="@id/fg_bottom"
         android:layout_alignParentTop="true" />
 
-    <TextView
-        android:id="@+id/tv_message"
-        android:gravity="center"
-        android:text="1"
-        android:visibility="gone"
-        android:layout_margin="@dimen/size10"
-        android:layout_width="@dimen/size50"
-        android:layout_height="@dimen/size50"
-        android:background="@drawable/hs_shape_ee9821_radius_3" />
 </RelativeLayout>

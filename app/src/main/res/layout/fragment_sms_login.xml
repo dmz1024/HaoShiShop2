@@ -18,6 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/size40"
         android:layout_below="@id/tv_logo"
+        android:inputType="number"
         android:layout_marginLeft="@dimen/size30"
         android:layout_marginRight="@dimen/size30"
         android:layout_marginTop="@dimen/size42"

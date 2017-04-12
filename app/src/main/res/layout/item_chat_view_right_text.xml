@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingBottom="@dimen/size3"
-    android:paddingLeft="@dimen/size10"
+    android:paddingLeft="@dimen/size60"
     android:paddingRight="@dimen/size10">
 
     <TextView
@@ -21,9 +21,9 @@
 
     <com.recker.flyshapeimageview.ShapeImageView
         android:id="@+id/iv_head"
-        android:layout_alignParentRight="true"
         android:layout_width="@dimen/size40"
         android:layout_height="@dimen/size40"
+        android:layout_alignParentRight="true"
         android:layout_below="@id/tv_time"
         android:layout_marginTop="@dimen/size10"
         android:scaleType="fitXY"
@@ -34,7 +34,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/iv_head"
-        android:layout_marginLeft="@dimen/size60"
         android:layout_marginRight="@dimen/size10"
         android:layout_toLeftOf="@id/iv_head"
         android:background="@drawable/icon_chat_right_b"
@@ -46,4 +45,28 @@
         android:textColor="#333"
         android:textSize="@dimen/sp14" />
 
+    <FrameLayout
+        android:layout_width="@dimen/size25"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/tv_content"
+        android:layout_alignTop="@id/tv_content"
+        android:layout_marginRight="@dimen/size5"
+        android:layout_toLeftOf="@id/tv_content">
+
+        <ProgressBar
+            android:id="@+id/pb_loading"
+            android:visibility="gone"
+            style="@android:style/Widget.ProgressBar.Small.Inverse"
+            android:layout_width="@dimen/size15"
+            android:layout_height="@dimen/size15"
+            android:layout_gravity="center" />
+        <ImageView
+            android:id="@+id/iv_tip"
+            android:visibility="gone"
+            android:scaleType="fitXY"
+            android:layout_gravity="center"
+            android:src="@mipmap/icon_send_tip"
+            android:layout_width="@dimen/size20"
+            android:layout_height="@dimen/size20" />
+    </FrameLayout>
 </RelativeLayout>

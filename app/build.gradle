@@ -2,8 +2,16 @@ apply plugin: 'com.android.application'
 apply plugin: 'android-apt'
 apply plugin: 'org.greenrobot.greendao'
 android {
+    signingConfigs {
+        config {
+            keyAlias 'haoshi'
+            keyPassword 'haoshi123'
+            storeFile file('/Users/dengmingzhi/Desktop/jks/haoshi.jks')
+            storePassword 'haoshi123'
+        }
+    }
     compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    buildToolsVersion '23.0.0'
     defaultConfig {
         applicationId "haoshi.com.shop"
         minSdkVersion 14
@@ -17,13 +25,14 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        debug{
+            signingConfig signingConfigs.config
+        }
     }
-
-    greendao{
+    greendao {
         schemaVersion 1
         targetGenDir 'src/main/java'
     }
-
     allprojects {
         repositories {
             maven { url "https://jitpack.io" }
@@ -43,4 +52,8 @@ dependencies {
     compile 'org.greenrobot:greendao:3.1.0'
     compile project(':mylibrary')
     compile files('libs/autobahn-0.5.0.jar')
+    compile files('libs/alipaySdk-20161222.jar')
+    compile files('libs/wechat.jar')
+    compile files('libs/mta-sdk-1.6.2.jar')
+    compile files('libs/open_sdk_r5788.jar')
 }

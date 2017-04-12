@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#fff"
+    android:paddingLeft="@dimen/size10"
+    android:paddingRight="@dimen/size10"
+    android:paddingTop="@dimen/size15">
+
+    <TextView
+        android:id="@+id/tv_money"
+        style="@style/TextSize12Color999"
+        android:layout_alignParentRight="true"
+        android:text="-￥0.99"
+        android:textColor="#ee9821" />
+
+    <TextView
+        android:id="@+id/tv_content"
+        style="@style/TextSize15Color333"
+        android:layout_alignParentLeft="true"
+        android:layout_marginRight="@dimen/size10"
+        android:layout_toLeftOf="@id/tv_money"
+        android:ellipsize="middle"
+        android:maxLines="1"
+        android:text="小李打赏给女主播" />
+
+    <TextView
+        android:id="@+id/tv_time"
+        style="@style/TextSize12Color666"
+        android:layout_below="@id/tv_content"
+        android:layout_marginTop="@dimen/size10"
+        android:text="2016-12-09 16:00" />
+
+    <TextView
+        android:id="@+id/tv_status"
+        style="@style/TextSize12Color333"
+        android:layout_below="@id/tv_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/size10"
+        android:text="已完成" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size0.5"
+        android:layout_below="@id/tv_time"
+        android:layout_marginTop="@dimen/size15"
+        android:background="#f6f6f6" />
+</RelativeLayout>

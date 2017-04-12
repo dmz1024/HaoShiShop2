@@ -16,5 +16,5 @@
         android:paddingBottom="@dimen/size5"
         android:paddingTop="@dimen/size5"
         android:background="@drawable/rectangle_fff_e2e2e2"
-        style="@style/TextSize13Color666" />
+        style="@style/TextSize14Color666" />
 </FrameLayout>

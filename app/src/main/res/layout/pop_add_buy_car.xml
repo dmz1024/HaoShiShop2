@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_alignParentBottom="true"
+    android:layout_height="match_parent">
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size10" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/view"
+        android:background="#fff">
+
+        <RelativeLayout
+            android:id="@+id/rl_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:paddingLeft="@dimen/size132"
+            android:paddingTop="@dimen/size10">
+
+            <TextView
+                android:id="@+id/tv_price"
+                style="@style/TextSize15Color333"
+                android:text="￥150"
+                android:textColor="#e83027"
+                android:textSize="@dimen/sp18" />
+
+            <TextView
+                android:id="@+id/tv_old_price"
+                style="@style/TextSize15Color333"
+                android:layout_alignBottom="@id/tv_price"
+                android:layout_marginLeft="@dimen/size10"
+                android:layout_toRightOf="@id/tv_price"
+                android:text="￥150"
+                android:textColor="#999" />
+
+            <TextView
+                android:id="@+id/tv_count"
+                style="@style/TextSize14Color999"
+                android:layout_below="@id/tv_price"
+                android:layout_marginTop="@dimen/size8"
+                android:text="库存：10" />
+
+            <TextView
+                android:id="@+id/tv_sn"
+                style="@style/TextSize14Color999"
+                android:layout_below="@id/tv_count"
+                android:layout_marginTop="@dimen/size8"
+                android:text="商品编号：12456789" />
+        </RelativeLayout>
+
+
+        <Button
+            android:id="@+id/bt_ok"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size40"
+            android:layout_alignParentBottom="true"
+            android:background="#ee9821"
+            android:text="确定"
+            android:textColor="#fff"
+            android:textSize="@dimen/sp14" />
+
+        <RelativeLayout
+            android:id="@+id/rl_choose_count"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/bt_ok"
+            android:padding="@dimen/size10">
+
+            <TextView
+                style="@style/TextSize14Color999"
+                android:layout_centerVertical="true"
+                android:text="购买数量" />
+
+            <LinearLayout
+                android:id="@+id/ll_count"
+                android:layout_width="@dimen/size120"
+                android:layout_height="@dimen/size35"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="@dimen/size5"
+                android:layout_marginBottom="@dimen/size5"
+                android:background="@drawable/rectangle_fff_e2e2e2"
+                android:weightSum="4">
+
+                <FrameLayout
+                    android:id="@+id/fg_jian"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <View
+                        android:layout_width="@dimen/size13"
+                        android:layout_height="@dimen/size1"
+                        android:layout_gravity="center"
+                        android:background="#666666" />
+                </FrameLayout>
+
+                <View
+                    android:layout_width="@dimen/size0.5"
+                    android:layout_height="match_parent"
+                    android:background="#e2e2e2" />
+
+                <TextView
+                    android:id="@+id/tv_zhi"
+                    style="@style/TextSize15Color666"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:gravity="center"
+                    android:text="5" />
+
+                <View
+                    android:layout_width="@dimen/size0.5"
+                    android:layout_height="match_parent"
+                    android:background="#e2e2e2" />
+
+                <FrameLayout
+                    android:id="@+id/fg_add"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <View
+                        android:layout_width="@dimen/size13"
+                        android:layout_height="@dimen/size1"
+                        android:layout_gravity="center"
+                        android:background="#666666" />
+
+                    <View
+                        android:layout_width="@dimen/size1"
+                        android:layout_height="@dimen/size13"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="@dimen/size0.5"
+                        android:background="#666666" />
+                </FrameLayout>
+            </LinearLayout>
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/view_add_sub"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size0.5"
+            android:layout_above="@id/rl_choose_count"
+            android:background="#f6f6f6" />
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/view_add_sub"
+            android:layout_below="@id/rl_content"
+            android:layout_marginTop="@dimen/size25"
+             />
+
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/fg_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/size12"
+        android:background="#fff"
+        android:padding="2dp">
+
+        <ImageView
+            android:id="@+id/iv_img"
+            android:layout_width="@dimen/size105"
+            android:layout_height="@dimen/size105"
+            android:scaleType="fitXY"
+            android:src="@mipmap/ic_launcher" />
+    </FrameLayout>
+
+
+</RelativeLayout>

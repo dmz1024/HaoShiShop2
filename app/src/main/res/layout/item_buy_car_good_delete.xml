@@ -35,6 +35,7 @@
 
     <LinearLayout
         android:id="@+id/ll_count"
+        android:layout_marginLeft="@dimen/size5"
         android:layout_width="match_parent"
         android:layout_height="@dimen/size35"
         android:layout_marginRight="@dimen/size10"
@@ -102,6 +103,7 @@
         style="@style/TextSize13Color666"
         android:layout_alignLeft="@id/ll_count"
         android:layout_below="@id/ll_count"
+        android:layout_marginRight="@dimen/size55"
         android:layout_marginTop="@dimen/size15"
         android:ellipsize="middle"
         android:maxLines="1"

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/bt_send"
+        android:layout_width="@dimen/size170"
+        android:layout_height="@dimen/size35"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/size10"
+        android:background="@drawable/hs_shape_ee9821_radius_3"
+        android:text="发布内容" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/bt_send"
+        android:layout_alignParentTop="true">
+    <LinearLayout
+        android:id="@+id/ll_content"
+        android:orientation="vertical"
+        android:layout_margin="@dimen/size10"
+        android:background="@drawable/rectangle_fff_ra3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/et_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/size70"
+            android:maxLength="60"
+            android:lineSpacingExtra="@dimen/size3"
+            android:background="@null"
+            android:gravity="left"
+            android:hint="请输入标题"
+            android:padding="@dimen/size5"
+            android:textColor="#666"
+            android:textColorHint="#999"
+            android:textSize="@dimen/sp14" />
+        <TextView
+            android:id="@+id/tv_num"
+            android:text="(0/60)"
+            android:layout_gravity="right"
+            android:padding="@dimen/size10"
+            style="@style/TextSize12Color999" />
+    </LinearLayout>
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_content"
+            android:background="#fff"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ll_content"
+            android:layout_marginLeft="@dimen/size10"
+            android:layout_marginRight="@dimen/size10" />
+
+        <RelativeLayout
+            android:id="@+id/rl_choose"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rv_content"
+            android:layout_marginTop="@dimen/size20"
+            android:background="#fff"
+            android:padding="@dimen/size10">
+
+            <TextView
+                style="@style/TextSize15Color333"
+                android:layout_centerVertical="true"
+                android:text="所属分类" />
+
+            <TextView
+                android:id="@+id/tv_choose"
+                style="@style/TextSize14Color999"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:drawablePadding="@dimen/size3"
+                android:drawableRight="@mipmap/wode_back_setting" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

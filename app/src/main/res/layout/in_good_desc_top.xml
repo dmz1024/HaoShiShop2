@@ -12,9 +12,20 @@
         android:paddingBottom="@dimen/size30">
 
         <com.jude.rollviewpager.RollPagerView
-            android:id="@+id/rpv_content"
+            android:id="@+id/rpv_ad"
             android:layout_width="match_parent"
             android:layout_height="180dp" />
+        <TextView
+            android:id="@+id/tv_time"
+            android:visibility="gone"
+            android:padding="@dimen/size10"
+            android:gravity="center"
+            android:textColor="#fff"
+            android:textSize="@dimen/sp14"
+            android:text="距离团购结束09:13:24"
+            android:background="#f00"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -41,13 +52,12 @@
                 android:background="#f5f5f5" />
 
             <TextView
-                android:id="@+id/tv_name"
+                android:id="@+id/tv_good_name"
                 style="@style/TextSize14Color666"
                 android:layout_alignParentLeft="true"
                 android:layout_marginRight="@dimen/size10"
                 android:layout_toLeftOf="@id/view_collect"
                 android:lineSpacingExtra="@dimen/size5"
-                android:maxLines="2"
                 android:text="四惠地铁旁 三室一厅四惠四惠地铁旁四惠地铁旁地铁旁 三室惠地" />
 
             <TextView
@@ -60,6 +70,8 @@
                 android:ellipsize="end"
                 android:gravity="center_vertical"
                 android:maxLines="2"
+                android:layout_alignParentLeft="true"
+                android:visibility="gone"
                 android:text="七匹狼成品授权，品质保证，顺丰包邮" />
 
             <TextView
@@ -113,7 +125,10 @@
             android:text="商品规格" />
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_info"
+            android:id="@+id/rv_attr"
+            android:background="#fff"
+            android:paddingLeft="@dimen/size10"
+            android:paddingRight="@dimen/size10"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -128,50 +143,19 @@
             android:padding="@dimen/size10"
             android:text="商品评价" />
 
-        <include
-            android:id="@+id/ic_comment"
-            layout="@layout/item_all_discover_comment"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_comment"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/size0.5" />
+            android:layout_height="wrap_content"/>
 
         <TextView
             android:id="@+id/tv_all_evaluate"
             style="@style/TextSize12Color666"
             android:layout_width="match_parent"
-            android:layout_marginTop="@dimen/size0.5"
             android:background="#fff"
             android:gravity="center"
             android:padding="@dimen/size10"
             android:text="全部评价(10)" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/size10"
-            android:background="#fff"
-            android:padding="@dimen/size10">
-
-            <com.recker.flyshapeimageview.ShapeImageView
-                android:id="@+id/iv_discover_person"
-                android:layout_width="@dimen/size50"
-                android:layout_height="@dimen/size50"
-                android:scaleType="fitXY"
-                app:shape_mode="circle" />
-
-            <TextView
-                android:id="@+id/tv_discover_person"
-                style="@style/TextSize14Color666"
-                android:layout_width="match_parent"
-                android:layout_marginLeft="@dimen/size10"
-                android:layout_marginTop="@dimen/size2"
-                android:layout_toRightOf="@id/iv_discover_person"
-                android:drawableRight="@mipmap/wode_back"
-                android:gravity="center_vertical"
-                android:text="邓如果\n\n金30天发布99条" />
-
-        </RelativeLayout>
-
         <TextView
             style="@style/TextSize12Color666"
             android:layout_width="match_parent"

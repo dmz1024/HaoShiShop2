@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -14,7 +15,8 @@
         android:paddingRight="@dimen/size10"
         android:paddingTop="@dimen/size15">
 
-        <ImageView
+        <com.recker.flyshapeimageview.ShapeImageView
+            app:shape_mode="circle"
             android:id="@+id/iv_head"
             android:layout_width="@dimen/size45"
             android:layout_height="@dimen/size45"
@@ -27,7 +29,7 @@
             android:layout_marginLeft="@dimen/size13"
             android:layout_toRightOf="@id/iv_head"
             android:gravity="center_vertical"
-            android:text="小峰" />
+            />
 
         <ImageView
             android:id="@+id/iv_go"
@@ -47,7 +49,7 @@
             android:layout_toLeftOf="@id/iv_mode"
             android:ellipsize="middle"
             android:maxLines="1"
-            android:text="我已完善：性别/爱好/老家" />
+            />
     </RelativeLayout>
 
     <view.NoScrollViewPager

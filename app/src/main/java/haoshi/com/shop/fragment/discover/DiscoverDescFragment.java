@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -24,8 +23,6 @@ import java.util.Map;
 import base.adapter.MyLoopPagerAdapter;
 import base.bean.SingleBaseBean;
 import base.bean.rxbus.AddFragmentBean;
-import base.fragment.SingleNetWorkBaseFragment;
-import base.fragment.WebViewFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -34,16 +31,16 @@ import haoshi.com.shop.adapter.AllDiscoverCommentAdapter;
 import haoshi.com.shop.adapter.AttrAdapter;
 import haoshi.com.shop.adapter.DiscoverAdapter;
 import haoshi.com.shop.bean.AttrsBean;
+import haoshi.com.shop.bean.chat.dao.SendBean;
 import haoshi.com.shop.bean.discover.AllDiscoverCommentBean;
 import haoshi.com.shop.bean.discover.DiscoverBean;
 import haoshi.com.shop.bean.discover.DiscoverDescBean;
 import haoshi.com.shop.constant.ApiConstant;
 import haoshi.com.shop.constant.UserInfo;
-import haoshi.com.shop.controller.DiscoverCollectController;
+import haoshi.com.shop.controller.DiscoverController;
 import haoshi.com.shop.controller.ShareUtil;
 import haoshi.com.shop.fragment.BaseShapeFragment;
 import haoshi.com.shop.pop.PopContactDiscoverPerson;
-import haoshi.com.shop.pop.PopDiscoverShare;
 import interfaces.OnSingleRequestListener;
 import interfaces.OnTitleBarListener;
 import util.DrawableUtil;
@@ -106,6 +103,18 @@ public class DiscoverDescFragment extends BaseShapeFragment<DiscoverDescBean> im
         }
     }
 
+
+    @Override
+    protected void manageError(boolean isWrite, DiscoverDescBean discoverDescBean, String msg) {
+        super.manageError(isWrite, discoverDescBean, msg);
+        switch (discoverDescBean.code) {
+            case 10001:
+                MyToast.showToast("内容已删除");
+                RxBus.get().post("back", "back");
+        }
+    }
+
+
     private DiscoverDescBean bean;
 
     @Override
@@ -123,6 +132,25 @@ public class DiscoverDescFragment extends BaseShapeFragment<DiscoverDescBean> im
         initDesc(bean.data.goodsDesc);
         initPerson();
 
+    }
+
+    @Override
+    protected boolean getIsGood() {
+        return false;
+    }
+
+    @Override
+    protected SendBean getSendBean() {
+        SendBean sendBean = new SendBean();
+        sendBean.setDesc(bean.data.shareContent);
+        sendBean.setName(bean.data.goodsName);
+        if (bean.data.gallery == null || bean.data.gallery.size() == 0) {
+            sendBean.setImg(bean.data.fx_logo);
+        } else {
+            sendBean.setImg(bean.data.gallery.get(0).getUrl());
+        }
+        sendBean.setId(goodsId);
+        return sendBean;
     }
 
     /**
@@ -268,7 +296,7 @@ public class DiscoverDescFragment extends BaseShapeFragment<DiscoverDescBean> im
     @OnClick(R.id.tv_collect)
     void collect() {
         if (!isCollect) {
-            DiscoverCollectController.getInstance().addCollect(goodsId, new OnSingleRequestListener<SingleBaseBean>() {
+            DiscoverController.getInstance().addCollect(goodsId, new OnSingleRequestListener<SingleBaseBean>() {
                 @Override
                 public void succes(boolean isWrite, SingleBaseBean bean) {
                     isCollect = true;
@@ -282,7 +310,7 @@ public class DiscoverDescFragment extends BaseShapeFragment<DiscoverDescBean> im
                 }
             });
         } else {
-            DiscoverCollectController.getInstance().cancelCollect(goodsId, new OnSingleRequestListener<SingleBaseBean>() {
+            DiscoverController.getInstance().cancelCollect(goodsId, new OnSingleRequestListener<SingleBaseBean>() {
                 @Override
                 public void succes(boolean isWrite, SingleBaseBean bean) {
                     isCollect = false;

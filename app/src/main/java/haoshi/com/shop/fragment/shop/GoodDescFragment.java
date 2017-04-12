@@ -32,6 +32,7 @@ import haoshi.com.shop.R;
 import haoshi.com.shop.adapter.AttrAdapter;
 import haoshi.com.shop.adapter.GoodEvaluateAdapter;
 import haoshi.com.shop.bean.AttrsBean;
+import haoshi.com.shop.bean.chat.dao.SendBean;
 import haoshi.com.shop.bean.shop.AddCarBean;
 import haoshi.com.shop.bean.shop.GoodDescBean;
 import haoshi.com.shop.bean.shop.GoodEvaluateBean;
@@ -122,6 +123,21 @@ public class GoodDescFragment extends BaseShapeFragment<GoodDescBean> implements
         initComment(bean.data.comment);
         initCollect(bean.data.favGood == 1);
         initDs();
+    }
+
+    @Override
+    protected boolean getIsGood() {
+        return true;
+    }
+
+    @Override
+    protected SendBean getSendBean() {
+        SendBean sendBean = new SendBean();
+        sendBean.setName(bean.data.share.title);
+        sendBean.setDesc(bean.data.share.info);
+        sendBean.setId(good_id);
+        sendBean.setImg(bean.data.share.logo);
+        return sendBean;
     }
 
     /**
@@ -355,7 +371,7 @@ public class GoodDescFragment extends BaseShapeFragment<GoodDescBean> implements
 
     @Override
     public void right() {
-        if(isCanShape){
+        if (isCanShape) {
             showShare();
         }
 

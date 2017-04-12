@@ -1,22 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#fff"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_area"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#f6f6f6"
+        android:padding="@dimen/size10">
+
+        <TextView
+            android:id="@+id/tv_cancel"
+            style="@style/TextSize12Color666"
+            android:layout_centerVertical="true"
+            android:text="取消" />
+
+        <TextView
+            android:id="@+id/tv_choose"
+            style="@style/TextSize12Color666"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="确定" />
+
+        <TextView
+            android:id="@+id/tv_area"
+            style="@style/TextSize13Color333"
+            android:layout_centerInParent="true"
+            android:layout_toLeftOf="@id/tv_choose"
+            android:layout_marginRight="@dimen/size10"
+            android:layout_marginLeft="@dimen/size10"
+            android:layout_toRightOf="@id/tv_cancel"
+            android:gravity="center"
+            android:text="选择省" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_area"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_below="@id/rl_area"
+        android:orientation="horizontal">
+
+    </LinearLayout>
+
     <FrameLayout
-        android:id="@+id/fg_content"
+        android:id="@+id/fg_bar"
         android:layout_width="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_height="@dimen/size300"/>
-    <TextView
-        android:background="#fff"
-        android:id="@+id/tv_content"
-        android:layout_above="@id/fg_content"
-        android:text="选择地区"
-        android:paddingBottom="@dimen/size10"
-        android:paddingTop="@dimen/size10"
-        android:gravity="center"
-        android:textColor="#666"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent"
+        android:layout_below="@id/rl_area"
+        android:layout_toRightOf="@id/ll_area">
+
+        <ProgressBar
+            style="@android:style/Widget.ProgressBar.Small.Inverse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+    </FrameLayout>
 </RelativeLayout>

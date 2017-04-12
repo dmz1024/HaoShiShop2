@@ -12,6 +12,7 @@ import base.fragment.ListNetWorkBaseFragment;
 import haoshi.com.shop.adapter.DiscoverAdapter;
 import haoshi.com.shop.bean.discover.DiscoverBean;
 import haoshi.com.shop.constant.ApiConstant;
+import util.RxBus;
 
 /**
  * Created by dengmingzhi on 2017/2/21.
@@ -39,6 +40,7 @@ public class DiscoverFragment extends ListNetWorkBaseFragment<DiscoverBean> {
             isFirst = bundle.getBoolean("isFirst");
         }
     }
+
 
     @Override
     protected RecyclerView.Adapter getAdapter() {

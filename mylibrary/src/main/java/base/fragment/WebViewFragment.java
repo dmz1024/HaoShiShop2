@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
@@ -55,6 +56,7 @@ public class WebViewFragment extends NotNetWorkBaseFragment {
         isShowTitle = bundle.getBoolean("isShowTitle", true);
     }
 
+
     @SuppressLint("JavascriptInterface")
     @Override
     protected void initData() {
@@ -75,7 +77,7 @@ public class WebViewFragment extends NotNetWorkBaseFragment {
             public void onProgressChanged(WebView view, int newProgress) {
                 if (newProgress == 100) {
                     tv_load.setVisibility(View.GONE);
-                    if(isShowTitle){
+                    if (isShowTitle) {
                         titleBarView.setTitleContent(web_view.getTitle());
                     }
                 } else {
@@ -87,6 +89,7 @@ public class WebViewFragment extends NotNetWorkBaseFragment {
         });
 
         web_view.loadUrl(url);
+
 
     }
 
@@ -120,5 +123,9 @@ public class WebViewFragment extends NotNetWorkBaseFragment {
     @Override
     public DefaultTitleBarView getTitleBarView() {
         return (isShowTitle ? new DefaultTitleBarView(getContext()) : null);
+    }
+
+    public WebView getWV() {
+        return web_view;
     }
 }

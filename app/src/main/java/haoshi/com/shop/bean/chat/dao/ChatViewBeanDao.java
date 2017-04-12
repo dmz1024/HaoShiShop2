@@ -186,12 +186,15 @@ public class ChatViewBeanDao extends AbstractDao<ChatViewBean, String> {
             SqlUtils.appendColumns(builder, "T3", daoSession.getPhotoBeanDao().getAllColumns());
             builder.append(',');
             SqlUtils.appendColumns(builder, "T4", daoSession.getChatFriendBeanDao().getAllColumns());
+            builder.append(',');
+            SqlUtils.appendColumns(builder, "T5", daoSession.getSendBeanDao().getAllColumns());
             builder.append(" FROM CHAT_VIEW_BEAN T");
             builder.append(" LEFT JOIN SOUND_BEAN T0 ON T.\"SIGN\"=T0.\"SIGN\"");
             builder.append(" LEFT JOIN TEXT_BEAN T1 ON T.\"SIGN\"=T1.\"SIGN\"");
             builder.append(" LEFT JOIN FILE_BEAN T2 ON T.\"SIGN\"=T2.\"SIGN\"");
             builder.append(" LEFT JOIN PHOTO_BEAN T3 ON T.\"SIGN\"=T3.\"SIGN\"");
             builder.append(" LEFT JOIN CHAT_FRIEND_BEAN T4 ON T.\"FID\"=T4.\"FID\"");
+            builder.append(" LEFT JOIN SEND_BEAN T5 ON T.\"SIGN\"=T5.\"SIGN\"");
             builder.append(' ');
             selectDeep = builder.toString();
         }
@@ -220,6 +223,10 @@ public class ChatViewBeanDao extends AbstractDao<ChatViewBean, String> {
 
         ChatFriendBean fUser = loadCurrentOther(daoSession.getChatFriendBeanDao(), cursor, offset);
         entity.setFUser(fUser);
+        offset += daoSession.getChatFriendBeanDao().getAllColumns().length;
+
+        SendBean sendBean = loadCurrentOther(daoSession.getSendBeanDao(), cursor, offset);
+        entity.setSendBean(sendBean);
 
         return entity;    
     }

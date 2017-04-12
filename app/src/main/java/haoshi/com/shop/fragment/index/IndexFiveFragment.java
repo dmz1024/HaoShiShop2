@@ -24,6 +24,7 @@ import haoshi.com.shop.bean.my.PeosonCenterBean;
 import haoshi.com.shop.constant.ApiConstant;
 import haoshi.com.shop.constant.UserInfo;
 import haoshi.com.shop.fragment.discover.DiscoverCollectRootFragment;
+import haoshi.com.shop.fragment.discover.MyDiscoverSendFragment;
 import haoshi.com.shop.fragment.my.GeRenAuthentFragment;
 import haoshi.com.shop.fragment.my.MessageFragment;
 import haoshi.com.shop.fragment.my.MyGiveFragment;
@@ -35,6 +36,7 @@ import haoshi.com.shop.fragment.my.ZanFragment;
 import haoshi.com.shop.fragment.shop.GoodCollectFragment;
 import haoshi.com.shop.fragment.shop.MyOrderRootFragment;
 import haoshi.com.shop.fragment.zongqinghui.ApplyBuildFlockFragment;
+import haoshi.com.shop.pop.PopContactService;
 import haoshi.com.shop.pop.PopRenZTip;
 import haoshi.com.shop.R;
 import rx.Observable;
@@ -194,13 +196,14 @@ public class IndexFiveFragment extends SingleNetWorkBaseFragment<PeosonCenterBea
         rv_order.setLayoutManager(manager);
     }
 
+    //    MyDiscoverSendFragment
     private void initItem() {
         ArrayList<GeneralBean> datas = new ArrayList<>();
         datas.add(new GeneralBean("我已发布", R.mipmap.wode_roll, null, 2));
-        datas.add(new GeneralBean("我的商品收藏", R.mipmap.shop, new GoodCollectFragment(), 2));
-        datas.add(new GeneralBean("我的发现收藏", R.mipmap.find, new DiscoverCollectRootFragment(), 2));
-        datas.add(new GeneralBean("我的打赏", R.mipmap.wode_jilu, new MyGiveFragment(), 2));
-        datas.add(new GeneralBean("申请建群", R.mipmap.wode_jiaqun, new ApplyBuildFlockFragment(), 2));
+        datas.add(new GeneralBean("我的商品收藏", R.mipmap.shop, null, 2));
+        datas.add(new GeneralBean("我的发现收藏", R.mipmap.find, null, 2));
+        datas.add(new GeneralBean("我的打赏", R.mipmap.wode_jilu, null, 2));
+        datas.add(new GeneralBean("申请建群", R.mipmap.wode_jiaqun, null, 2));
         datas.add(new GeneralBean("用户协议", R.mipmap.wode_xieyi, null, 2));
         datas.add(new GeneralBean("联系我们", R.mipmap.wode_lianxi, null, 2));
         LinearLayoutManager manager = new LinearLayoutManager(getContext()) {
@@ -209,7 +212,31 @@ public class IndexFiveFragment extends SingleNetWorkBaseFragment<PeosonCenterBea
                 return false;
             }
         };
-        GeneralAdapter mAdatpter = new GeneralAdapter(getContext(), datas);
+        GeneralAdapter mAdatpter = new GeneralAdapter(getContext(), datas) {
+            @Override
+            protected void chooseItem(int position) {
+                switch (position) {
+                    case 0:
+                        RxBus.get().post("addFragment", new AddFragmentBean(new MyDiscoverSendFragment()));
+                        break;
+                    case 1:
+                        RxBus.get().post("addFragment", new AddFragmentBean(new GoodCollectFragment()));
+                        break;
+                    case 2:
+                        RxBus.get().post("addFragment", new AddFragmentBean(new DiscoverCollectRootFragment()));
+                        break;
+                    case 3:
+                        RxBus.get().post("addFragment", new AddFragmentBean(new MyGiveFragment()));
+                        break;
+                    case 4:
+                        RxBus.get().post("addFragment", new AddFragmentBean(new ApplyBuildFlockFragment()));
+                        break;
+                    case 6:
+                        new PopContactService(ctx).showAtLocation(false);
+                        break;
+                }
+            }
+        };
         rv_item.setAdapter(mAdatpter);
         rv_item.setLayoutManager(manager);
     }
@@ -240,7 +267,8 @@ public class IndexFiveFragment extends SingleNetWorkBaseFragment<PeosonCenterBea
     void ping() {
         RxBus.get().post("addFragment", new AddFragmentBean(new CommentFragment()));
     }
- @OnClick(R.id.iv_head)
+
+    @OnClick(R.id.iv_head)
     void head() {
         RxBus.get().post("addFragment", new AddFragmentBean(new PeosonSetFragment()));
     }

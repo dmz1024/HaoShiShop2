@@ -15,13 +15,13 @@ public class BitmapUtil {
             BitmapFactory.Options opts = null;
             if (width > 0 && height > 0) {
                 opts = new BitmapFactory.Options();//设置inJustDecodeBounds为true后，decodeFile并不分配空间，此时计算原始图片的长度和宽度
-                        opts.inJustDecodeBounds = true;
+                opts.inJustDecodeBounds = true;
                 BitmapFactory.decodeFile(dst.getPath(), opts);
                 // 计算图片缩放比例
                 final int minSideLength = Math.min(width, height);
                 opts.inSampleSize = computeSampleSize(opts, minSideLength,
                         width * height); //这里一定要将其设置回false，因为之前我们将其设置成了true
-                        opts.inJustDecodeBounds = false;
+                opts.inJustDecodeBounds = false;
                 opts.inInputShareable = true;
                 opts.inPurgeable = true;
             }
@@ -53,7 +53,7 @@ public class BitmapUtil {
     }
 
     public static int computeInitialSampleSize(BitmapFactory.Options options,
-                                                int minSideLength, int maxNumOfPixels) {
+                                               int minSideLength, int maxNumOfPixels) {
         double w = options.outWidth;
         double h = options.outHeight;
 
@@ -74,5 +74,17 @@ public class BitmapUtil {
         } else {
             return upperBound;
         }
+    }
+
+    /**
+     * 获取图片宽高
+     * @param path
+     * @return
+     */
+    public static int[] getBitmapSize(String path) {
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        Bitmap bitmap = BitmapFactory.decodeFile(path, options);
+        return new int[]{options.outWidth, options.outHeight};
     }
 }

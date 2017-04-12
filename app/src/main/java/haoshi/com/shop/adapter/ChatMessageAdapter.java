@@ -21,8 +21,10 @@ import haoshi.com.shop.bean.chat.PhotoBean;
 import haoshi.com.shop.bean.chat.SoundBean;
 import haoshi.com.shop.bean.chat.TextBean;
 import haoshi.com.shop.bean.chat.dao.ChatFriendBean;
+import haoshi.com.shop.bean.chat.dao.SendBean;
 import haoshi.com.shop.bean.chat.impl.FileImpl;
 import haoshi.com.shop.bean.chat.impl.PhotoImpl;
+import haoshi.com.shop.bean.chat.impl.SendImpl;
 import haoshi.com.shop.bean.chat.impl.SoundImpl;
 import haoshi.com.shop.bean.chat.impl.TextImpl;
 import haoshi.com.shop.fragment.chat.ChatViewFragment;
@@ -126,6 +128,24 @@ public class ChatMessageAdapter extends BaseAdapter<MessageBean> {
                             break;
                         case 3:
                             content = "[文件]发送失败...";
+                            break;
+                    }
+                }
+                break;
+            case 5:
+                if (from == 1) {
+                    content = "[链接]";
+                } else {
+                    SendBean fb= SendImpl.getInstance().select(sign);
+                    switch (fb.getStatus()) {
+                        case 1:
+                            content = "[链接]发送中...";
+                            break;
+                        case 2:
+                            content = "[链接]";
+                            break;
+                        case 3:
+                            content = "[链接]发送失败...";
                             break;
                     }
                 }

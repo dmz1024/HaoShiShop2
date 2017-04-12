@@ -15,6 +15,7 @@ import base.bean.BaseBean;
 import base.bean.TipLoadingBean;
 import interfaces.OnMyResponseListener;
 import interfaces.OnRequestListener;
+import util.ContextUtil;
 import util.FileUtil;
 import util.JLogUtils;
 import util.JsonUtil;
@@ -27,6 +28,8 @@ import view.pop.TipLoading;
 
 public abstract class ApiRequest<T extends BaseBean> {
     private static Handler mHandler = new Handler();
+    private String msg;
+    private int code;
 
     protected abstract Map<String, String> getMap();
 
@@ -35,7 +38,7 @@ public abstract class ApiRequest<T extends BaseBean> {
     protected abstract Class<T> getClx();
 
     protected Context getContext() {
-        return null;
+        return ContextUtil.getCtx();
     }
 
     protected boolean getShowInfo() {
@@ -62,6 +65,9 @@ public abstract class ApiRequest<T extends BaseBean> {
         return true;
     }
 
+    protected String getMsg(int code){
+        return msg;
+    }
     public ApiRequest get() {
         JavaBeanRequest<T> request = new JavaBeanRequest<>(getUrl(), getClx());
         creatRequest(request, null);
@@ -101,7 +107,7 @@ public abstract class ApiRequest<T extends BaseBean> {
             return;
         }
 
-        CallServer.getInstance().cancelBySign(getSign());
+//        CallServer.getInstance().cancelBySign(getSign());
         request.setCancelSign(getSign());
         TipLoading tipLoading = null;
         if (tip != null) {
@@ -182,6 +188,7 @@ public abstract class ApiRequest<T extends BaseBean> {
     }
 
     private void result(boolean isWrite, TipLoading finalTipLoading, TipLoadingBean tip, T t) {
+        code = t.code;
         if (t.result == 0) {
             if (finalTipLoading != null && !isWrite) {
                 if (getShowSucces()) {
@@ -198,7 +205,7 @@ public abstract class ApiRequest<T extends BaseBean> {
         } else {
             if (finalTipLoading != null && !isWrite) {
                 if (getShowInfo()) {
-                    finalTipLoading.showInfo(TextUtils.isEmpty(t.msg) ? tip.getError() : t.msg);
+                    finalTipLoading.showInfo(TextUtils.isEmpty(getMsg(code)) ? tip.getError() : getMsg(code));
                 } else {
                     finalTipLoading.dismiss();
                 }
@@ -206,7 +213,7 @@ public abstract class ApiRequest<T extends BaseBean> {
             }
 
             if (onRequestListeren != null) {
-                onRequestListeren.error(isWrite, t, t.msg);
+                onRequestListeren.error(isWrite, t, msg);
             }
         }
     }

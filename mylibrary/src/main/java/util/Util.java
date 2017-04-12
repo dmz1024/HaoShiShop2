@@ -261,7 +261,7 @@ public class Util {
 
     public static byte[] bmpToByteArray(final Bitmap bmp, final boolean needRecycle) {
         ByteArrayOutputStream output = new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.PNG, 1, output);
+        bmp.compress(Bitmap.CompressFormat.JPEG, 100, output);
         if (needRecycle) {
             bmp.recycle();
         }
@@ -277,7 +277,7 @@ public class Util {
     }
 
 
-    public static Bitmap getimage(String srcPath) {
+    public static byte[] getimage(String srcPath) {
         BitmapFactory.Options newOpts = new BitmapFactory.Options();
         //开始读入图片，此时把options.inJustDecodeBounds 设回true了
         newOpts.inJustDecodeBounds = true;
@@ -304,20 +304,25 @@ public class Util {
         return compressImage(bitmap);//压缩好比例大小后再进行质量压缩
     }
 
-    public static Bitmap compressImage(Bitmap image) {
+    public static byte[] compressImage(Bitmap image) {
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        image.compress(Bitmap.CompressFormat.PNG, 10, baos);//质量压缩方法，这里100表示不压缩，把压缩后的数据存放到baos中
+        image.compress(Bitmap.CompressFormat.JPEG, 100, baos);//质量压缩方法，这里100表示不压缩，把压缩后的数据存放到baos中
+        Log.d("图", baos.toByteArray().length / 1024 + "--");
         int options = 100;
-        while (baos.toByteArray().length / 1024 > 33) {  //循环判断如果压缩后图片是否大于100kb,大于继续压缩
-            baos.reset();//重置baos即清空baos
-            image.compress(Bitmap.CompressFormat.PNG, options, baos);//这里压缩options%，把压缩后的数据存放到baos中
-            options -= 5;//每次都减少5
-        }
+        while (baos.toByteArray().length / 1024 > 32) {  //循环判断如果压缩后图片是否大于100kb,大于继续压缩
+            options = 100;
+            while (baos.toByteArray().length / 1024 > 32 && options > 10) {  //循环判断如果压缩后图片是否大于100kb,大于继续压缩
+                options -= 10;//每次都减少5
+                baos.reset();//重置baos即清空baos
+                image.compress(Bitmap.CompressFormat.JPEG, options, baos);//这里压缩options%，把压缩后的数据存放到baos中
+            }
 
-        ByteArrayInputStream isBm = new ByteArrayInputStream(baos.toByteArray());//把压缩后的数据baos存放到ByteArrayInputStream中
-        Bitmap bitmap = BitmapFactory.decodeStream(isBm, null, null);//把ByteArrayInputStream数据生成图片
-        return bitmap;
+        }
+        return baos.toByteArray();
+//        ByteArrayInputStream isBm = new ByteArrayInputStream(baos.toByteArray());//把压缩后的数据baos存放到ByteArrayInputStream中
+//        Bitmap bitmap = BitmapFactory.decodeStream(isBm, null, null);//把ByteArrayInputStream数据生成图片
+//        return bitmap;
     }
 
 
@@ -470,11 +475,10 @@ public class Util {
     }
 
 
-
     public static String getPath(Context context, Uri uri) {
-        String filename=null;
+        String filename = null;
         if (uri.getScheme().toString().compareTo("content") == 0) {
-            Cursor cursor = context.getContentResolver().query(uri, new String[] { "_data" }, null, null, null);
+            Cursor cursor = context.getContentResolver().query(uri, new String[]{"_data"}, null, null, null);
             if (cursor.moveToFirst()) {
                 filename = cursor.getString(0);
             }
@@ -487,6 +491,7 @@ public class Util {
         }
         return filename;
     }
+
     @SuppressLint("NewApi")
     public static String getPathByUri4kitkat(final Context context, final Uri uri) {
         final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
@@ -517,7 +522,7 @@ public class Util {
                     contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
                 }
                 final String selection = "_id=?";
-                final String[] selectionArgs = new String[] { split[1] };
+                final String[] selectionArgs = new String[]{split[1]};
                 return getDataColumn(context, contentUri, selection, selectionArgs);
             }
         } else if ("content".equalsIgnoreCase(uri.getScheme())) {// MediaStore
@@ -534,7 +539,7 @@ public class Util {
     public static String getDataColumn(Context context, Uri uri, String selection, String[] selectionArgs) {
         Cursor cursor = null;
         final String column = "_data";
-        final String[] projection = { column };
+        final String[] projection = {column};
         try {
             cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs, null);
             if (cursor != null && cursor.moveToFirst()) {
@@ -553,8 +558,7 @@ public class Util {
     }
 
     /**
-     * @param uri
-     *            The Uri to check.
+     * @param uri The Uri to check.
      * @return Whether the Uri authority is DownloadsProvider.
      */
     public static boolean isDownloadsDocument(Uri uri) {
@@ -562,14 +566,12 @@ public class Util {
     }
 
     /**
-     * @param uri
-     *            The Uri to check.
+     * @param uri The Uri to check.
      * @return Whether the Uri authority is MediaProvider.
      */
     public static boolean isMediaDocument(Uri uri) {
         return "com.android.providers.media.documents".equals(uri.getAuthority());
     }
-
 
 
 }

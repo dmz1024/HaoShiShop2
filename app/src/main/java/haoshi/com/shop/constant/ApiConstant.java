@@ -99,6 +99,8 @@ public interface ApiConstant {
     String REGS = BASE + "app.php/home/Users/regs";
     String MYREWARDS = BASE + "app.php/home/Users/myRewards";
     String MOBILEFRIEND = BASE + "app.php/home/users/mobilefriend";
+    String MYARTICLES = BASE + "app.php/home/Users/myArticles";
+    String DELETEISSUES = BASE + "app.php/home/Helpcenter/deleteIsSues";
 
 
 }

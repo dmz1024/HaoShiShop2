@@ -1,9 +1,6 @@
 package base.fragment;
 
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.PagerAdapter;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -16,11 +13,9 @@ import java.util.Map;
 
 import base.bean.ChooseAreaBean;
 import base.bean.SerializableMap;
-import butterknife.BindView;
 import rx.Observable;
 import rx.functions.Action1;
 import util.RxBus;
-import view.NoScrollViewPager;
 
 /**
  * Created by dengmingzhi on 2017/2/13.
@@ -46,7 +41,7 @@ public class AreaFragment extends NotNetWorkBaseFragment {
 
     @Override
     protected int getRId() {
-        return R.layout.pop_choose_area;
+        return R.layout.fragment_choose_area;
     }
 
     @Override

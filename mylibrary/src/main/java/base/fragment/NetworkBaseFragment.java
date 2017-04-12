@@ -93,6 +93,11 @@ public abstract class NetworkBaseFragment<D extends BaseBean> extends RefreshBas
             }
 
             @Override
+            protected String getMsg(int code) {
+                return getnMsg(code);
+            }
+
+            @Override
             protected boolean getShowSucces() {
                 return showSucces();
             }
@@ -155,6 +160,10 @@ public abstract class NetworkBaseFragment<D extends BaseBean> extends RefreshBas
             }
         }
 
+    }
+
+    protected String getnMsg(int code) {
+        return "";
     }
 
     protected boolean getDis() {
@@ -386,6 +395,13 @@ public abstract class NetworkBaseFragment<D extends BaseBean> extends RefreshBas
     protected View getNoNetworkView() {
         TextView view = (TextView) View.inflate(getContext(), R.layout.net_work_show_view, null);
         view.setText("您的网络出现问题了，请检查重试");
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getCurrentView(ShowCurrentViewENUM.VIEW_IS_LOADING);
+                loadingFromServerErr();
+            }
+        });
         return view;
     }
 
@@ -413,9 +429,7 @@ public abstract class NetworkBaseFragment<D extends BaseBean> extends RefreshBas
      * @return
      */
     protected View getIsLoadingView() {
-        TextView view = (TextView) View.inflate(getContext(), R.layout.net_work_show_view, null);
-        view.setText("正在加载...");
-        return view;
+        return View.inflate(getContext(), R.layout.view_loading_data, null);
     }
 
     @Override

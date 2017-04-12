@@ -41,6 +41,8 @@ public class ChatViewBean {
     private PhotoBean photoBean;
     @ToOne(joinProperty = "fid")
     private ChatFriendBean fUser;
+    @ToOne(joinProperty = "sign")
+    private SendBean sendBean;
     /**
      * Convenient call for {@link org.greenrobot.greendao.AbstractDao#refresh(Object)}.
      * Entity must attached to an entity context.
@@ -225,6 +227,8 @@ public class ChatViewBean {
     /** Used to resolve relations */
     @Generated(hash = 2040040024)
     private transient DaoSession daoSession;
+    @Generated(hash = 1157664268)
+    private transient String sendBean__resolvedKey;
     public int getFrom() {
         return this.from;
     }
@@ -272,6 +276,33 @@ public class ChatViewBean {
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getChatViewBeanDao() : null;
+    }
+    /** called by internal mechanisms, do not call yourself. */
+    @Generated(hash = 691692354)
+    public void setSendBean(SendBean sendBean) {
+        synchronized (this) {
+            this.sendBean = sendBean;
+            sign = sendBean == null ? null : sendBean.getSign();
+            sendBean__resolvedKey = sign;
+        }
+    }
+    /** To-one relationship, resolved on first access. */
+    @Generated(hash = 571847317)
+    public SendBean getSendBean() {
+        String __key = this.sign;
+        if (sendBean__resolvedKey == null || sendBean__resolvedKey != __key) {
+            final DaoSession daoSession = this.daoSession;
+            if (daoSession == null) {
+                throw new DaoException("Entity is detached from DAO context");
+            }
+            SendBeanDao targetDao = daoSession.getSendBeanDao();
+            SendBean sendBeanNew = targetDao.load(__key);
+            synchronized (this) {
+                sendBean = sendBeanNew;
+                sendBean__resolvedKey = __key;
+            }
+        }
+        return sendBean;
     }
     @Generated(hash = 304419200)
     public ChatViewBean(String sign, String fid, int type, long time, int isRead,

@@ -22,8 +22,10 @@ import haoshi.com.shop.bean.chat.FileBean;
 import haoshi.com.shop.bean.chat.PhotoBean;
 import haoshi.com.shop.bean.chat.SoundBean;
 import haoshi.com.shop.bean.chat.TextBean;
+import haoshi.com.shop.bean.chat.dao.SendBean;
 import haoshi.com.shop.bean.chat.impl.FileImpl;
 import haoshi.com.shop.bean.chat.impl.PhotoImpl;
+import haoshi.com.shop.bean.chat.impl.SendImpl;
 import haoshi.com.shop.bean.chat.impl.SoundImpl;
 import haoshi.com.shop.bean.chat.impl.TextImpl;
 import haoshi.com.shop.constant.ApiConstant;
@@ -475,5 +477,76 @@ public class ChatSendMessageController {
 
             }
         }).start();
+    }
+
+
+    public void sendSend(final String... content) {
+        new ApiRequest<SingleBaseBean>() {
+            @Override
+            protected Map<String, String> getMap() {
+                Map<String, String> map = new HashMap<>();
+                map.put("uid", UserInfo.userId);
+                map.put("token", UserInfo.token);
+                map.put("touid", content[1]);
+                map.put("content", "[链接]");
+                map.put("groupid", content[2]);
+                map.put("extend", content[3]);
+                map.put("type", "5");
+                map.put("linkurl", "-1");
+                return map;
+            }
+
+            @Override
+            protected String getUrl() {
+                return ApiConstant.SEND_MESSAGE;
+            }
+
+            @Override
+            protected Class<SingleBaseBean> getClx() {
+                return SingleBaseBean.class;
+            }
+        }.setOnRequestListeren(new OnSingleRequestListener<SingleBaseBean>() {
+            @Override
+            public void succes(boolean isWrite, SingleBaseBean bean) {
+                SendBean textBean = SendImpl.getInstance().select(content[0]);
+                Log.d("这里", "0");
+                if (textBean != null) {
+                    textBean.setStatus(2);
+                    SendImpl.getInstance().update(textBean);
+                }
+                RxBus.get().post("viewmessage", "");
+                RxBus.get().post("message", "");
+
+            }
+
+            @Override
+            public void error(boolean isWrite, SingleBaseBean bean, String msg) {
+                SendBean textBean = SendImpl.getInstance().select(content[0]);
+                if (textBean != null) {
+                    textBean.setStatus(3);
+                    SendImpl.getInstance().update(textBean);
+                }
+                RxBus.get().post("viewmessage", "");
+                RxBus.get().post("message", "");
+            }
+
+            @Override
+            public void onFailed(Exception e) {
+                super.onFailed(e);
+                SendBean textBean = SendImpl.getInstance().select(content[0]);
+                if (textBean != null) {
+                    textBean.setStatus(3);
+                    SendImpl.getInstance().update(textBean);
+                }
+                RxBus.get().post("viewmessage", "");
+                RxBus.get().post("message", "");
+            }
+
+            @Override
+            public void finish() {
+                super.finish();
+
+            }
+        }).post();
     }
 }

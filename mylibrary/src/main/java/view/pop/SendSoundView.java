@@ -13,6 +13,7 @@ import audio.AudioRecoderUtils;
 import audio.MediaPlayerUtils;
 import base.other.PopBaseView;
 import util.MyToast;
+import util.SharedPreferenUtil;
 import view.MyButton;
 
 /**
@@ -94,19 +95,30 @@ public class SendSoundView extends PopBaseView implements MyButton.OnMyTounchLis
             }
 
             @Override
-            public void onStop(String filePath) {
-                Log.d("录音", filePath);
-                filePath(filePath);
+            public void onStop(String... filePath) {
+                Log.d("录音", filePath[0]);
+                filePath(filePath[0], filePath[1]);
             }
 
             @Override
             public void onError() {
                 MyToast.showToast("录音失败");
             }
+
         }).startRecord();
 
-    }
+        if (!new SharedPreferenUtil(ctx, "yuying").getBoolean("isFirst")) {
+            new SharedPreferenUtil(ctx, "yuying").setData("isFirst", true);
+            button.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    AudioRecoderUtils.getInstance().cancelRecord();
+                    dismiss();
+                }
+            }, 500);
+        }
 
+    }
 
 
     @Override
@@ -122,7 +134,6 @@ public class SendSoundView extends PopBaseView implements MyButton.OnMyTounchLis
         isReconrding = true;
         iv_img.setImageResource(R.drawable.send_sounds_drawable);
     }
-
 
 
     @Override
@@ -164,9 +175,7 @@ public class SendSoundView extends PopBaseView implements MyButton.OnMyTounchLis
     }
 
 
-    public void filePath(String path) {
+    public void filePath(String... content) {
 
     }
-
-
 }

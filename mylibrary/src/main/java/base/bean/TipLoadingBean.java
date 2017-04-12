@@ -21,7 +21,7 @@ public class TipLoadingBean {
     }
 
     public String getLoading() {
-        return TextUtils.isEmpty(loading) ? "正在加载..." : loading;
+        return loading;
     }
 
     public void setLoading(String loading) {
@@ -29,7 +29,7 @@ public class TipLoadingBean {
     }
 
     public String getSucces() {
-        return TextUtils.isEmpty(succes) ? "加载成功" : succes;
+        return succes;
     }
 
     public void setSucces(String succes) {
@@ -37,7 +37,7 @@ public class TipLoadingBean {
     }
 
     public String getError() {
-        return TextUtils.isEmpty(error) ? "加载失败" : error;
+        return error;
     }
 
     public void setError(String error) {

@@ -12,12 +12,15 @@ import java.util.ArrayList;
 import base.adapter.BaseAdapter;
 import base.adapter.BaseViewHolder;
 import base.bean.SingleBaseBean;
+import base.bean.rxbus.AddFragmentBean;
 import butterknife.BindView;
 import haoshi.com.shop.R;
 import haoshi.com.shop.bean.shop.GoodBean;
 import haoshi.com.shop.controller.GoodController;
+import haoshi.com.shop.fragment.shop.GoodDescFragment;
 import interfaces.OnSingleRequestListener;
 import util.GlideUtil;
+import util.RxBus;
 
 
 /**
@@ -74,6 +77,12 @@ public class GoodCollectAdapter extends BaseAdapter<GoodBean> {
         public ViewHolder(View itemView) {
             super(itemView);
             tv_delete.setOnClickListener(this);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        protected void onClick(int layoutPosition) {
+            RxBus.get().post("addFragment",new AddFragmentBean(GoodDescFragment.getInstance(list.get(layoutPosition).goodsId)));
         }
 
         @Override

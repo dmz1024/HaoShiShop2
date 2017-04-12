@@ -11,6 +11,7 @@ import com.jude.rollviewpager.adapter.LoopPagerAdapter;
 import java.util.ArrayList;
 
 import interfaces.ImageUrlBaseBean;
+import util.GlideUtil;
 
 /**
  * Created by dengmingzhi on 2016/12/19.
@@ -29,7 +30,7 @@ public class MyLoopPagerAdapter<D extends ImageUrlBaseBean > extends LoopPagerAd
         ImageView view = new ImageView(container.getContext());
         view.setScaleType(ImageView.ScaleType.FIT_XY);
         view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        Glide.with(container.getContext()).load(urls.get(position).getUrl()).into(view);
+        GlideUtil.GlideErrAndOc(container.getContext(),urls.get(position).getUrl(),view);
         return view;
     }
 

@@ -40,17 +40,6 @@ public class MessagesImpl extends ChatBaseBean<MessageBean, MessageBeanDao> {
     }
 
 
-//    public MessageBean select(MessageBean bean) {
-//        if (TextUtils.isEmpty(bean.getTouid())) {
-//            return getDao().queryBuilder()
-//                    .where(MessageBeanDao.Properties.Id.eq(bean.getUid()), ChatMessageBeanDao.Properties.Groupid.eq(bean.getGroupid()))
-//                    .build().unique();
-//        }
-//        return getDao().queryBuilder()
-//                .where(ChatMessageBeanDao.Properties.Uid.eq(bean.getUid()), ChatMessageBeanDao.Properties.Touid.eq(bean.getTouid()))
-//                .build().unique();
-//    }
-
     @Override
     protected List<MessageBean> getAll() {
         return getDao().queryBuilder().orderDesc(MessageBeanDao.Properties.Time).build().list();

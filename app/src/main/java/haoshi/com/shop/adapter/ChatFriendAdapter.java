@@ -59,12 +59,12 @@ public class ChatFriendAdapter extends BaseAdapter<ChatFriendBean> {
 
         @Override
         protected void onClick(int layoutPosition) {
+            ChatFriendBean chatFriendBean = list.get(layoutPosition);
             if (sendShape) {
-                RxBus.get().post("back","back");
-                RxBus.get().post("sendShare", list.get(layoutPosition).getFid());
+                RxBus.get().post("back", "back");
+                RxBus.get().post("initSendFriendRxBus", new String[]{chatFriendBean.getFid(), chatFriendBean.getType() + ""});
             } else {
-                ChatFriendBean data = list.get(layoutPosition);
-                RxBus.get().post("addFragment", new AddFragmentBean(ChatViewFragment.getInstance(data.getType(), data.getName(), data.getFid())));
+                RxBus.get().post("addFragment", new AddFragmentBean(ChatViewFragment.getInstance(chatFriendBean.getType(), chatFriendBean.getName(), chatFriendBean.getFid())));
             }
 
         }

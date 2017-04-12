@@ -33,12 +33,15 @@ public abstract class BaseAdapter<D> extends RecyclerView.Adapter<RecyclerView.V
 
     public BaseAdapter(ArrayList<D> list) {
         this.list = list;
+        if(this.list==null){
+            this.list=new ArrayList<>();
+        }
     }
 
 
     @Override
     public int getItemCount() {
-        return list!=null?list.size():0;
+        return list.size();
     }
 
 

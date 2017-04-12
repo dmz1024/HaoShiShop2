@@ -17,6 +17,7 @@ public class DiscoverBean extends ListBaseBean<ArrayList<DiscoverBean.Data>> {
 
         public static class ListBean {
             public String goodsId;
+            public String shareContent;
             public String goodsCatId;
             public String goodsName;
             public String userId;

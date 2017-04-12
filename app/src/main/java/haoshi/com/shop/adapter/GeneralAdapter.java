@@ -269,11 +269,7 @@ public class GeneralAdapter extends BaseAdapter<GeneralBean> {
 
         @Override
         protected void itemOnclick(int id, int layoutPosition) {
-            if (layoutPosition == list.size() - 1) {
-                new PopContactService(ctx).showAtLocation(false);
-            } else if (list.get(layoutPosition).fragment != null) {
-                RxBus.get().post("addFragment", new AddFragmentBean(list.get(layoutPosition).fragment));
-            }
+            chooseItem(layoutPosition);
         }
     }
 

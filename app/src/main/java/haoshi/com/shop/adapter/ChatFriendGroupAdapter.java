@@ -16,6 +16,7 @@ import butterknife.BindView;
 import haoshi.com.shop.R;
 import haoshi.com.shop.bean.chat.dao.ChatFriendGroupBean;
 import util.ListUtils;
+import util.RxBus;
 
 
 /**
@@ -70,6 +71,7 @@ public class ChatFriendGroupAdapter extends BaseAdapter<ChatFriendGroupBean> {
             tv_name.setOnClickListener(this);
             iv_edit.setOnClickListener(this);
         }
+
 
         @Override
         protected void itemOnclick(int id, int layoutPosition) {

@@ -1,9 +1,13 @@
 package haoshi.com.shop.activity;
 
+
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
 
 import com.canyinghao.canphotos.CanPhotoHelper;
@@ -78,18 +82,27 @@ public class MainActivity extends BaseActivity {
                 .setName(chat.from_client_name)
                 .setContent(chat.content).show();
 
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle(chat.from_client_name)
+                .setContentText(chat.content);
+
+        NotificationManager mNotificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager.notify("id", 0, mBuilder.build());
+
         changeMessage(chat);
     }
 
     private Ringtone r;
 
     private void changeMessage(ReceiveChatBean chat) {
+
         if (r == null) {
             Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
             r = RingtoneManager.getRingtone(getApplicationContext(), notification);
         }
         r.play();
-
 
         ChatMessageBean bean = new ChatMessageBean();
         boolean isG = TextUtils.isEmpty(chat.touid);

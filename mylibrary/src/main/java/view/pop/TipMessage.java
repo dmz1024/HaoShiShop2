@@ -4,6 +4,7 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.mall.naiqiao.mylibrary.R;
 
@@ -27,17 +28,13 @@ public class TipMessage extends PopBaseView implements View.OnClickListener {
     @Override
     protected View getView() {
         View view = View.inflate(ctx, R.layout.tip_message, null);
-        Color2Text tv_message = (Color2Text) view.findViewById(R.id.tv_message);
+        TextView tv_title = (TextView) view.findViewById(R.id.tv_title);
+        TextView tv_message = (TextView) view.findViewById(R.id.tv_message);
         Button bt_left = (Button) view.findViewById(R.id.bt_left);
         Button bt_right = (Button) view.findViewById(R.id.bt_right);
         View view_divider = view.findViewById(R.id.view_divider);
-        if (!TextUtils.isEmpty(tipMessageBean.title)) {
-            tv_message.setChange(tipMessageBean.title + "\n", tipMessageBean.content);
-        } else {
-            tv_message.setTextNotChange(tipMessageBean.content);
-        }
-
-
+        tv_title.setText(TextUtils.isEmpty(tipMessageBean.title) ? "提示" : tipMessageBean.title);
+        tv_message.setText(tipMessageBean.content);
         if (!TextUtils.isEmpty(tipMessageBean.left)) {
             bt_left.setOnClickListener(this);
             bt_left.setVisibility(View.VISIBLE);
@@ -71,6 +68,7 @@ public class TipMessage extends PopBaseView implements View.OnClickListener {
         } else if (v.getId() == R.id.bt_right) {
             right();
         }
+
     }
 
     protected void right() {

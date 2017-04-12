@@ -1,8 +1,10 @@
 package haoshi.com.shop.fragment.chat;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -34,6 +36,7 @@ import butterknife.OnClick;
 import haoshi.com.shop.R;
 import haoshi.com.shop.adapter.ChatAdapter;
 import haoshi.com.shop.bean.chat.MessageBean;
+import haoshi.com.shop.bean.chat.dao.SendBean;
 import haoshi.com.shop.bean.chat.impl.ChatViewsImpl;
 import haoshi.com.shop.bean.chat.FileBean;
 import haoshi.com.shop.bean.chat.PhotoBean;
@@ -46,6 +49,8 @@ import haoshi.com.shop.bean.chat.impl.PhotoImpl;
 import haoshi.com.shop.bean.chat.impl.SoundImpl;
 import haoshi.com.shop.bean.chat.impl.TextImpl;
 
+import haoshi.com.shop.controller.SendMessageController;
+import haoshi.com.shop.fragment.discover.MyDiscoverSendFragment;
 import haoshi.com.shop.fragment.zongqinghui.FlockInfoFragment;
 import haoshi.com.shop.constant.UserInfo;
 import haoshi.com.shop.controller.ChatSendMessageController;
@@ -62,6 +67,7 @@ import util.FileUtil;
 import util.RxBus;
 import util.Util;
 import view.DefaultTitleBarView;
+import view.KeyboardListenRelativeLayout;
 import view.MyButton;
 import view.pop.SendSoundView;
 
@@ -85,7 +91,7 @@ public class ChatViewFragment extends NotNetWorkBaseFragment implements MyButton
     @BindView(R.id.ll_bottom)
     LinearLayout ll_bottom;
     @BindView(R.id.rl_root)
-    RelativeLayout rl_root;
+    KeyboardListenRelativeLayout rl_root;
     private ArrayList<ChatViewBean> datas = new ArrayList<>();
     private ChatAdapter mAdapter;
     LinearLayoutManager manager;
@@ -97,12 +103,20 @@ public class ChatViewFragment extends NotNetWorkBaseFragment implements MyButton
         message.subscribe(new Action1<String>() {
             @Override
             public void call(String s) {
-                Log.d("这里啊", "ddd");
-                datas.clear();
-                datas.addAll(ChatViewsImpl.getInstance().setFid(id).getDatas());
-                mAdapter.notifyDataSetChanged();
+                initDatas();
             }
         });
+    }
+
+
+    @OnClick(R.id.tv_send)
+    void send() {
+        initSendSend();
+        AddFragmentBean addFragmentBean = new AddFragmentBean();
+        addFragmentBean.setFragment(MyDiscoverSendFragment.getInstance(true));
+        addFragmentBean.setInAnimation(R.anim.form_2_up);
+        addFragmentBean.setOutAnimation(R.anim.go_2_down);
+        RxBus.get().post("addFragment", addFragmentBean);
     }
 
 
@@ -199,36 +213,10 @@ public class ChatViewFragment extends NotNetWorkBaseFragment implements MyButton
                 @Override
                 public void call(ChooseFileRxBus chooseFileRxBus) {
                     if (chooseFileRxBus.index == 0) {
-                        File file = new File(chooseFileRxBus.result);
-                        StringBuilder exend = new StringBuilder();
-                        String fileType = FileUtil.getFileType(chooseFileRxBus.result);
-                        String fileSize = Formatter.formatFileSize(getContext(), FileUtil.getFileSize(file));
-                        String fileName = file.getName();
-                        exend.append(fileType)
-                                .append(",")
-                                .append(fileSize)
-                                .append(",")
-                                .append(fileName);
-
+                        SendMessageController.getInstance().sendFile(id, type + "", chooseFileRxBus.result);
                         ll_send.setVisibility(View.GONE);
-                        //TODO 发送文件
-                        String sign = UserInfo.getSign(id);
-                        ChatViewBean vb = new ChatViewBean();
-                        vb.setSign(sign);
-                        vb.setFid(id);
-                        vb.setStatus(0);
-                        vb.setFrom(2);
-                        vb.setIsRead(0);
-                        long time = System.currentTimeMillis();
-                        vb.setTime(time);
-                        vb.setType(4);
-                        FileImpl.getInstance().add(new FileBean(sign, chooseFileRxBus.result, 0, 1, fileType, fileName, fileSize));
-                        ChatViewsImpl.getInstance().add(vb);
-                        MessagesImpl.getInstance().addM(new MessageBean(id, time, 4, 1, 2, sign));
-                        RxBus.get().post("message", "");
                         toBottom();
                         initDatas();
-                        ChatSendMessageController.getInstance().sendFile(sign, chooseFileRxBus.result, type == 1 ? "" : id, type == 1 ? id : "", exend.toString());
                     }
 
                 }
@@ -246,29 +234,30 @@ public class ChatViewFragment extends NotNetWorkBaseFragment implements MyButton
                 @Override
                 public void call(PhotoRxbus photoRxbus) {
                     if (photoRxbus.index == 2) {
+                        SendMessageController.getInstance().sendPhoto(id, type + "", ((String) photoRxbus.result));
                         ll_send.setVisibility(View.GONE);
-                        //TODO 发送照片
-                        String sign = UserInfo.getSign(id);
-                        ChatViewBean vb = new ChatViewBean();
-                        vb.setSign(sign);
-                        vb.setFid(id);
-                        vb.setStatus(0);
-                        vb.setFrom(2);
-                        vb.setIsRead(0);
-                        long time = System.currentTimeMillis();
-                        vb.setTime(time);
-                        vb.setType(3);
-
-                        int[] size = BitmapUtil.getBitmapSize((String) photoRxbus.result);
-
-                        PhotoImpl.getInstance().add(new PhotoBean(sign, (String) photoRxbus.result, size[0], size[1], 1));
-                        ChatViewsImpl.getInstance().add(vb);
-                        MessagesImpl.getInstance().addM(new MessageBean(id, time, 3, 1, 2, sign));
-                        RxBus.get().post("message", "");
                         toBottom();
                         initDatas();
-                        ChatSendMessageController.getInstance().sendPhoto(sign, (String) photoRxbus.result, type == 1 ? "" : id, type == 1 ? id : "", size[0] + "," + size[1]);
                     }
+                }
+            });
+        }
+
+    }
+
+
+    private Observable<SendBean> sendSendRxBus;
+
+    private void initSendSend() {
+        if (sendSendRxBus == null) {
+            sendSendRxBus = RxBus.get().register("sendSendRxBus", SendBean.class);
+            sendSendRxBus.subscribe(new Action1<SendBean>() {
+                @Override
+                public void call(SendBean send) {
+                    SendMessageController.getInstance().sendSend(false, id, type + "", send.getDesc(), send.getName(), send.getId(), send.getImg());
+                    ll_send.setVisibility(View.GONE);
+                    toBottom();
+                    initDatas();
                 }
             });
         }
@@ -290,65 +279,19 @@ public class ChatViewFragment extends NotNetWorkBaseFragment implements MyButton
         return false;
     }
 
-//    map.put("touid", content[1]);
-//    map.put("groupid", content[2]);
-//    map.put("content", content[3]);
-//    map.put("type", content[4]);
-
     /**
      * 发送普通文本
      *
      * @param content
      */
     private void sendContent(String content) {
-        String sign = UserInfo.getSign(id);
-        ChatViewBean vb = new ChatViewBean();
-        vb.setSign(sign);
-        vb.setFid(id);
-        vb.setStatus(0);
-        vb.setFrom(2);
-        vb.setIsRead(0);
-        long time = System.currentTimeMillis();
-        vb.setTime(time);
-        vb.setType(1);
-        TextImpl.getInstance().add(new TextBean(sign, content, 1));
-        ChatViewsImpl.getInstance().add(vb);
-        MessagesImpl.getInstance().addM(new MessageBean(id, time, 1, 1, 2, sign));
-        RxBus.get().post("message", "");
+        SendMessageController.getInstance().sendText(id, type + "", content);
         initDatas();
         toBottom();
         hideInput();
         et_content.clearFocus();
-        ChatSendMessageController.getInstance().sendText(sign, type == 1 ? "" : id, type == 1 ? id : "", content, "1");
     }
 
-
-    public void record() {
-        soundView = new SendSoundView(getContext()) {
-            @Override
-            public void filePath(String... path) {
-                String sign = UserInfo.getSign(id);
-                ChatViewBean vb = new ChatViewBean();
-                vb.setSign(sign);
-                vb.setFid(id);
-                vb.setStatus(0);
-                vb.setFrom(2);
-                vb.setIsRead(0);
-                long time = System.currentTimeMillis();
-                vb.setTime(time);
-                vb.setType(2);
-                SoundImpl.getInstance().add(new SoundBean(sign, path[0], Integer.parseInt(path[1]), 0, 1));
-                MessagesImpl.getInstance().addM(new MessageBean(id, time, 2, 1, 2, sign));
-                ChatViewsImpl.getInstance().add(vb);
-                RxBus.get().post("message", "");
-                initDatas();
-                toBottom();
-                ChatSendMessageController.getInstance().sendSound(sign, path[0], type == 1 ? "" : id, type == 1 ? id : "", path[1]);
-            }
-        };
-
-        soundView.setButton(bt_send).showAtLocation(true);
-    }
 
     private void initDatas() {
         datas.clear();
@@ -365,7 +308,8 @@ public class ChatViewFragment extends NotNetWorkBaseFragment implements MyButton
         et_content.setOnFocusChangeListener(this);
     }
 
-    private int rootInvisibleHeight = 800;
+
+    private int rootInvisibleHeight = 0;
 
     @Override
     protected String getBackColor() {
@@ -386,6 +330,9 @@ public class ChatViewFragment extends NotNetWorkBaseFragment implements MyButton
         Util.chooseFile(getActivity(), "*/*");
     }
 
+    /**
+     * 显示隐藏底部按钮
+     */
     @OnClick(R.id.iv_send)
     void sendFile() {
         if (ll_send.getVisibility() == View.GONE) {
@@ -395,6 +342,9 @@ public class ChatViewFragment extends NotNetWorkBaseFragment implements MyButton
         }
     }
 
+    /**
+     * 显示隐藏语音
+     */
     @OnClick(R.id.iv_mode)
     void mode() {
         ll_send.setVisibility(View.GONE);
@@ -409,9 +359,21 @@ public class ChatViewFragment extends NotNetWorkBaseFragment implements MyButton
         }
     }
 
+    /**
+     * 发送语音
+     */
     @Override
     public void onDown() {
-        record();
+        soundView = new SendSoundView(getContext()) {
+            @Override
+            public void filePath(String... path) {
+                initDatas();
+                toBottom();
+                SendMessageController.getInstance().sendSound(path, id, type + "");
+            }
+        };
+
+        soundView.setButton(bt_send).showAtLocation(true);
     }
 
     @Override
@@ -438,16 +400,21 @@ public class ChatViewFragment extends NotNetWorkBaseFragment implements MyButton
         //取得 rootView 不可视区域高度 (被其他View遮挡的区域高度)
         int height = Util.getHeight() - (rect.bottom);
 //                要是不可视区域高度大于100，则输入键盘就显示
-        if (height > Util.getHeight() / 3 && rootInvisibleHeight == 800) {
+        if (height > Util.getHeight() / 3 && rootInvisibleHeight == 100) {
             rootInvisibleHeight = height;
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) ll_bottom.getLayoutParams();
+            params.setMargins(0, 0, 0, rootInvisibleHeight);
+            ll_bottom.setLayoutParams(params);
         }
     }
+
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         RxBus.get().unregister("chooseFileRxBus", chooseFileRxBus);
         RxBus.get().unregister("photoRxBus", choosePhotoRxBus);
+        RxBus.get().unregister("sendSendRxBus", sendSendRxBus);
         RxBus.get().unregister("viewmessage", message);
         ll_bottom.getViewTreeObserver().removeGlobalOnLayoutListener(this);
     }
@@ -459,7 +426,6 @@ public class ChatViewFragment extends NotNetWorkBaseFragment implements MyButton
 
     @Override
     public void right() {
-        Log.d("dd", "aaaaaa"+type);
         switch (type) {
             case 1:
                 RxBus.get().post("addFragment", new AddFragmentBean(FlockInfoFragment.getInstance(id)));

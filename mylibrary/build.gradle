@@ -3,8 +3,8 @@ apply plugin: 'com.android.library'
 android {
     signingConfigs {
     }
-    compileSdkVersion 24
-    buildToolsVersion "24.0.2"
+    compileSdkVersion 23
+    buildToolsVersion '23.0.0'
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 24
@@ -68,4 +68,10 @@ dependencies {
     //https://github.com/lovedise/PermissionGen
     compile 'com.lovedise:permissiongen:0.0.6'
     compile files('libs/universal-image-loader-1.9.5.jar')
+    //https://github.com/saiwu-bigkoo/Android-PickerView
+    compile 'com.bigkoo:pickerview:2.1.1'
+    //https://github.com/zzhoujay/RichText
+    compile 'com.zzhoujay.richtext:richtext:2.4.6'
+    //https://github.com/lygttpod/SuperTextView
+    compile 'com.github.lygttpod:SuperTextView:1.1.2'
 }

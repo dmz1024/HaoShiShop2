@@ -1,6 +1,7 @@
 package haoshi.com.shop.fragment.shop;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -55,6 +56,16 @@ public class GoodCollectFragment extends ListNetWorkBaseFragment<GoodCollectBean
     protected boolean isCanRefresh() {
         return false;
     }
+
+
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        if (!isFirst) {
+//            Log.d("ddd","onResume");
+//            getData();
+//        }
+//    }
 
     @Override
     public void left() {

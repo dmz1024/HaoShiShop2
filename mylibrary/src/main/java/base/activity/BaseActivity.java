@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 
 import com.mall.naiqiao.mylibrary.R;
+
 import base.bean.rxbus.AddFragmentBean;
 import rx.Observable;
 import rx.functions.Action1;
@@ -31,19 +32,24 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);//防止编辑框被键盘遮住
+        setContentView(R.layout.activity_main);
+        initView();
         ContextUtil.setContext(this);
         ContextUtil.setActivity(this);
-        setContentView(R.layout.activity_main);
         if (WindowUtil.setBarTrans()) {
             setShowBar(barView = findViewById(R.id.fg_bar));
             initChangeBarColor();
         }
+
         initBackRxBus();
         initFragmentRxBus();
         initData();
     }
 
-    private void initPhoto() {
+    protected void initView() {
+    }
+
+    protected void initPhoto() {
 
     }
 
@@ -131,6 +137,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         backRxBus.subscribe(new Action1<String>() {
             @Override
             public void call(String bean) {
+                Log.d("这里", "ddd");
                 getSupportFragmentManager().popBackStack();
             }
         });

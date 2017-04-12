@@ -32,12 +32,16 @@ import haoshi.com.shop.bean.chat.SoundBean;
 import haoshi.com.shop.bean.chat.TextBean;
 import haoshi.com.shop.bean.chat.dao.ChatFriendBean;
 import haoshi.com.shop.bean.chat.dao.ChatViewBean;
+import haoshi.com.shop.bean.chat.dao.SendBean;
 import haoshi.com.shop.bean.chat.impl.ChatFriendsImpl;
 import haoshi.com.shop.bean.chat.impl.FileImpl;
 import haoshi.com.shop.bean.chat.impl.PhotoImpl;
+import haoshi.com.shop.bean.chat.impl.SendImpl;
 import haoshi.com.shop.bean.chat.impl.SoundImpl;
 import haoshi.com.shop.bean.chat.impl.TextImpl;
 import haoshi.com.shop.controller.ChatSendMessageController;
+import haoshi.com.shop.fragment.discover.DiscoverDescFragment;
+import haoshi.com.shop.fragment.shop.GoodDescFragment;
 import haoshi.com.shop.fragment.zongqinghui.FriendInfoFragment;
 import util.GlideUtil;
 import util.MyToast;
@@ -76,6 +80,10 @@ public class ChatAdapter extends BaseAdapter<ChatViewBean> {
                 return new FileBaseHolder(getView(R.layout.item_chat_view_left_file, parent));
             case 8:
                 return new FileRightHolder(getView(R.layout.item_chat_view_right_file, parent));
+            case 9:
+                return new SendLeftHolder(getView(R.layout.item_chat_view_left_send, parent));
+            case 10:
+                return new SendRightHolder(getView(R.layout.item_chat_view_right_send, parent));
 
         }
         return new SoundBaseHolder(View.inflate(ctx, android.R.layout.simple_list_item_1, null));
@@ -106,7 +114,6 @@ public class ChatAdapter extends BaseAdapter<ChatViewBean> {
         ChatViewBean data = list.get(position);
         ChatBaseHolder baseHolder = (ChatBaseHolder) holder;
         ChatFriendBean fUser = ChatFriendsImpl.getInstance().select(data.getFid());
-//        Log.d("dddH", fUser.getHeader());
         GlideUtil.GlideErrAndOc(ctx, fUser.getHeader(), baseHolder.iv_head);
         baseHolder.tv_time.setText(TimeUtils.formatTime(data.getTime()));
         int from = data.getFrom();
@@ -269,6 +276,33 @@ public class ChatAdapter extends BaseAdapter<ChatViewBean> {
                         fileRightHolder.tv_status.setText("发送失败");
                         fileRightHolder.pb_loading.setVisibility(View.GONE);
                         fileRightHolder.iv_tip.setVisibility(View.VISIBLE);
+                    }
+                }
+                break;
+            case 9:
+            case 10:
+                SendLeftHolder sendLeftHolder = (SendLeftHolder) holder;
+                SendBean sendBean = SendImpl.getInstance().select(data.getSign());
+                sendLeftHolder.tv_content.setText(sendBean.getDesc());
+                sendLeftHolder.tv_title.setText(sendBean.getName());
+                GlideUtil.GlideErrAndOc(ctx,sendBean.getImg(),sendLeftHolder.iv_img);
+                if (type == 10) {
+                    SendRightHolder textRightHolder = (SendRightHolder) holder;
+                    int status = sendBean.getStatus();
+                    if (status == 1) {
+                        if (System.currentTimeMillis() - data.getTime() >= 50000) {
+                            status = 3;
+                        }
+                    }
+                    if (status == 1) {
+                        textRightHolder.pb_loading.setVisibility(View.VISIBLE);
+                        textRightHolder.iv_tip.setVisibility(View.GONE);
+                    } else if (status == 2) {
+                        textRightHolder.pb_loading.setVisibility(View.GONE);
+                        textRightHolder.iv_tip.setVisibility(View.GONE);
+                    } else {
+                        textRightHolder.pb_loading.setVisibility(View.GONE);
+                        textRightHolder.iv_tip.setVisibility(View.VISIBLE);
                     }
                 }
                 break;
@@ -495,15 +529,43 @@ public class ChatAdapter extends BaseAdapter<ChatViewBean> {
             iv_tip.setOnClickListener(this);
         }
 
-        @Override
-        protected void itemOnclick(int id, int layoutPosition) {
-            switch (id) {
-                case R.id.iv_tip:
+    }
 
-                    break;
-            }
+    public class SendRightHolder extends SendLeftHolder {
+        @BindView(R.id.pb_loading)
+        ProgressBar pb_loading;
+        @BindView(R.id.iv_tip)
+        ImageView iv_tip;
+
+        public SendRightHolder(View itemView) {
+            super(itemView);
+            iv_tip.setOnClickListener(this);
         }
 
+    }
+
+    public class SendLeftHolder extends ChatBaseHolder {
+        @BindView(R.id.tv_title)
+        TextView tv_title;
+        @BindView(R.id.tv_content)
+        TextView tv_content;
+        @BindView(R.id.iv_img)
+        ImageView iv_img;
+
+        public SendLeftHolder(View itemView) {
+            super(itemView);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        protected void onClick(int layoutPosition) {
+            SendBean sendBean = SendImpl.getInstance().select(list.get(layoutPosition).getSign());
+            if (sendBean.getIsGoods()) {
+                RxBus.get().post("addFragment", new AddFragmentBean(GoodDescFragment.getInstance(sendBean.getId())));
+            } else {
+                RxBus.get().post("addFragment", new AddFragmentBean(DiscoverDescFragment.getInstance(sendBean.getId())));
+            }
+        }
     }
 
     public class PhotoBaseHolder extends ChatBaseHolder {

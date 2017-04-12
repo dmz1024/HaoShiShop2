@@ -77,7 +77,7 @@ public class AudioRecoderUtils {
             /* ②setAudioSource/setVedioSource */
             mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);// 设置麦克风
             /* ②设置音频文件的编码：AAC/AMR_NB/AMR_MB/Default 声音的（波形）的采样 */
-            mMediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.DEFAULT);
+            mMediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.AMR_NB);
             /*
              * ②设置输出文件的格式：THREE_GPP/MPEG-4/RAW_AMR/Default THREE_GPP(3gp格式
              * ，H263视频/ARM音频编码)、MPEG-4、RAW_AMR(只支持音频且音频编码要求为AMR_NB)
@@ -87,11 +87,14 @@ public class AudioRecoderUtils {
             filePath = FolderPath + System.currentTimeMillis() + ".amr";
             /* ③准备 */
             mMediaRecorder.setOutputFile(filePath);
+//            mMediaRecorder.setAudioSamplingRate(8000);
+//            mMediaRecorder.setAudioEncodingBitRate(64);
+//            mMediaRecorder.setAudioChannels(1);
             mMediaRecorder.setMaxDuration(MAX_LENGTH);
             mMediaRecorder.prepare();
             /* ④开始 */
             mMediaRecorder.start();
-            isStart=true;
+            isStart = true;
             // AudioRecord audioRecord.
             /* 获取开始时间* */
             startTime = System.currentTimeMillis();
@@ -110,6 +113,7 @@ public class AudioRecoderUtils {
     }
 
     private boolean isStart;
+
     /**
      * 停止录音
      */
@@ -121,8 +125,10 @@ public class AudioRecoderUtils {
         mMediaRecorder.reset();
         mMediaRecorder.release();
         mMediaRecorder = null;
+        if (audioStatusUpdateListener != null) {
+            audioStatusUpdateListener.onStop(filePath, ((endTime + 500 - startTime) / 1000) + "");
 
-        audioStatusUpdateListener.onStop(filePath);
+        }
         filePath = "";
         return endTime - startTime;
     }
@@ -166,7 +172,7 @@ public class AudioRecoderUtils {
 
         if (mMediaRecorder != null) {
             double ratio = (double) mMediaRecorder.getMaxAmplitude() / BASE;
-            double db = 0;// 分贝
+            double db;// 分贝
             if (ratio > 1) {
                 db = 20 * Math.log10(ratio);
                 if (null != audioStatusUpdateListener) {
@@ -189,11 +195,12 @@ public class AudioRecoderUtils {
         /**
          * 停止录音
          *
-         * @param filePath 保存路径
+         * @param content 保存路径
          */
-        void onStop(String filePath);
+        void onStop(String... content);
 
         void onError();
+
     }
 
 }

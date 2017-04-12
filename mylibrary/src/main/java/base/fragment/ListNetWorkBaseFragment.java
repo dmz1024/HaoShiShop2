@@ -2,7 +2,10 @@ package base.fragment;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
+
+import com.mall.naiqiao.mylibrary.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,6 +69,11 @@ public abstract class ListNetWorkBaseFragment<D extends ListBaseBean> extends Ne
     }
 
     @Override
+    protected int time() {
+        return 0;
+    }
+
+    @Override
     protected void writeData(boolean isWrite, D bean) {
         stopRefresh();
         manageFinish();
@@ -115,6 +123,7 @@ public abstract class ListNetWorkBaseFragment<D extends ListBaseBean> extends Ne
             getCurrentView(VIEW_SERVER_ERR);
         }
     }
+
 
     @Override
     protected void networkError() {
@@ -170,6 +179,8 @@ public abstract class ListNetWorkBaseFragment<D extends ListBaseBean> extends Ne
     protected LinearLayoutManager layoutManager;
     private OnShowListDataListener view;
     protected RecyclerView recyclerView;
+    private boolean isG;
+    private boolean b = false;
 
     @Override
     protected View getHaveDataView() {
@@ -199,12 +210,18 @@ public abstract class ListNetWorkBaseFragment<D extends ListBaseBean> extends Ne
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 isSlidingToLast = dy > 0;
-                if (onScrollListener != null) {
+
+                if (onScrollListener != null && isG) {
                     if (isSlidingToLast) {
-                        onScrollListener.toDown(dy, layoutManager.findFirstCompletelyVisibleItemPosition() == 0);
+                        onScrollListener.toTop(dy, b);
                     } else {
-                        onScrollListener.toTop(dy, layoutManager.findFirstCompletelyVisibleItemPosition() == 0);
+                        onScrollListener.toDown(dy, b);
                     }
+
+                }
+
+                if (!isG) {
+                    isG = true;
                 }
 
             }
@@ -213,9 +230,11 @@ public abstract class ListNetWorkBaseFragment<D extends ListBaseBean> extends Ne
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 //防止滑动被抢焦点
+                b = layoutManager.findFirstCompletelyVisibleItemPosition() == 0;
                 if (isCanRefresh()) {
-                    setRefresh(layoutManager.findFirstCompletelyVisibleItemPosition() == 0);
+                    setRefresh(b);
                 }
+
 //
                 // 当不滚动时
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
@@ -309,6 +328,7 @@ public abstract class ListNetWorkBaseFragment<D extends ListBaseBean> extends Ne
         return getTipLoadingBean();
     }
 
+
     @Override
     protected boolean isFormListNet() {
         return true;
@@ -338,4 +358,8 @@ public abstract class ListNetWorkBaseFragment<D extends ListBaseBean> extends Ne
     }
 
 
+    @Override
+    protected View getNoDataView() {
+        return View.inflate(getContext(), R.layout.view_no_data, null);
+    }
 }

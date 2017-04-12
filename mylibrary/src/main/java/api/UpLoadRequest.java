@@ -49,7 +49,7 @@ public abstract class UpLoadRequest<T extends BaseBean> {
                 }
                 if (finalTipLoading != null) {
                     finalTipLoading.showAtLocation(true);
-                    finalTipLoading.setLoadingContent("正在上传");
+                    finalTipLoading.setLoadingContent("正在上传图片");
                 }
             }
 

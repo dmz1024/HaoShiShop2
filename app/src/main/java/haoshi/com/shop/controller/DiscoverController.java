@@ -14,9 +14,9 @@ import interfaces.OnSingleRequestListener;
  * Created by dengmingzhi on 2017/3/19.
  */
 
-public class DiscoverCollectController {
-    public static DiscoverCollectController getInstance() {
-        return new DiscoverCollectController();
+public class DiscoverController {
+    public static DiscoverController getInstance() {
+        return new DiscoverController();
     }
 
 
@@ -30,7 +30,6 @@ public class DiscoverCollectController {
                 map.put("goodsId", catId);
                 return map;
             }
-
 
 
             @Override
@@ -49,10 +48,12 @@ public class DiscoverCollectController {
 
                 return super.getMsg(code);
             }
+
             @Override
             protected boolean getShowSucces() {
                 return false;
             }
+
             @Override
             protected Class<SingleBaseBean> getClx() {
                 return SingleBaseBean.class;
@@ -99,6 +100,48 @@ public class DiscoverCollectController {
                 return SingleBaseBean.class;
             }
         }.setOnRequestListeren(listener).post(new TipLoadingBean("取消收藏", "", "取消失败"));
+
+    }
+
+
+    public void cancelSend(final String catId, OnSingleRequestListener<SingleBaseBean> listener) {
+        new ApiRequest<SingleBaseBean>() {
+            @Override
+            protected Map<String, String> getMap() {
+                Map<String, String> map = new HashMap<>();
+                map.put("userId", UserInfo.userId);
+                map.put("token", UserInfo.token);
+                map.put("goodsId", catId);
+                return map;
+            }
+
+            @Override
+            protected String getUrl() {
+                return ApiConstant.DELETEISSUES;
+            }
+
+            @Override
+            protected String getMsg(int code) {
+                switch (code) {
+                    case 10001:
+                        return "取消失败";
+                    case 10018:
+                        return "发布不存在";
+                }
+
+                return super.getMsg(code);
+            }
+
+            @Override
+            protected boolean getShowSucces() {
+                return false;
+            }
+
+            @Override
+            protected Class<SingleBaseBean> getClx() {
+                return SingleBaseBean.class;
+            }
+        }.setOnRequestListeren(listener).post(new TipLoadingBean("取消我的发布", "", "取消失败"));
 
     }
 

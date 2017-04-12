@@ -2,9 +2,15 @@ package audio;
 
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.net.Uri;
+import android.util.Log;
 
 import java.io.File;
 import java.io.IOException;
+
+import util.ContextUtil;
+import util.FileUtil;
+import util.StringUtil;
 
 /**
  * Created by dengmingzhi on 2017/2/23.
@@ -14,11 +20,33 @@ public class MediaPlayerUtils {
     private static MediaPlayer player;
     private static MediaPlayerUtils playerUtils;
 
-    public MediaPlayerUtils startPlay(String file) {
-        if (new File(file).exists()) {
+    public MediaPlayerUtils startPlay(String... file) {
+        if (file.length == 1) {
+            if (new File(file[0]).exists()) {
+                try {
+                    initPlayer();
+                    player.setDataSource(file[0]);
+                    player.prepare();
+                    player.start();
+                    isPause = false;
+                    if (onMediaPlayerListener != null) {
+                        onMediaPlayerListener.onStart();
+                    }
+                } catch (IOException e) {
+                    if (onMediaPlayerListener != null) {
+                        onMediaPlayerListener.onError();
+                    }
+                }
+            } else {
+                if (onMediaPlayerListener != null) {
+                    onMediaPlayerListener.onNoFile();
+                }
+            }
+        } else {
             try {
                 initPlayer();
-                player.setDataSource(file);
+                Log.d("音频", file[0]);
+                player.setDataSource(ContextUtil.getCtx(), Uri.parse(file[0]));
                 player.prepare();
                 player.start();
                 isPause = false;
@@ -30,12 +58,7 @@ public class MediaPlayerUtils {
                     onMediaPlayerListener.onError();
                 }
             }
-        } else {
-            if (onMediaPlayerListener != null) {
-                onMediaPlayerListener.onNoFile();
-            }
         }
-
         return playerUtils;
     }
 

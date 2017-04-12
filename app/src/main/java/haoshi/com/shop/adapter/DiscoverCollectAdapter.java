@@ -18,7 +18,7 @@ import base.bean.rxbus.AddFragmentBean;
 import butterknife.BindView;
 import haoshi.com.shop.R;
 import haoshi.com.shop.bean.discover.DiscoverBean;
-import haoshi.com.shop.controller.DiscoverCollectController;
+import haoshi.com.shop.controller.DiscoverController;
 import haoshi.com.shop.fragment.discover.DiscoverDescFragment;
 import interfaces.OnSingleRequestListener;
 import util.GlideUtil;
@@ -142,7 +142,7 @@ public class DiscoverCollectAdapter extends BaseAdapter<DiscoverBean.Data> {
             super.itemOnclick(id, layoutPosition);
             switch (id) {
                 case R.id.tv_delete:
-                    DiscoverCollectController.getInstance().cancelCollect(list.get(layoutPosition).list.goodsId, new OnSingleRequestListener<SingleBaseBean>() {
+                    DiscoverController.getInstance().cancelCollect(list.get(layoutPosition).list.goodsId, new OnSingleRequestListener<SingleBaseBean>() {
                         @Override
                         public void succes(boolean isWrite, SingleBaseBean bean) {
                             remove(layoutPosition);

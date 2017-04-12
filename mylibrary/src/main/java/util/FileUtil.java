@@ -1,7 +1,12 @@
 package util;
 
+import android.content.Context;
+import android.os.Environment;
+
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -80,4 +85,63 @@ public class FileUtil {
     }
 
 
+    /**
+     * 得到SD卡根目录.
+     */
+    public static File getRootPath(Context context) {
+        if (FileUtil.sdCardIsAvailable()) {
+            return Environment.getExternalStorageDirectory(); // 取得sdcard文件路径
+        } else {
+            return context.getFilesDir();
+        }
+    }
+
+    /**
+     * SD卡是否可用.
+     */
+    public static boolean sdCardIsAvailable() {
+        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+            File sd = new File(Environment.getExternalStorageDirectory().getPath());
+            return sd.canWrite();
+        } else
+            return false;
+    }
+
+    /**
+     * 获取指定文件大小(单位：字节)
+     *
+     * @param file
+     * @return
+     * @throws Exception
+     */
+    public static long getFileSize(File file) {
+        if (file == null) {
+            return 0;
+        }
+        long size = 0;
+        if (file.exists()) {
+            FileInputStream fis = null;
+            try {
+                fis = new FileInputStream(file);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            try {
+                size = fis.available();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return size;
+    }
+
+
+    /**
+     * 获取文件类型
+     * @param path
+     * @return
+     */
+    public static String getFileType(String path) {
+        return path.substring(path.lastIndexOf(".") + 1);
+    }
 }

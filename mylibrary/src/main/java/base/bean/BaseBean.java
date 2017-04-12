@@ -1,5 +1,7 @@
 package base.bean;
 
+import java.util.ArrayList;
+
 /**
  * Created by dengmingzhi on 2016/11/15.
  */

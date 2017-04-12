@@ -12,7 +12,9 @@ import haoshi.com.shop.bean.chat.dao.ChatBaseBean;
 import haoshi.com.shop.bean.chat.dao.ChatMessageBean;
 import haoshi.com.shop.bean.chat.dao.ChatViewBean;
 import haoshi.com.shop.bean.chat.dao.ChatViewBeanDao;
+import haoshi.com.shop.bean.chat.dao.SendBean;
 import haoshi.com.shop.constant.UserInfo;
+import util.JsonUtil;
 
 /**
  * Created by dengmingzhi on 2017/1/18.
@@ -61,7 +63,7 @@ public class ChatViewsImpl extends ChatBaseBean<ChatViewBean, ChatViewBeanDao> {
         String id = isU ? bean.getGroupid() : bean.getUid();
         c.setFid(id);
         c.setType(bean.getType());
-        c.setTime(bean.getCreatetime()*1000);
+        c.setTime(bean.getCreatetime() * 1000);
         c.setIsRead(1);
         c.setStatus(0);
         c.setFrom(1);
@@ -85,6 +87,10 @@ public class ChatViewsImpl extends ChatBaseBean<ChatViewBean, ChatViewBeanDao> {
                 FileImpl.getInstance().add(fb);
                 break;
             case 5:
+                SendBean sendBean = JsonUtil.json2Bean(bean.getExtend(), SendBean.class);
+                sendBean.setSign(sign);
+                sendBean.setStatus(2);
+                SendImpl.getInstance().add(sendBean);
                 break;
         }
 

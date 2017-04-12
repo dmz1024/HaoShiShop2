@@ -28,6 +28,7 @@ import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import haoshi.com.shop.R;
+import haoshi.com.shop.bean.chat.dao.SendBean;
 import haoshi.com.shop.bean.shop.ShopInfoBean;
 import haoshi.com.shop.constant.ApiConstant;
 import haoshi.com.shop.controller.ShareUtil;
@@ -102,6 +103,16 @@ public class ShopInfoFragment extends BaseShapeFragment<ShopInfoBean> implements
         this.bean = bean;
         initVp();
         initShopInfo(bean.data);
+    }
+
+    @Override
+    protected boolean getIsGood() {
+        return false;
+    }
+
+    @Override
+    protected SendBean getSendBean() {
+        return null;
     }
 
     private void initShopInfo(ShopInfoBean.Data data) {

@@ -5,6 +5,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -19,13 +20,15 @@ import java.util.ArrayList;
 
 import base.fragment.NotNetWorkBaseFragment;
 import butterknife.BindView;
+import interfaces.OnTitleBarListener;
+import util.RxBus;
 import view.DefaultTitleBarView;
 
 /**
  * Created by dengmingzhi on 2016/12/7.
  */
 
-public abstract class TabIndicatorBaseFragment extends NotNetWorkBaseFragment {
+public abstract class TabIndicatorBaseFragment extends NotNetWorkBaseFragment implements OnTitleBarListener {
     public TabLayout tab;
     ViewPager vp_content;
     ArrayList<Fragment> fragments;
@@ -48,9 +51,24 @@ public abstract class TabIndicatorBaseFragment extends NotNetWorkBaseFragment {
             public CharSequence getPageTitle(int position) {
                 return tabTitles[position];
             }
-        });
 
+            @Override
+            public void finishUpdate(ViewGroup container) {
+                try {
+                    super.finishUpdate(container);
+                } catch (NullPointerException e) {
+                    Log.d("finishUpdate", e.getMessage() + "--");
+                }
+            }
+        });
         tab.setupWithViewPager(vp_content);
+        vp_content.setCurrentItem(getCurrent());
+    }
+
+
+
+    protected int getCurrent() {
+        return 0;
     }
 
 
@@ -83,6 +101,21 @@ public abstract class TabIndicatorBaseFragment extends NotNetWorkBaseFragment {
 
     @Override
     protected void initTitleView() {
-        ((DefaultTitleBarView) getTitleBar()).setTitleContent(getTitleContent());
+        ((DefaultTitleBarView) getTitleBar()).setTitleContent(getTitleContent()).setOnTitleBarListener(this);
+    }
+
+    @Override
+    public void left() {
+        RxBus.get().post("back","back");
+    }
+
+    @Override
+    public void right() {
+
+    }
+
+    @Override
+    public void center() {
+
     }
 }

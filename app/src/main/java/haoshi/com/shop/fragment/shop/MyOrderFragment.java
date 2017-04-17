@@ -9,11 +9,16 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.Map;
 
+import base.bean.TipLoadingBean;
 import base.fragment.ListNetWorkBaseFragment;
+import base.fragment.NetworkBaseFragment;
 import haoshi.com.shop.adapter.MyOrderAdapter;
 import haoshi.com.shop.bean.shop.MyOrderBean;
 import haoshi.com.shop.constant.ApiConstant;
 import haoshi.com.shop.constant.UserInfo;
+import rx.Observable;
+import rx.functions.Action1;
+import util.RxBus;
 
 /**
  * Created by dengmingzhi on 2017/3/10.
@@ -22,16 +27,18 @@ import haoshi.com.shop.constant.UserInfo;
 public class MyOrderFragment extends ListNetWorkBaseFragment<MyOrderBean> {
     private boolean isFirst;
 
-    public static MyOrderFragment getInstance(String type, boolean isFirst) {
+    public static MyOrderFragment getInstance(String type, boolean isFirst, int position) {
         MyOrderFragment fragment = new MyOrderFragment();
         Bundle bundle = new Bundle();
         bundle.putString("type", type);
         bundle.putBoolean("isFirst", isFirst);
+        bundle.putInt("position", position);
         fragment.setArguments(bundle);
         return fragment;
     }
 
     private String type;
+    private int position;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,12 +47,14 @@ public class MyOrderFragment extends ListNetWorkBaseFragment<MyOrderBean> {
         if (bundle != null) {
             type = bundle.getString("type");
             isFirst = bundle.getBoolean("isFirst");
+            position = bundle.getInt("position");
         }
     }
 
     @Override
     protected RecyclerView.Adapter getAdapter() {
-        return new MyOrderAdapter(getContext(), (ArrayList<MyOrderBean.Data>) totalList);
+
+        return new MyOrderAdapter(getContext(), (ArrayList<MyOrderBean.Data>) totalList, position);
     }
 
     @Override
@@ -63,6 +72,45 @@ public class MyOrderFragment extends ListNetWorkBaseFragment<MyOrderBean> {
         return super.map();
     }
 
+
+    @Override
+    protected ShowCurrentViewENUM getDefaultView() {
+        return ShowCurrentViewENUM.VIEW_HAVE_DATA;
+    }
+
+
+//    private Observable<Integer> orderManager;
+//
+//    private void initManagerOrder() {
+//        if (orderManager == null) {
+//            orderManager = RxBus.get().register("orderManager", Integer.class);
+//            orderManager.subscribe(new Action1<Integer>() {
+//                @Override
+//                public void call(Integer s) {
+//                    getData();
+//                }
+//            });
+//        }
+//
+//    }
+
+
+    @Override
+    protected boolean showSucces() {
+        return false;
+    }
+
+
+    @Override
+    protected TipLoadingBean getTipLoadingBeanForListNet() {
+        return new TipLoadingBean();
+    }
+
+    @Override
+    protected boolean showInfo() {
+        return false;
+    }
+
     @Override
     protected Class<MyOrderBean> getTClass() {
         return MyOrderBean.class;
@@ -75,7 +123,7 @@ public class MyOrderFragment extends ListNetWorkBaseFragment<MyOrderBean> {
 
     @Override
     protected boolean isOnlyInitOne() {
-        return true;
+        return false;
     }
 
     @Override
@@ -92,7 +140,14 @@ public class MyOrderFragment extends ListNetWorkBaseFragment<MyOrderBean> {
     public void onDestroy() {
         super.onDestroy();
         if (mAdapter != null) {
-            ((MyOrderAdapter) mAdapter).cancelRxBus();
+            ((MyOrderAdapter) mAdapter).onDestroy();
         }
+
+//        RxBus.get().unregister("orderManager",orderManager);
+    }
+
+    @Override
+    protected int time() {
+        return super.time();
     }
 }

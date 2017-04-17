@@ -264,7 +264,7 @@ public class GeRenAuthentFragment extends SingleNetWorkBaseFragment<GeRenAuthent
                 }.setOnRequestListeren(new OnSingleRequestListener<SingleBaseBean>() {
                     @Override
                     public void succes(boolean isWrite, SingleBaseBean bean) {
-                        RxBus.get().post("fivegetdata", "");
+                        RxBus.get().post("fivegetdata", "geren");
                         RxBus.get().post("back", "back");
                     }
 

@@ -35,6 +35,7 @@ public interface ApiConstant {
     String ISSEES = BASE + "app.php/home/Helpcenter/isSees";
     String ZANME = BASE + "app.php/home/Helpcenter/zanMe";
     String ISZAN = BASE + "app.php/home/Helpcenter/isZan";
+    String CANCELZAN = BASE + "app.php/home/Helpcenter/cancelZan";
     String ISCOMMENTSEES = BASE + "app.php/home/Helpcenter/isCommentSees";
     String PJARTICLE = BASE + "app.php/home/Helpcenter/pjArticle";
     String CUSTOMDYNAMICS = BASE + "app.php/home/Helpcenter/customDynamics";
@@ -51,6 +52,7 @@ public interface ApiConstant {
     String ADDRESS_DELETE = BASE + "app.php/home/userAddress/delAddress";
     String ADDRESS_ADDS = BASE + "app.php/home/userAddress/adds";
     String IMG = BASE + "app.php/home/Helpcenter/img";
+    String BACKIMG = BASE + "app.php/home/OrderRefunds/img";
     String PERFECT_REG_INFO_TAG = BASE + "app.php/home/Users/tag";
     String PERFECT_EDITFRIEND = BASE + "app.php/home/users/editfriend";
     String WAITPAYBYPAGES = BASE + "app.php/home/Orders/waitPayByPages";
@@ -70,7 +72,7 @@ public interface ApiConstant {
     String EDIT_SUBGROUP = BASE + "app.php/home/evn/edit_subgroup";
     String JOIN_LIST = BASE + "app.php/home/evn/join_list";
     String SEND_FILE = BASE + "app.php/home/Helpcenter/evn";
-    String CANCELREFUNDS = BASE + "app.php/home/Orderrefunds/cancelRefunds";
+
     String DELORDERS = BASE + "app.php/home/Orders/delOrders";
     String USERINTERFACE = BASE + "app.php/home/Users/userInterface";
     String GETALIPAYSAPP = BASE + "app.php/home/Alipays/getAlipaysapp";
@@ -101,6 +103,19 @@ public interface ApiConstant {
     String MOBILEFRIEND = BASE + "app.php/home/users/mobilefriend";
     String MYARTICLES = BASE + "app.php/home/Users/myArticles";
     String DELETEISSUES = BASE + "app.php/home/Helpcenter/deleteIsSues";
+    String CUSTOMCATS = BASE + "app.php/home/Helpcenter/customCats";
+    String FORWARDS = BASE + "app.php/home/Helpcenter/forwards";
+    String FEEDBACK = BASE + "app.php/home/Messages/feedback";
+    String GROUP_LIST = BASE + "app.php/home/evn/group_list";
+    String FAMILY_LIST = BASE + "app.php/home/users/family_list";
+    String HSMSGSETTINGLIST = BASE + "app.php/home/Users/HsMsgSettingList";
+    String HSMSGSETTING = BASE + "app.php/home/Users/HsMsgSetting";
+    String EDITSHOPS = BASE + "app.php/home/Shops/editShops";
+    String DSSUBMIT = BASE + "app.php/home/orders/dssubmit";
+    String CANCELREFUNDS = BASE + "app.php/home/Orderrefunds/cancelRefunds";
+    String RECEIVES = BASE + "app.php/home/Orders/receives";
+    String REFUND = BASE + "app.php/home/OrderRefunds/refund";
+    String REASON = BASE + "app.php/home/OrderRefunds/reason";
 
 
 }

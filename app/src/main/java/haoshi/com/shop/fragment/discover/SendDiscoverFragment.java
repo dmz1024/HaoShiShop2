@@ -65,6 +65,7 @@ public class SendDiscoverFragment extends SingleNetWorkBaseFragment<SendDiscover
         super.writeData(isWrite, bean);
         datas.add(new SendDiscoverBean.Data("标题", 0));
         datas.addAll(bean.getData());
+        datas.add(new SendDiscoverBean.Data("描述信息", 0));
         SendDiscoverAAdapter aAdapter = new SendDiscoverAAdapter(getContext(), datas);
         LinearLayoutManager manager = new LinearLayoutManager(getContext()) {
             @Override
@@ -135,6 +136,7 @@ public class SendDiscoverFragment extends SingleNetWorkBaseFragment<SendDiscover
     void send() {
         boolean isok = true;
         String goodsName = "";
+        String goodsDesc = "";
         StringBuilder sb = new StringBuilder();
         exit:
         for (int i = 0; i < datas.size(); i++) {
@@ -145,6 +147,13 @@ public class SendDiscoverFragment extends SingleNetWorkBaseFragment<SendDiscover
             } else {
                 if (i == 0) {
                     goodsName = data.content;
+                } else if (i == datas.size() - 1) {
+                    if (!TextUtils.isEmpty(data.content)) {
+                        goodsDesc = data.content;
+                    } else {
+                        goodsDesc = "";
+                    }
+
                 } else {
                     if (sb.length() > 0) {
                         sb.append("&&&");
@@ -159,7 +168,8 @@ public class SendDiscoverFragment extends SingleNetWorkBaseFragment<SendDiscover
             }
         }
         if (!isok) {
-            MyToast.showToast("请完善信息");
+            MyToast.showToast("请填写完整的发布信息");
+            return;
         }
 
         if (photos.size() > 0) {
@@ -177,6 +187,7 @@ public class SendDiscoverFragment extends SingleNetWorkBaseFragment<SendDiscover
             intent.putExtra("token", UserInfo.token);
             intent.putExtra("goodsCatId", id);
             intent.putExtra("goodsName", goodsName);
+            intent.putExtra("goodsDesc", goodsDesc);
             intent.putExtra("attr", sb.toString());
             intent.putExtra("photo", p.toString());
             getContext().startService(intent);
@@ -193,7 +204,7 @@ public class SendDiscoverFragment extends SingleNetWorkBaseFragment<SendDiscover
                 public void error(boolean isWrite, SingleBaseBean bean, String msg) {
 
                 }
-            }, true, goodsName, id, UserInfo.userId, UserInfo.token);
+            }, true, goodsName, id, UserInfo.userId, UserInfo.token, goodsDesc);
         }
 
     }

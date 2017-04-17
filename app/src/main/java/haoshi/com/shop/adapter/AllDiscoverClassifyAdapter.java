@@ -23,11 +23,9 @@ import util.GlideUtil;
  */
 
 public class AllDiscoverClassifyAdapter extends BaseAdapter<AllDiscoverClassifyBean.Data> {
-    private boolean isChoose;
 
-    public AllDiscoverClassifyAdapter(Context ctx, ArrayList<AllDiscoverClassifyBean.Data> list, boolean isChoose) {
+    public AllDiscoverClassifyAdapter(Context ctx, ArrayList<AllDiscoverClassifyBean.Data> list) {
         super(ctx, list);
-        this.isChoose = isChoose;
     }
 
     @Override
@@ -44,12 +42,12 @@ public class AllDiscoverClassifyAdapter extends BaseAdapter<AllDiscoverClassifyB
         if (data.cats != null && data.cats.size() > 0) {
             initCat(mHolder.rv_content, data.cats);
         }
-        GlideUtil.GlideErrAndOc(ctx,data.catImg,mHolder.iv_icon);
+        GlideUtil.GlideErrAndOc(ctx,data.catsImg,mHolder.iv_icon);
     }
 
     private void initCat(RecyclerView rv_content, ArrayList<AllDiscoverClassifyBean.Cats> data) {
         GridLayoutManager manager = new GridLayoutManager(ctx, 3);
-        AllDiscoverClassifyItemAdapter mAdapter = new AllDiscoverClassifyItemAdapter(ctx, data,isChoose);
+        AllDiscoverClassifyItemAdapter mAdapter = new AllDiscoverClassifyItemAdapter(ctx, data);
         rv_content.setLayoutManager(manager);
         rv_content.setAdapter(mAdapter);
     }

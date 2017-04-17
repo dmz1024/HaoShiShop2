@@ -9,6 +9,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.canyinghao.canphotos.CanPhotoHelper;
 import com.yanzhenjie.album.Album;
@@ -30,12 +31,15 @@ import haoshi.com.shop.constant.UserInfo;
 import haoshi.com.shop.fragment.index.IndexFragment;
 import haoshi.com.shop.fragment.login.LoginFragment;
 import haoshi.com.shop.view.ChatShowView;
+import rx.Observable;
+import rx.functions.Action1;
 import util.GlideUtil;
 import util.RxBus;
 import util.Util;
 
 public class MainActivity extends BaseActivity {
     private ChatShowView chat_view;
+    public static boolean ISSHOW = true;
 
     @Override
     protected void initData() {
@@ -43,7 +47,7 @@ public class MainActivity extends BaseActivity {
         GlideUtil.setLoadImage(R.mipmap.image_loading);
         UserInfo.getUserInfo();
         sendFragment();
-
+        initShowChatViewRxBus();
     }
 
     @Override
@@ -76,51 +80,42 @@ public class MainActivity extends BaseActivity {
 
     }
 
+    private Observable<ChatMessageBean> initShowChatViewRxBus;
 
-    public void showChat(ReceiveChatBean chat) {
-        chat_view.setHead(chat.logo)
-                .setName(chat.from_client_name)
-                .setContent(chat.content).show();
+    private void initShowChatViewRxBus() {
+        if (initShowChatViewRxBus == null) {
+            initShowChatViewRxBus = RxBus.get().register("initShowChatViewRxBus", ChatMessageBean.class);
+            initShowChatViewRxBus.subscribe(new Action1<ChatMessageBean>() {
+                @Override
+                public void call(ChatMessageBean chat) {
+                    chat_view.setHead(chat.getLogoOnLine())
+                            .setName(chat.getNameOnLine())
+                            .setContent(chat.content).show();
+                }
+            });
+        }
 
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle(chat.from_client_name)
-                .setContentText(chat.content);
-
-        NotificationManager mNotificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        mNotificationManager.notify("id", 0, mBuilder.build());
-
-        changeMessage(chat);
     }
 
-    private Ringtone r;
-
-    private void changeMessage(ReceiveChatBean chat) {
-
-        if (r == null) {
-            Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-            r = RingtoneManager.getRingtone(getApplicationContext(), notification);
-        }
-        r.play();
-
-        ChatMessageBean bean = new ChatMessageBean();
-        boolean isG = TextUtils.isEmpty(chat.touid);
-        bean.setTouid(chat.touid);
-        bean.setUid(chat.uid);
-        bean.setGroupid(chat.groupid);
-        bean.setContent(chat.content);
-        bean.setFile(chat.file);
-        bean.setName(isG ? chat.groupname : chat.from_client_name);
-        bean.setLogo(isG ? chat.grouplogo : chat.logo);
-        bean.setNums(1);
-        if (!TextUtils.isEmpty(chat.extend)) {
-            bean.setExtend(chat.extend);
-        }
-        bean.setCreatetime(chat.time);
-        bean.setType(chat.filetype);
-        MessagesImpl.getInstance().add(bean, ChatViewsImpl.getInstance().add(bean));
-        RxBus.get().post("viewmessage", "");
-        RxBus.get().post("message", "");
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("dd", "r");
+        ISSHOW = true;
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d("dd", "p");
+        ISSHOW = false;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        RxBus.get().unregister("initShowChatViewRxBus", initShowChatViewRxBus);
+    }
+
+
 }

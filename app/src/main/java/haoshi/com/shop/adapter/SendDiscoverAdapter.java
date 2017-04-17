@@ -14,6 +14,7 @@ import base.adapter.BaseAdapter;
 import base.adapter.BaseViewHolder;
 import butterknife.BindView;
 import haoshi.com.shop.R;
+import haoshi.com.shop.bean.discover.AllDiscoverClassifyBean;
 import haoshi.com.shop.bean.discover.DiscoverTabBean;
 import util.GlideUtil;
 
@@ -22,8 +23,8 @@ import util.GlideUtil;
  * Created by dengmingzhi on 2017/1/18.
  */
 
-public class SendDiscoverAdapter extends BaseAdapter<DiscoverTabBean.Data> {
-    public SendDiscoverAdapter(Context ctx, ArrayList<DiscoverTabBean.Data> list) {
+public class SendDiscoverAdapter extends BaseAdapter<AllDiscoverClassifyBean.Data> {
+    public SendDiscoverAdapter(Context ctx, ArrayList<AllDiscoverClassifyBean.Data> list) {
         super(ctx, list);
     }
 
@@ -41,7 +42,7 @@ public class SendDiscoverAdapter extends BaseAdapter<DiscoverTabBean.Data> {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ViewHolder viewHolder = (ViewHolder) holder;
         if (position != list.size()) {
-            DiscoverTabBean.Data data = list.get(position);
+            AllDiscoverClassifyBean.Data data = list.get(position);
             GlideUtil.GlideErrAndOc(ctx,data.catsImg,viewHolder.iv_icon);
             viewHolder.tv_title.setText(data.catName);
         } else {

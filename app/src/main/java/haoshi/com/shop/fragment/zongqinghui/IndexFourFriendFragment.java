@@ -4,6 +4,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -32,6 +34,8 @@ public class IndexFourFriendFragment extends SingleNetWorkBaseFragment<RegFriend
     RecyclerView rv_search;
     @BindView(R.id.rv_content)
     RecyclerView rv_content;
+    @BindView(R.id.tv_tips)
+    TextView tv_tips;
 
     @Override
     protected String url() {
@@ -48,10 +52,17 @@ public class IndexFourFriendFragment extends SingleNetWorkBaseFragment<RegFriend
     @Override
     protected void writeData(boolean isWrite, RegFriendRecommendBean bean) {
         super.writeData(isWrite, bean);
-        rv_content.setAdapter(new FriendRecommendAdapter(getContext(), bean.data.users));
-        LinearLayoutManager manager = new LinearLayoutManager(getContext());
-        manager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        rv_content.setLayoutManager(manager);
+        if (bean.data.users != null && bean.data.users.size() > 0) {
+            rv_content.setAdapter(new FriendRecommendAdapter(getContext(), bean.data.users));
+            LinearLayoutManager manager = new LinearLayoutManager(getContext());
+            manager.setOrientation(LinearLayoutManager.HORIZONTAL);
+            rv_content.setLayoutManager(manager);
+            rv_content.setVisibility(View.VISIBLE);
+        } else {
+            tv_tips.setVisibility(View.VISIBLE);
+
+        }
+
     }
 
     @Override
@@ -68,7 +79,7 @@ public class IndexFourFriendFragment extends SingleNetWorkBaseFragment<RegFriend
                         RxBus.get().post("addFragment", new AddFragmentBean(new PhoneFriendFragment()));
                         break;
                     case 1:
-                        RxBus.get().post("addFragment", new AddFragmentBean(new FindFlockAndFriendFragment()));
+                        RxBus.get().post("addFragment", new AddFragmentBean(FindFlockAndFriendFragment.getInstance(1)));
                         break;
                 }
             }
@@ -110,7 +121,7 @@ public class IndexFourFriendFragment extends SingleNetWorkBaseFragment<RegFriend
 
     @OnClick(R.id.tv_more)
     void more() {
-
+        RxBus.get().post("addFragment", new AddFragmentBean(MoreFriendFragment.getInstance("和我相似的人")));
     }
 
     @OnClick(R.id.fg_search)

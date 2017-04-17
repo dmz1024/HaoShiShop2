@@ -21,13 +21,13 @@ public class DiscoverDescBean extends BaseBean<DiscoverDescBean.Data> {
          * goodsCatId : 369
          * shopId : 1
          * zan : 1
-         * userPhone : 
+         * userPhone :
          * userId : 1
          * isShouCang : 0
          * publishNum : {"publishNum":0,"userId":1,"userPhone":""}
-         * fx_logo : 
-         * fx_url : 
-         * fx_title : 
+         * fx_logo :
+         * fx_url :
+         * fx_title :
          * h5Url : http://www.baidu.com/
          * goodsAttr : [{"attrId":3,"attrVal":"河北11","attrName":"起步地点"},{"attrId":4,"attrVal":"邯郸11","attrName":"落脚地点"},{"attrId":5,"attrVal":"153","attrName":"电话"}]
          * goodsComent : {"userPhoto":"","userName":"15HDI2YFW8YL","content":"我来评价了","createTime":"2017-03-19 16:04:40","allPingLun":1,"zanNum":1}
@@ -38,6 +38,7 @@ public class DiscoverDescBean extends BaseBean<DiscoverDescBean.Data> {
         public String userName;
         public String goodsId;
         public String goodsName;
+        public int is_zan;
         public String createTime;
         public String shopPrice;
         public String goodsCatId;
@@ -74,7 +75,7 @@ public class DiscoverDescBean extends BaseBean<DiscoverDescBean.Data> {
             /**
              * publishNum : 0
              * userId : 1
-             * userPhone : 
+             * userPhone :
              */
 
             public int publishNum;

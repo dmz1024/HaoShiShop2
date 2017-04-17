@@ -27,6 +27,8 @@ import haoshi.com.shop.constant.ApiConstant;
 import haoshi.com.shop.constant.UserInfo;
 import haoshi.com.shop.controller.MyOrderController;
 import haoshi.com.shop.fragment.my.AddressFragment;
+import haoshi.com.shop.pay.PayRxBus;
+import haoshi.com.shop.pay.PayUtil;
 import interfaces.OnSingleRequestListener;
 import interfaces.OnTitleBarListener;
 import haoshi.com.shop.pay.PayController;
@@ -186,6 +188,8 @@ public class AffirmBuyFragment extends SingleNetWorkBaseFragment<AffirmBuyBean> 
             @Override
             protected void itemClick(final int position) {
                 super.itemClick(position);
+
+                initPayRxbus();
                 MyOrderController.getInstance().submitOrder(addressId, tv_note.getText().toString(), new OnSingleRequestListener<OrderIdBean>() {
                     @Override
                     public void succes(boolean isWrite, OrderIdBean bean) {
@@ -208,6 +212,23 @@ public class AffirmBuyFragment extends SingleNetWorkBaseFragment<AffirmBuyBean> 
             }
         }.showAtLocation(false);
     }
+
+    private Observable<Integer> payRxbus;
+
+    private void initPayRxbus() {
+        PayUtil.PAYRESULT = 50000;
+        if (payRxbus == null) {
+            payRxbus = PayRxBus.getVavle(new Action1<Integer>() {
+                @Override
+                public void call(Integer integer) {
+                    if (integer == 50000) {
+                        RxBus.get().post("back", "back");
+                    }
+                }
+            });
+        }
+    }
+
 
     @Override
     public void left() {
@@ -261,5 +282,6 @@ public class AffirmBuyFragment extends SingleNetWorkBaseFragment<AffirmBuyBean> 
     public void onDestroy() {
         super.onDestroy();
         RxBus.get().unregister("chooseAddress", chooseAddress);
+        RxBus.get().unregister("payRxBus", payRxbus);
     }
 }

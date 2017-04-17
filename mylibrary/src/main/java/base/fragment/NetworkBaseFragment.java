@@ -103,6 +103,11 @@ public abstract class NetworkBaseFragment<D extends BaseBean> extends RefreshBas
             }
 
             @Override
+            protected boolean getShowInfo() {
+                return showInfo();
+            }
+
+            @Override
             protected boolean getWriteCache() {
                 return writeCache();
             }
@@ -160,6 +165,10 @@ public abstract class NetworkBaseFragment<D extends BaseBean> extends RefreshBas
             }
         }
 
+    }
+
+    protected boolean showInfo() {
+        return true;
     }
 
     protected String getnMsg(int code) {

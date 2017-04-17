@@ -8,6 +8,7 @@ import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+//import com.tencent.bugly.Bugly;
 import com.yanzhenjie.nohttp.OkHttpNetworkExecutor;
 import com.yolanda.nohttp.NoHttp;
 import com.yolanda.nohttp.cache.DBCacheStore;
@@ -28,6 +29,7 @@ public class MyApplication extends Application {
         Util.setApplication(this);
         Fresco.initialize(this);
         initImageLoader(getApplicationContext());
+//        Bugly.init(getApplicationContext(), "010f081132", false);
     }
 
     //网络框架初始化

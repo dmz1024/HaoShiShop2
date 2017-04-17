@@ -14,6 +14,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import haoshi.com.shop.R;
+import haoshi.com.shop.bean.discover.AllDiscoverClassifyBean;
 import haoshi.com.shop.bean.discover.DiscoverTabBean;
 import haoshi.com.shop.constant.ApiConstant;
 import haoshi.com.shop.fragment.discover.AllDiscoverClassifyFragment;
@@ -28,7 +29,7 @@ import view.DefaultTitleBarView;
  * Created by dengmingzhi on 2017/2/21.
  */
 
-public class IndexThreeFragment extends SingleNetWorkBaseFragment<DiscoverTabBean> implements OnTitleBarListener {
+public class IndexThreeFragment extends SingleNetWorkBaseFragment<AllDiscoverClassifyBean> implements OnTitleBarListener {
     @BindView(R.id.tab)
     TabLayout tab;
     @BindView(R.id.vp_content)
@@ -36,13 +37,13 @@ public class IndexThreeFragment extends SingleNetWorkBaseFragment<DiscoverTabBea
 
     @Override
     protected String url() {
-        return ApiConstant.ONEARTICLE;
+        return ApiConstant.GETTREES;
     }
-
+//    ApiConstant.GETTREES
 
     @Override
-    protected Class<DiscoverTabBean> getTClass() {
-        return DiscoverTabBean.class;
+    protected Class<AllDiscoverClassifyBean> getTClass() {
+        return AllDiscoverClassifyBean.class;
     }
 
     @Override
@@ -52,10 +53,10 @@ public class IndexThreeFragment extends SingleNetWorkBaseFragment<DiscoverTabBea
         return view;
     }
 
-    private DiscoverTabBean bean;
+    private AllDiscoverClassifyBean bean;
 
     @Override
-    protected void writeData(boolean isWrite, final DiscoverTabBean bean) {
+    protected void writeData(boolean isWrite, final AllDiscoverClassifyBean bean) {
         super.writeData(isWrite, bean);
         this.bean = bean;
         final ArrayList<Fragment> fragments = new ArrayList<>();
@@ -103,7 +104,8 @@ public class IndexThreeFragment extends SingleNetWorkBaseFragment<DiscoverTabBea
         ((DefaultTitleBarView) getTitleBar())
                 .setTitleContent("发现")
                 .setLeftImage(R.mipmap.leimu2)
-                .setRightImage(R.mipmap.seach2).setOnTitleBarListener(this);
+                .setOnTitleBarListener(this);
+//        .setRightImage(R.mipmap.seach2)
     }
 
     @Override

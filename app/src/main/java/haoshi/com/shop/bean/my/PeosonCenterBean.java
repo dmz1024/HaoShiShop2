@@ -41,5 +41,9 @@ public class PeosonCenterBean extends BaseBean<PeosonCenterBean.Data> {
         public String yfh;
         public String dpj;
         public String tk;
+        public String serviceQQ;
+        public String serviceTel;
+        public String wrongReason;
+        public String handleDesc;
     }
 }

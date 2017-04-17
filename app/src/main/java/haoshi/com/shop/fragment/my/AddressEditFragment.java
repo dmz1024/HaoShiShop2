@@ -174,7 +174,7 @@ public class AddressEditFragment extends NotNetWorkBaseFragment implements OnTit
 
     @Override
     protected String getBackColor() {
-        return "#ffffff";
+        return "#f6f6f6";
     }
 
     @Override

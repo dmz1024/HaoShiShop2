@@ -5,6 +5,7 @@ import java.util.Map;
 
 import api.ApiRequest;
 import base.bean.SingleBaseBean;
+import base.bean.TipLoadingBean;
 import haoshi.com.shop.constant.ApiConstant;
 import haoshi.com.shop.constant.UserInfo;
 import interfaces.OnSingleRequestListener;
@@ -25,7 +26,7 @@ public class DiscoverZanController {
      * @param title
      * @param listener
      */
-    public void addCollect(final String catId, final String title,OnSingleRequestListener<SingleBaseBean> listener) {
+    public void addZan(final String catId, final String title,OnSingleRequestListener<SingleBaseBean> listener) {
         new ApiRequest<SingleBaseBean>() {
             @Override
             protected Map<String, String> getMap() {
@@ -49,16 +50,50 @@ public class DiscoverZanController {
             protected Class<SingleBaseBean> getClx() {
                 return SingleBaseBean.class;
             }
-        }.setOnRequestListeren(listener).post();
+        }.setOnRequestListeren(listener).post(new TipLoadingBean("正在点赞","","点赞失败"));
 
     }
+
+    /**
+     * 文章取消赞
+     * @param id
+     * @param listener
+     */
+    public void cancelZan(final String id,OnSingleRequestListener<SingleBaseBean> listener) {
+        new ApiRequest<SingleBaseBean>() {
+            @Override
+            protected Map<String, String> getMap() {
+                Map<String, String> map = new HashMap<>();
+                map.put("userId", UserInfo.userId);
+                map.put("token", UserInfo.token);
+                map.put("goodsId", id);
+                return map;
+            }
+            @Override
+            protected String getUrl() {
+                return ApiConstant.CANCELZAN;
+            }
+
+            @Override
+            protected boolean getShowSucces() {
+                return false;
+            }
+            @Override
+            protected Class<SingleBaseBean> getClx() {
+                return SingleBaseBean.class;
+            }
+        }.setOnRequestListeren(listener).post(new TipLoadingBean("正在取消赞","","取消失败"));
+
+    }
+
+
 
     /**
      * 查看赞
      * @param id
      * @param listener
      */
-    public void lookCollect(final String id,OnSingleRequestListener<SingleBaseBean> listener) {
+    public void lookZan(final String id, OnSingleRequestListener<SingleBaseBean> listener) {
         new ApiRequest<SingleBaseBean>() {
             @Override
             protected Map<String, String> getMap() {

@@ -6,6 +6,7 @@ import java.util.Map;
 import api.ApiRequest;
 import base.bean.SingleBaseBean;
 import base.bean.TipLoadingBean;
+import haoshi.com.shop.bean.shop.OrderIdBean;
 import haoshi.com.shop.constant.ApiConstant;
 import haoshi.com.shop.constant.UserInfo;
 import interfaces.OnSingleRequestListener;
@@ -143,6 +144,51 @@ public class DiscoverController {
             }
         }.setOnRequestListeren(listener).post(new TipLoadingBean("取消我的发布", "", "取消失败"));
 
+    }
+
+
+    /**
+     * 生成打赏订单
+     * @param listener
+     * @param content
+     */
+    public void getDssubmitId(OnSingleRequestListener<OrderIdBean> listener, final String... content) {
+        new ApiRequest<OrderIdBean>() {
+            @Override
+            protected Map<String, String> getMap() {
+                Map<String, String> map = new HashMap<>();
+                map.put("uid", UserInfo.userId);
+                map.put("token", UserInfo.token);
+                map.put("dsid", content[0]);
+                map.put("money", content[1]);
+                return map;
+            }
+
+            @Override
+            protected String getUrl() {
+                return ApiConstant.DSSUBMIT;
+            }
+
+            @Override
+            protected boolean getShowSucces() {
+                return false;
+            }
+
+
+            @Override
+            protected String getMsg(int code) {
+                switch (code){
+                    case 10001:
+                        return "该商品不存在";
+                }
+                return super.getMsg(code);
+            }
+
+            @Override
+            protected Class<OrderIdBean> getClx() {
+                return OrderIdBean.class;
+            }
+        }.setOnRequestListeren(listener).post(new TipLoadingBean("正在生成订单", "", "生成订单失败"));
     }
 
 

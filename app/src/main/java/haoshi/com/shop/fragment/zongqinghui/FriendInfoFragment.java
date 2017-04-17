@@ -2,8 +2,11 @@ package haoshi.com.shop.fragment.zongqinghui;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -29,6 +32,7 @@ import haoshi.com.shop.controller.FriendAndFlockController;
 import haoshi.com.shop.fragment.chat.ChatViewFragment;
 import interfaces.OnSingleRequestListener;
 import interfaces.OnTitleBarListener;
+import util.MyToast;
 import util.RxBus;
 import view.DefaultTitleBarView;
 import view.pop.ChooseStringView;
@@ -49,16 +53,24 @@ public class FriendInfoFragment extends SingleNetWorkBaseFragment<FriendInfoBean
     TextView tv_group;
     @BindView(R.id.tv_beizhu)
     TextView tv_beizhu;
+    @BindView(R.id.bt_send)
+    Button bt_send;
+    @BindView(R.id.bt_delete)
+    Button bt_delete;
+    @BindView(R.id.rl_bei)
+    RelativeLayout rl_bei;
 
-    public static FriendInfoFragment getInstance(String fid) {
+    public static FriendInfoFragment getInstance(String fid, int type) {
         FriendInfoFragment fragment = new FriendInfoFragment();
         Bundle bundle = new Bundle();
         bundle.putString("fid", fid);
+        bundle.putInt("type", type);
         fragment.setArguments(bundle);
         return fragment;
     }
 
     private String fid;
+    private int type;
 
 
     @Override
@@ -70,6 +82,11 @@ public class FriendInfoFragment extends SingleNetWorkBaseFragment<FriendInfoBean
         tv_beizhu.setText(data.note);
         tv_group.setText(data.groupname);
         tv_name.setText(data.loginName);
+        if (TextUtils.equals(fid, UserInfo.userId)) {
+            bt_delete.setVisibility(View.GONE);
+            bt_send.setVisibility(View.GONE);
+            rl_bei.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -78,6 +95,7 @@ public class FriendInfoFragment extends SingleNetWorkBaseFragment<FriendInfoBean
         Bundle bundle = getArguments();
         if (bundle != null) {
             fid = bundle.getString("fid");
+            type = bundle.getInt("type");
         }
     }
 
@@ -119,12 +137,16 @@ public class FriendInfoFragment extends SingleNetWorkBaseFragment<FriendInfoBean
 
     @OnClick(R.id.bt_dongtai)
     void dongtai() {
-        RxBus.get().post("addFragment", new AddFragmentBean(MyFriendDynamicRootFragment.getInstance(fid)));
+        RxBus.get().post("addFragment", new AddFragmentBean(MyFriendDynamicRootFragment.getInstance(fid,type)));
     }
 
     @OnClick(R.id.bt_send)
     void send() {
-        RxBus.get().post("addFragment", new AddFragmentBean(ChatViewFragment.getInstance(1, tv_nick_name.getText().toString(), fid)));
+        RxBus.get().post("back", "back");
+        if (type == 1) {
+            RxBus.get().post("back", "back");
+            RxBus.get().post("addFragment", new AddFragmentBean(ChatViewFragment.getInstance(fid)));
+        }
     }
 
     @OnClick(R.id.tv_beizhu)
@@ -172,6 +194,12 @@ public class FriendInfoFragment extends SingleNetWorkBaseFragment<FriendInfoBean
     }
 
     private void showGroup() {
+        if (groups.size() == 0) {
+            MyToast.showToast("没有其它分组");
+            return;
+        }
+
+
         new ChooseStringView<SubGroupBean.Data>(getContext(), groups) {
             @Override
             protected void itemClick(final int position) {
@@ -202,6 +230,7 @@ public class FriendInfoFragment extends SingleNetWorkBaseFragment<FriendInfoBean
                 if (select != null) {
                     MessagesImpl.getInstance().delete(select);
                     RxBus.get().post("message", "");
+                    RxBus.get().post("groupNotifyDataRxBus", "");
                 }
                 RxBus.get().post("back", "back");
                 RxBus.get().post("back", "back");

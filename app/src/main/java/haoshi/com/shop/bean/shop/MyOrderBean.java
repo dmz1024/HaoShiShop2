@@ -1,5 +1,9 @@
 package haoshi.com.shop.bean.shop;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import base.bean.ListBaseBean;
@@ -41,7 +45,7 @@ public class MyOrderBean extends ListBaseBean<ArrayList<MyOrderBean.Data>> {
         public String orderNo;
         public String shopName;
         public String shopId;
-        public String goodsMoney;
+        public double goodsMoney;
         public String totalMoney;
         public String realTotalMoney;
         public int orderStatus;
@@ -59,8 +63,10 @@ public class MyOrderBean extends ListBaseBean<ArrayList<MyOrderBean.Data>> {
         public String payTypeName;
         public String status;
         public ArrayList<OrderGoodBean> list;
-
-        public static class OrderGoodBean {
+        public String shopUserId;
+        public String shopUserPhoto;
+        public String shopUserName;
+        public static class OrderGoodBean implements Parcelable {
             /**
              * id : 16
              * orderId : 12
@@ -84,6 +90,50 @@ public class MyOrderBean extends ListBaseBean<ArrayList<MyOrderBean.Data>> {
             public String goodsName;
             public String goodsImg;
             public String commissionRate;
+
+            protected OrderGoodBean(Parcel in) {
+                id = in.readInt();
+                orderId = in.readInt();
+                goodsId = in.readInt();
+                goodsNum = in.readInt();
+                goodsPrice = in.readString();
+                goodsSpecId = in.readString();
+                goodsSpecNames = in.readString();
+                goodsName = in.readString();
+                goodsImg = in.readString();
+                commissionRate = in.readString();
+            }
+
+            public static final Creator<OrderGoodBean> CREATOR = new Creator<OrderGoodBean>() {
+                @Override
+                public OrderGoodBean createFromParcel(Parcel in) {
+                    return new OrderGoodBean(in);
+                }
+
+                @Override
+                public OrderGoodBean[] newArray(int size) {
+                    return new OrderGoodBean[size];
+                }
+            };
+
+            @Override
+            public int describeContents() {
+                return 0;
+            }
+
+            @Override
+            public void writeToParcel(Parcel parcel, int i) {
+                parcel.writeInt(id);
+                parcel.writeInt(orderId);
+                parcel.writeInt(goodsId);
+                parcel.writeInt(goodsNum);
+                parcel.writeString(goodsPrice);
+                parcel.writeString(goodsSpecId);
+                parcel.writeString(goodsSpecNames);
+                parcel.writeString(goodsName);
+                parcel.writeString(goodsImg);
+                parcel.writeString(commissionRate);
+            }
         }
     }
 

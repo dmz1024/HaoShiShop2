@@ -32,7 +32,9 @@ import haoshi.com.shop.R;
 import haoshi.com.shop.adapter.AttrAdapter;
 import haoshi.com.shop.adapter.GoodEvaluateAdapter;
 import haoshi.com.shop.bean.AttrsBean;
+import haoshi.com.shop.bean.chat.dao.ChatFriendBean;
 import haoshi.com.shop.bean.chat.dao.SendBean;
+import haoshi.com.shop.bean.chat.impl.ChatFriendsImpl;
 import haoshi.com.shop.bean.shop.AddCarBean;
 import haoshi.com.shop.bean.shop.GoodDescBean;
 import haoshi.com.shop.bean.shop.GoodEvaluateBean;
@@ -42,11 +44,13 @@ import haoshi.com.shop.controller.BuyCarController;
 import haoshi.com.shop.controller.GoodController;
 import haoshi.com.shop.controller.ShareUtil;
 import haoshi.com.shop.fragment.BaseShapeFragment;
+import haoshi.com.shop.fragment.chat.ChatViewFragment;
 import haoshi.com.shop.pop.PopBuyCar;
 import haoshi.com.shop.pop.PopDiscoverShare;
 import interfaces.OnSingleRequestListener;
 import interfaces.OnTitleBarListener;
 import util.DrawableUtil;
+import util.MyToast;
 import util.RxBus;
 import util.TimeUtils;
 import util.Util;
@@ -341,22 +345,35 @@ public class GoodDescFragment extends BaseShapeFragment<GoodDescBean> implements
 
     @OnClick(R.id.tv_add_car)
     void addCar() {
-        new PopBuyCar(getContext(), bean.data.spec, bean.data.saleSpec, bean.data.gallery.get(0).getUrl(), bean.data.isDefault) {
-            @Override
-            protected void addBuyCar(String sid, String count) {
-                BuyCarController.getInstance().addBuyCar(true, new OnSingleRequestListener<AddCarBean>() {
-                    @Override
-                    public void succes(boolean isWrite, AddCarBean bean) {
+        if (bean.data.spec == null || bean.data.spec.size() == 0) {
+            BuyCarController.getInstance().addBuyCar(true, null, good_id, bean.data.sid, 1 + "");
 
-                    }
+        } else {
+            new PopBuyCar(getContext(), bean.data.spec, bean.data.saleSpec, bean.data.gallery.get(0).getUrl(), bean.data.isDefault) {
+                @Override
+                protected void addBuyCar(String sid, String count) {
+                    BuyCarController.getInstance().addBuyCar(true, null, good_id, sid, count);
+                }
+            }.showAtLocation(false);
+        }
 
-                    @Override
-                    public void error(boolean isWrite, AddCarBean bean, String msg) {
+    }
 
-                    }
-                }, good_id, sid, count);
-            }
-        }.showAtLocation(false);
+    @OnClick(R.id.tv_online)
+    void online() {
+        GoodDescBean.Data.Serviceid serviceid = bean.data.serviceid;
+        ChatFriendBean select = ChatFriendsImpl.getInstance().select(serviceid.shopUserId);
+        if (select == null) {
+            select = new ChatFriendBean();
+            select.setName(serviceid.shopUserName);
+            select.setFid(serviceid.shopUserId);
+            select.setGid("-1");
+            select.setType(2);
+            select.setLogo(serviceid.shopUserPhoto);
+            ChatFriendsImpl.getInstance().add(select);
+        }
+        RxBus.get().post("addFragment", new AddFragmentBean(ChatViewFragment.getInstance(serviceid.shopUserId,true)));
+
     }
 
     @OnClick(R.id.iv_car)
@@ -425,5 +442,21 @@ public class GoodDescFragment extends BaseShapeFragment<GoodDescBean> implements
         shareInfo.logo = bean.data.share.logo;
         shareInfo.url = bean.data.share.url;
         return shareInfo;
+    }
+
+
+    @Override
+    protected String getImg() {
+        return bean.data.share.logo;
+    }
+
+    @Override
+    public String getGoodsId() {
+        return good_id;
+    }
+
+    @Override
+    protected String getGoodsName() {
+        return bean.data.goodsName;
     }
 }

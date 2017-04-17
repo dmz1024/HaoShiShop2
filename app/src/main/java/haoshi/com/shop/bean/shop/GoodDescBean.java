@@ -53,6 +53,16 @@ public class GoodDescBean extends BaseBean<GoodDescBean.Data> {
         public ArrayList<GoodEvaluateBean.Data> comment;
         public long starttime;
         public long endtime;
+        public Serviceid serviceid;
+
+        public static class Serviceid {
+            public String userId;
+            public String shopName;
+            public String shopImg;
+            public String shopUserName;
+            public String shopUserPhoto;
+            public String shopUserId;
+        }
 
         public static class GalleryBean extends ImageUrlBaseBean {
             public String pic;

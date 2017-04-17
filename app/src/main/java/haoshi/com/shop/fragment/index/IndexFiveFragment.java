@@ -13,6 +13,7 @@ import com.recker.flyshapeimageview.ShapeImageView;
 import java.util.ArrayList;
 import java.util.Map;
 
+import base.bean.TipLoadingBean;
 import base.bean.rxbus.AddFragmentBean;
 import base.fragment.SingleNetWorkBaseFragment;
 import butterknife.BindView;
@@ -27,6 +28,7 @@ import haoshi.com.shop.fragment.discover.DiscoverCollectRootFragment;
 import haoshi.com.shop.fragment.discover.MyDiscoverSendFragment;
 import haoshi.com.shop.fragment.my.GeRenAuthentFragment;
 import haoshi.com.shop.fragment.my.MessageFragment;
+import haoshi.com.shop.fragment.my.MyFeedBackFragment;
 import haoshi.com.shop.fragment.my.MyGiveFragment;
 import haoshi.com.shop.fragment.my.PeosonInfoFragment;
 import haoshi.com.shop.fragment.my.PeosonSetFragment;
@@ -45,6 +47,8 @@ import util.DrawableUtil;
 import util.GlideUtil;
 import util.MyToast;
 import util.RxBus;
+import util.Util;
+import view.pop.TipMessage;
 
 /**
  * Created by dengmingzhi on 2017/1/16.
@@ -71,6 +75,7 @@ public class IndexFiveFragment extends SingleNetWorkBaseFragment<PeosonCenterBea
     TextView tv_zan;
     @BindView(R.id.tv_ping)
     TextView tv_ping;
+
 
     @Override
     protected String url() {
@@ -122,31 +127,85 @@ public class IndexFiveFragment extends SingleNetWorkBaseFragment<PeosonCenterBea
         tv_name.setText(data.userName);
         Drawable d = null;
         if (data.userSex != 0) {
-            d = DrawableUtil.setBounds(getResources().getDrawable(data.userSex == 1 ? R.mipmap.wode_boy : R.mipmap.wode_boy));
+            d = DrawableUtil.setBounds(getResources().getDrawable(data.userSex == 1 ? R.mipmap.wode_boy : R.mipmap.girl));
         }
         tv_name.setCompoundDrawables(null, null, d, null);
 
         tv_message.setText(data.notice + "\n通知");
         tv_zan.setText(data.praise + "\n赞");
         tv_ping.setText(data.comment + "\n评论");
+        tv_check.setText(getCheckInfo(checkStatus = getStatus(data.isTrue, data.shops, data.person)));
 
+    }
 
-        if (data.isTrue == 1) {
-            if (data.shops == 1) {
-                checkStatus = 1;
-                tv_check.setText("企业认证");//企业已认证
-            } else if (data.person == 1) {
-                checkStatus = 2;
-                tv_check.setText("个人认证");//已完成个人认证
-            } else {
-                checkStatus = 3;
-                tv_check.setText("未认证");
+    public static int getStatus(int isTrue, int isShop, int isPerson) {
+        int checkStatus = 0;
+        if (isTrue == 1) {
+            switch (isShop) {
+                case 0:
+                    switch (isPerson) {
+                        case 0:
+                            checkStatus = 1;//未认证
+                            break;
+                        case 1:
+                            checkStatus = 2;//审核中
+                            break;
+                        case 2:
+                            checkStatus = 3;//已认证，个人认证
+                            break;
+                        default: {
+                            checkStatus = 4;//不通过
+                        }
+                    }
+                    break;
+                case 1:
+                    checkStatus = 5;//商家审核中
+                    break;
+                case 2:
+                    checkStatus = 6;//商家已认证
+                    break;
+                default: {
+                    checkStatus = 7;//商家认证不通过
+                    break;
+                }
             }
         } else {
-            checkStatus = 4;
-            tv_check.setText("信息未完善");
+            checkStatus = 8;
         }
 
+        return checkStatus;
+    }
+
+    public static String getCheckInfo(int checkStatus) {
+        String checkInfo = "";
+        switch (checkStatus) {
+            case 1:
+                checkInfo = "未认证";
+                break;
+            case 2:
+                checkInfo = "审核中";
+                break;
+            case 3:
+                checkInfo = "个人认证";
+                break;
+            case 4:
+                checkInfo = "认证失败";
+                break;
+            case 5:
+                checkInfo = "审核中";
+                break;
+            case 6:
+                checkInfo = "商家认证";
+                break;
+            case 7:
+                checkInfo = "认证失败";
+                break;
+            case 8:
+                checkInfo = "信息未完善";
+                break;
+        }
+
+        return checkInfo;
     }
 
 
@@ -154,19 +213,54 @@ public class IndexFiveFragment extends SingleNetWorkBaseFragment<PeosonCenterBea
     void check() {
         switch (checkStatus) {
             case 1:
-                RxBus.get().post("addFragment", new AddFragmentBean(QiYeAuthentFragment.getInstance(true)));
+                new PopRenZTip(getContext()).showAtLocation(false);
                 break;
             case 2:
-                RxBus.get().post("addFragment", new AddFragmentBean(GeRenAuthentFragment.getInstance(true)));
+                new TipMessage(getContext(), new TipMessage.TipMessageBean("提示", "个人认证正在审核中", "", "确定")).showAtLocation(false);
                 break;
             case 3:
+                RxBus.get().post("addFragment", new AddFragmentBean(GeRenAuthentFragment.getInstance(true)));
                 new PopRenZTip(getContext()).showAtLocation(false);
                 break;
             case 4:
+                new TipMessage(getContext(), new TipMessage.TipMessageBean("提示", "个人认证失败\n原因："+data.wrongReason, "", "确定")){
+                    @Override
+                    protected void right() {
+                        super.right();
+                        RxBus.get().post("addFragment", new AddFragmentBean(GeRenAuthentFragment.getInstance(false)));
+                    }
+                }.showAtLocation(false);
+                break;
+            case 5:
+                new TipMessage(getContext(), new TipMessage.TipMessageBean("提示", "商家认证正在审核中", "", "确定")).showAtLocation(false);
+                break;
+            case 6:
+                RxBus.get().post("addFragment", new AddFragmentBean(QiYeAuthentFragment.getInstance(true)));
+                break;
+            case 7:
+                new TipMessage(getContext(), new TipMessage.TipMessageBean("提示", "商家认证失败\n原因："+data.handleDesc, "", "确定")){
+                    @Override
+                    protected void right() {
+                        super.right();
+                        RxBus.get().post("addFragment", new AddFragmentBean(QiYeAuthentFragment.getInstance(false)));
+                    }
+                }.showAtLocation(false);
+                break;
+            case 8:
                 RxBus.get().post("addFragment", new AddFragmentBean(new PeosonInfoFragment()));
                 break;
         }
 
+    }
+
+    @Override
+    protected TipLoadingBean getTipLoadingBean() {
+        return isWriteData ? new TipLoadingBean("", "", "") : super.getTipLoadingBean();
+    }
+
+    @Override
+    protected boolean showSucces() {
+        return false;
     }
 
     private void initOrder() {
@@ -185,11 +279,7 @@ public class IndexFiveFragment extends SingleNetWorkBaseFragment<PeosonCenterBea
         GeneralAdapter mAdatpter = new GeneralAdapter(getContext(), datas) {
             @Override
             protected void chooseItem(int position) {
-                if (position != datas.size() - 1) {
-                    RxBus.get().post("addFragment", new AddFragmentBean(MyOrderRootFragment.getInstance(position + 1)));
-                } else {
-                    MyToast.showToast("退款建设中");
-                }
+                RxBus.get().post("addFragment", new AddFragmentBean(MyOrderRootFragment.getInstance(position + 1)));
             }
         };
         rv_order.setAdapter(mAdatpter);
@@ -232,7 +322,22 @@ public class IndexFiveFragment extends SingleNetWorkBaseFragment<PeosonCenterBea
                         RxBus.get().post("addFragment", new AddFragmentBean(new ApplyBuildFlockFragment()));
                         break;
                     case 6:
-                        new PopContactService(ctx).showAtLocation(false);
+                        new PopContactService(ctx) {
+                            @Override
+                            protected void choose(int position) {
+                                switch (position) {
+                                    case 0:
+                                        Util.qq(getContext(), data.serviceQQ);
+                                        break;
+                                    case 1:
+                                        Util.tel(getContext(), data.serviceTel);
+                                        break;
+                                    case 2:
+                                        RxBus.get().post("addFragment", new AddFragmentBean(new MyFeedBackFragment()));
+                                        break;
+                                }
+                            }
+                        }.showAtLocation(false);
                         break;
                 }
             }

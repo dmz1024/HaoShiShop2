@@ -56,7 +56,7 @@ public class FlockInfoUserAdapter extends BaseAdapter<FlockInfoBean.Data.UsersBe
 
         @Override
         protected void onClick(final int layoutPosition) {
-            RxBus.get().post("addFragment", new AddFragmentBean(FriendInfoFragment.getInstance(list.get(layoutPosition).uid)));
+//            RxBus.get().post("addFragment", new AddFragmentBean(FriendInfoFragment.getInstance(list.get(layoutPosition).uid, type)));
         }
     }
 }

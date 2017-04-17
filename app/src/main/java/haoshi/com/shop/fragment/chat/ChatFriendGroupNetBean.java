@@ -15,14 +15,13 @@ public class ChatFriendGroupNetBean extends ListBaseBean<ArrayList<ChatFriendGro
     @Override
     public ArrayList<ChatFriendGroupBean> getData() {
         ChatFriendGroupImpl.getInstance().deleteAll();
-
         for (int i = 0; i < data.size(); i++) {
             ChatFriendsImpl.getInstance().insertAll(data.get(i).getFriends());
         }
 
         ChatFriendGroupImpl.getInstance().addAll(data);
-        data.clear();
-        data.addAll(ChatFriendGroupImpl.getInstance().getDatas());
+//        data.clear();
+//        data.addAll(ChatFriendGroupImpl.getInstance().getDatas());
         return data;
     }
 }

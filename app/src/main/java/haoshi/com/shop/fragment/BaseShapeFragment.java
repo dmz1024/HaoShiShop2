@@ -3,11 +3,13 @@ package haoshi.com.shop.fragment;
 import base.bean.BaseBean;
 import base.bean.rxbus.AddFragmentBean;
 import base.fragment.SingleNetWorkBaseFragment;
+import haoshi.com.shop.R;
 import haoshi.com.shop.bean.chat.dao.SendBean;
 import haoshi.com.shop.controller.SendMessageController;
 import haoshi.com.shop.controller.ShareUtil;
 import haoshi.com.shop.fragment.chat.ChatFlockFragment;
 import haoshi.com.shop.fragment.chat.ChatFriendFragment;
+import haoshi.com.shop.fragment.discover.ShapeToDongtaiFragment;
 import haoshi.com.shop.pop.PopDiscoverShare;
 import rx.Observable;
 import rx.functions.Action1;
@@ -54,10 +56,32 @@ public abstract class BaseShapeFragment<D extends BaseBean> extends SingleNetWor
                         flockFragment.setOutAnimation(com.mall.naiqiao.mylibrary.R.anim.go_2_down);
                         RxBus.get().post("addFragment", flockFragment);
                         break;
+                    case 6:
+                        AddFragmentBean addFragmentBean = new AddFragmentBean();
+                        addFragmentBean.setOutAnimation(R.anim.go_2_down);
+                        addFragmentBean.setInAnimation(R.anim.form_2_up);
+                        addFragmentBean.setFragment(ShapeToDongtaiFragment.getInstance(getGoodsId(),getGoodsName(),getImg()));
+                        RxBus.get().post("addFragment",addFragmentBean);
+                        break;
                 }
             }
         }.showAtLocation(false);
     }
+
+    protected String getGoodsName() {
+        return "";
+    }
+
+    protected String getImg() {
+        return "";
+    }
+
+
+    protected String getGoodsId() {
+        return "";
+    }
+
+    ;
 
 
     protected boolean getShareShow() {
@@ -99,4 +123,6 @@ public abstract class BaseShapeFragment<D extends BaseBean> extends SingleNetWor
         super.onDestroy();
         RxBus.get().unregister("initSendFriendRxBus", initSendFriendRxBus);
     }
+
+
 }

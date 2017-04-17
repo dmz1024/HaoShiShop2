@@ -21,11 +21,10 @@ import util.RxBus;
  */
 
 public class AllDiscoverClassifyItemAdapter extends BaseAdapter<AllDiscoverClassifyBean.Cats> {
-    private boolean isChoose;
 
-    public AllDiscoverClassifyItemAdapter(Context ctx, ArrayList<AllDiscoverClassifyBean.Cats> list, boolean isChoose) {
+
+    public AllDiscoverClassifyItemAdapter(Context ctx, ArrayList<AllDiscoverClassifyBean.Cats> list) {
         super(ctx, list);
-        this.isChoose = isChoose;
     }
 
     @Override
@@ -50,17 +49,8 @@ public class AllDiscoverClassifyItemAdapter extends BaseAdapter<AllDiscoverClass
 
         @Override
         protected void onClick(int layoutPosition) {
-//            SerializableMap serializableMap = new SerializableMap();
-//            Map<String, String> map = new HashMap<>();
-//            map.put("catsId", list.get(layoutPosition - 1).goodsCatId);
-//            map.put("catName", list.get(layoutPosition - 1).catName);
-//            serializableMap.setMap(map);
-//            RxBus.get().post("addFragment", new AddFragmentBean(GoodsIndexRootFragment.getInstance(serializableMap)));
-
-            if(isChoose){
-                RxBus.get().post("customChooseRxBus",new String[]{list.get(layoutPosition).catId,list.get(layoutPosition).catName});
-                RxBus.get().post("back","back");
-            }
+            RxBus.get().post("customChooseRxBus",new String[]{list.get(layoutPosition).catId,list.get(layoutPosition).catName});
+            RxBus.get().post("back","back");
         }
     }
 }

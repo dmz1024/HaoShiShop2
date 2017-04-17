@@ -13,6 +13,7 @@
         android:weightSum="6">
 
         <TextView
+            android:id="@+id/tv_online"
             style="@style/TextSize11Color666"
             android:layout_width="0dp"
             android:layout_gravity="center_vertical"

@@ -29,6 +29,7 @@
         android:background="#fff" />
 
     <FrameLayout
+        android:id="@+id/fg_more"
         android:layout_width="match_parent"
         android:layout_height="@dimen/size40"
         android:layout_marginTop="@dimen/size10"
@@ -51,8 +52,21 @@
 
     </FrameLayout>
 
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/tv_tips"
+        android:gravity="center_horizontal"
+        android:padding="@dimen/size15"
+        android:background="#fff"
+        android:layout_marginTop="@dimen/size0.5"
+        android:textColor="#666"
+        android:text="暂无推荐群组,可以通过完善信息来提高匹配率"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_content"
+        android:visibility="gone"
         android:paddingBottom="@dimen/size10"
         android:paddingTop="@dimen/size10"
         android:layout_width="match_parent"

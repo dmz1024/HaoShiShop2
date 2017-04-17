@@ -73,7 +73,7 @@ public class FriendAndFlockTitleBarView extends FrameLayout implements View.OnCl
         }
     }
 
-    private void changeColor(int index) {
+    public void changeColor(int index) {
         title_bar_tv_flock.setTextColor(Color.parseColor(index == 1 ? "#ffffff" : "#393934"));
         title_bar_tv_friend.setTextColor(Color.parseColor(index == 2 ? "#ffffff" : "#393934"));
         title_bar_tv_flock.setBackgroundResource(index == 1 ? R.drawable.hs_shape_666_left_radius_5 : R.drawable.hs_shape_fff_left_radius_5);

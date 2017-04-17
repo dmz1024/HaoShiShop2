@@ -5,6 +5,8 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.Map;
 
@@ -18,6 +20,7 @@ import haoshi.com.shop.R;
 import haoshi.com.shop.constant.ApiConstant;
 import haoshi.com.shop.constant.UserInfo;
 import interfaces.OnTitleBarListener;
+import util.GlideUtil;
 import util.MyToast;
 import util.RxBus;
 import view.DefaultTitleBarView;
@@ -29,6 +32,10 @@ import view.DefaultTitleBarView;
 public class DiscoverContactCommentFragment extends SingleNetWorkBaseFragment<SingleBaseBean> implements OnTitleBarListener {
     @BindView(R.id.et_comment)
     EditText et_comment;
+    @BindView(R.id.iv_img)
+    ImageView iv_img;
+    @BindView(R.id.tv_name)
+    TextView tv_name;
 
     public static DiscoverContactCommentFragment getInstance(String id) {
         DiscoverContactCommentFragment fragment = new DiscoverContactCommentFragment();
@@ -80,6 +87,8 @@ public class DiscoverContactCommentFragment extends SingleNetWorkBaseFragment<Si
     protected View getHaveDataView() {
         View view = View.inflate(getContext(), R.layout.fragment_discover_contact_comment, null);
         ButterKnife.bind(this, view);
+        GlideUtil.GlideErrAndOc(getContext(), UserInfo.logo, iv_img);
+        tv_name.setText(UserInfo.userName);
         return view;
     }
 

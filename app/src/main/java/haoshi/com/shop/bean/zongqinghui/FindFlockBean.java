@@ -24,4 +24,15 @@ public class FindFlockBean extends ListBaseBean<ArrayList<FindFlockBean.Data>> {
         public String userPhoto;
         public String property;
     }
+
+    @Override
+    public ArrayList<Data> getData() {
+        ArrayList<FindFlockBean.Data> d = new ArrayList<>();
+        for (FindFlockBean.Data f : data) {
+            if (f.data != null && f.data.size() > 0) {
+                d.add(f);
+            }
+        }
+        return d;
+    }
 }

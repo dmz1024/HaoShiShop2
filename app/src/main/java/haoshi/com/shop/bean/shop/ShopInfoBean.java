@@ -16,6 +16,9 @@ public class ShopInfoBean extends BaseBean<ShopInfoBean.Data> {
         public String shopName;
         public String shopDesc;
         public String shopCompany;
+        public String shopUserId;
+        public String shopUserName;
+        public String shopUserPhoto;
         public List<AccredsBean> accreds;
 
         public static class AccredsBean {

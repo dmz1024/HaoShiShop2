@@ -16,6 +16,9 @@ import butterknife.BindView;
 import haoshi.com.shop.R;
 import haoshi.com.shop.bean.zongqinghui.FriendBean;
 import haoshi.com.shop.bean.zongqinghui.FindFriendBean;
+import haoshi.com.shop.fragment.zongqinghui.FindFriendFragment;
+import haoshi.com.shop.fragment.zongqinghui.MoreFriendFragment;
+import haoshi.com.shop.fragment.zongqinghui.SexFlockFragment;
 import haoshi.com.shop.fragment.zongqinghui.StandFriendFragment;
 import util.RxBus;
 
@@ -68,7 +71,9 @@ public class FindFriendAdapter extends BaseAdapter<FindFriendBean.Data> {
         protected void itemOnclick(int id, int layoutPosition) {
             switch (id) {
                 case R.id.tv_more:
-                    RxBus.get().post("addFragment",new AddFragmentBean(new StandFriendFragment()));
+                    FindFriendBean.Data data = list.get(layoutPosition);
+                    RxBus.get().post("addFragment", new AddFragmentBean(MoreFriendFragment.getInstance(data.keyword, "{\"" + data.type + "\":\"" + data.fid + "\"}", data.name)));
+
                     break;
             }
         }

@@ -15,7 +15,7 @@ public class ChatFriendBean {
     @Id
     private String fid;
     private String name;
-    private String header;
+    private String logo;
     private String gid;
 
     private int type;//1群组、2好友,3、店铺用来区分是群组还是好友
@@ -36,12 +36,12 @@ public class ChatFriendBean {
         this.gid = gid;
     }
 
-    public String getHeader() {
-        return this.header;
+    public String getLogo() {
+        return this.logo;
     }
 
-    public void setHeader(String header) {
-        this.header = header;
+    public void setLogo(String logo) {
+        this.logo = logo;
     }
 
     public String getName() {
@@ -60,12 +60,11 @@ public class ChatFriendBean {
         this.fid = fid;
     }
 
-    @Generated(hash = 728430091)
-    public ChatFriendBean(String fid, String name, String header, String gid,
-            int type) {
+    @Generated(hash = 323264659)
+    public ChatFriendBean(String fid, String name, String logo, String gid, int type) {
         this.fid = fid;
         this.name = name;
-        this.header = header;
+        this.logo = logo;
         this.gid = gid;
         this.type = type;
     }

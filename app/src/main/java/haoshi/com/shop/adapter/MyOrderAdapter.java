@@ -17,9 +17,14 @@ import base.bean.rxbus.AddFragmentBean;
 import butterknife.BindView;
 import haoshi.com.shop.R;
 import haoshi.com.shop.bean.shop.MyOrderBean;
+import haoshi.com.shop.constant.UserInfo;
 import haoshi.com.shop.controller.MyOrderController;
+import haoshi.com.shop.fragment.chat.ChatViewFragment;
+import haoshi.com.shop.fragment.shop.MyOrderBackFragment;
 import haoshi.com.shop.fragment.shop.OrderCommentFragment;
 import haoshi.com.shop.fragment.shop.OrderDescFragment;
+import haoshi.com.shop.pay.PayRxBus;
+import haoshi.com.shop.pay.PayUtil;
 import interfaces.OnSingleRequestListener;
 import haoshi.com.shop.pay.PayController;
 import rx.Observable;
@@ -34,9 +39,11 @@ import view.pop.ChooseStringView;
  */
 
 public class MyOrderAdapter extends BaseAdapter<MyOrderBean.Data> {
-    public MyOrderAdapter(Context ctx, ArrayList<MyOrderBean.Data> list) {
+    private int rootPosition;
+
+    public MyOrderAdapter(Context ctx, ArrayList<MyOrderBean.Data> list, int position) {
         super(ctx, list);
-        initOrderRxBus();
+        rootPosition = position;
     }
 
     @Override
@@ -78,9 +85,7 @@ public class MyOrderAdapter extends BaseAdapter<MyOrderBean.Data> {
                         MyOrderController.getInstance().cancelOrder(list.get(position).orderId, new OnSingleRequestListener<SingleBaseBean>() {
                             @Override
                             public void succes(boolean isWrite, SingleBaseBean bean) {
-                                list.get(position).orderStatus = 15;
-                                list.get(position).status = "已取消";
-                                notifyDataSetChanged();
+                                RxBus.get().post("orderManager", rootPosition);
                             }
 
                             @Override
@@ -95,6 +100,7 @@ public class MyOrderAdapter extends BaseAdapter<MyOrderBean.Data> {
                     @Override
                     public void onClick(View view) {
                         final ArrayList<ChooseStringBean> datas = new ArrayList<>();
+                        initPayRxBus();
                         datas.add(new ChooseStringBean("支付宝安全支付"));
                         datas.add(new ChooseStringBean("微信安全支付"));
                         new ChooseStringView<ChooseStringBean>(ctx, datas) {
@@ -119,12 +125,44 @@ public class MyOrderAdapter extends BaseAdapter<MyOrderBean.Data> {
             case 9:
                 tv_right.setVisibility(View.VISIBLE);
                 tv_right.setText("催单");
+                tv_right.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        MyOrderBean.Data data = list.get(position);
+                        UserInfo.addUser(data.shopUserId, data.shopUserPhoto, data.shopUserName);
+                        RxBus.get().post("addFragment", new AddFragmentBean(ChatViewFragment.getInstance(data.shopUserId)));
+                    }
+                });
+                tv_left.setText("退款");
+                tv_left.setVisibility(View.VISIBLE);
+                tv_left.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        RxBus.get().post("addFragment", new AddFragmentBean(MyOrderBackFragment.getInstance(list.get(position).list, 0, list.get(position).goodsMoney, list.get(position).orderId, position)));
+                    }
+                });
                 break;
             case 6:
                 tv_left.setVisibility(View.VISIBLE);
                 tv_right.setVisibility(View.VISIBLE);
                 tv_right.setText("确认收货");
                 tv_left.setText("查看物流");
+                tv_right.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        MyOrderController.getInstance().receives(list.get(position).orderId, new OnSingleRequestListener<SingleBaseBean>() {
+                            @Override
+                            public void succes(boolean isWrite, SingleBaseBean bean) {
+                                RxBus.get().post("orderManager", position);
+                            }
+
+                            @Override
+                            public void error(boolean isWrite, SingleBaseBean bean, String msg) {
+
+                            }
+                        });
+                    }
+                });
                 break;
             case 12:
                 tv_right.setVisibility(View.VISIBLE);
@@ -132,7 +170,24 @@ public class MyOrderAdapter extends BaseAdapter<MyOrderBean.Data> {
                 tv_right.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        RxBus.get().post("addFragment", new AddFragmentBean(OrderCommentFragment.getInstance(list.get(position).orderId, position)));
+                        RxBus.get().post("addFragment", new AddFragmentBean(OrderCommentFragment.getInstance(list.get(position).orderId, rootPosition)));
+                    }
+                });
+                tv_left.setText("退款/退货");
+                tv_left.setVisibility(View.VISIBLE);
+                tv_left.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ArrayList<ChooseStringBean> chooseStringBeen = new ArrayList<ChooseStringBean>();
+                        chooseStringBeen.add(new ChooseStringBean("退款"));
+                        chooseStringBeen.add(new ChooseStringBean("退货"));
+                        new ChooseStringView<ChooseStringBean>(ctx, chooseStringBeen) {
+                            @Override
+                            protected void itemClick(int p) {
+                                super.itemClick(position);
+                                RxBus.get().post("addFragment", new AddFragmentBean(MyOrderBackFragment.getInstance(list.get(position).list, p, list.get(position).goodsMoney, list.get(position).orderId, position)));
+                            }
+                        }.showAtLocation(false);
                     }
                 });
                 break;
@@ -148,7 +203,7 @@ public class MyOrderAdapter extends BaseAdapter<MyOrderBean.Data> {
                         MyOrderController.getInstance().deleteOrder(list.get(position).orderId, new OnSingleRequestListener<SingleBaseBean>() {
                             @Override
                             public void succes(boolean isWrite, SingleBaseBean bean) {
-                                remove(position);
+                                RxBus.get().post("orderManager", rootPosition);
                             }
 
                             @Override
@@ -162,6 +217,22 @@ public class MyOrderAdapter extends BaseAdapter<MyOrderBean.Data> {
             case 10:
                 tv_right.setVisibility(View.VISIBLE);
                 tv_right.setText("取消退款");
+                tv_right.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        MyOrderController.getInstance().cancelOrder(list.get(position).orderId, new OnSingleRequestListener<SingleBaseBean>() {
+                            @Override
+                            public void succes(boolean isWrite, SingleBaseBean bean) {
+                                RxBus.get().post("orderManager", rootPosition);
+                            }
+
+                            @Override
+                            public void error(boolean isWrite, SingleBaseBean bean, String msg) {
+
+                            }
+                        });
+                    }
+                });
                 break;
 
         }
@@ -172,6 +243,27 @@ public class MyOrderAdapter extends BaseAdapter<MyOrderBean.Data> {
         MyOrderGoodAdapter mAdapter = new MyOrderGoodAdapter(ctx, list);
         rv_content.setLayoutManager(manager);
         rv_content.setAdapter(mAdapter);
+    }
+
+    private Observable<Integer> orderManager;
+
+    private void initPayRxBus() {
+        PayUtil.PAYRESULT = 20000 + rootPosition;
+        if (orderManager == null) {
+            orderManager = PayRxBus.getVavle(new Action1<Integer>() {
+                @Override
+                public void call(Integer integer) {
+                    if (integer == 20000 + rootPosition) {
+                        RxBus.get().post("orderManager", rootPosition);
+                    }
+                }
+            });
+        }
+
+    }
+
+    public void onDestroy() {
+        RxBus.get().unregister("payRxBus", orderManager);
     }
 
     public class ViewHolder extends BaseViewHolder {
@@ -195,102 +287,9 @@ public class MyOrderAdapter extends BaseAdapter<MyOrderBean.Data> {
 
         @Override
         protected void onClick(int layoutPosition) {
-            RxBus.get().post("addFragment", new AddFragmentBean(OrderDescFragment.getInstance(list.get(layoutPosition).orderId, layoutPosition, list.get(layoutPosition).status)));
+            RxBus.get().post("addFragment", new AddFragmentBean(OrderDescFragment.getInstance(list.get(layoutPosition).orderId, layoutPosition, list.get(layoutPosition).status, rootPosition)));
         }
     }
 
-
-    private Observable<Integer> orderCommentRxBus;
-    private Observable<Integer> orderCancelRxBus;
-    private Observable<Integer> orderDeleteRxBus;
-    private Observable<Integer> orderPayRxBus;
-    private Observable<Integer> orderBackRxBus;
-    private Observable<Integer> orderReceRxBus;
-
-
-    private void initOrderRxBus() {
-        //评价
-        if (orderCommentRxBus == null) {
-            orderCommentRxBus = RxBus.get().register("orderCommentRxBus", Integer.class);
-            orderCommentRxBus.subscribe(new Action1<Integer>() {
-                @Override
-                public void call(Integer integer) {
-                    list.get(integer).orderStatus = 7;
-                    list.get(integer).status = "已完成";
-                    notifyDataSetChanged();
-                }
-            });
-        }
-        //取消订单
-        if (orderCancelRxBus == null) {
-            orderCancelRxBus = RxBus.get().register("orderCancelRxBus", Integer.class);
-            orderCancelRxBus.subscribe(new Action1<Integer>() {
-                @Override
-                public void call(Integer integer) {
-                    list.get(integer).orderStatus = 15;
-                    list.get(integer).status = "已取消";
-                    notifyDataSetChanged();
-                }
-            });
-        }
-
-        //删除订单
-        if (orderDeleteRxBus == null) {
-            orderDeleteRxBus = RxBus.get().register("orderDeleteRxBus", Integer.class);
-            orderDeleteRxBus.subscribe(new Action1<Integer>() {
-                @Override
-                public void call(Integer integer) {
-                    remove(integer);
-                }
-            });
-        }
-        //支付
-        if (orderPayRxBus == null) {
-            orderPayRxBus = RxBus.get().register("orderPayRxBus", Integer.class);
-            orderPayRxBus.subscribe(new Action1<Integer>() {
-                @Override
-                public void call(Integer integer) {
-                    list.get(integer).orderStatus = 9;
-                    list.get(integer).status = "待发货";
-                    notifyDataSetChanged();
-                }
-            });
-        }
-        //退款
-        if (orderBackRxBus == null) {
-            orderBackRxBus = RxBus.get().register("orderBackRxBus", Integer.class);
-            orderBackRxBus.subscribe(new Action1<Integer>() {
-                @Override
-                public void call(Integer integer) {
-                    list.get(integer).orderStatus = 10;
-                    list.get(integer).status = "退款中";
-                    notifyDataSetChanged();
-                }
-            });
-        }
-        //确认收货
-        if (orderReceRxBus == null) {
-            orderReceRxBus = RxBus.get().register("orderReceRxBus", Integer.class);
-            orderReceRxBus.subscribe(new Action1<Integer>() {
-                @Override
-                public void call(Integer integer) {
-                    list.get(integer).orderStatus = 12;
-                    list.get(integer).status = "待评价";
-                    notifyDataSetChanged();
-                }
-            });
-        }
-
-    }
-
-
-    public void cancelRxBus() {
-        RxBus.get().unregister("orderCommentRxBus", orderCommentRxBus);
-        RxBus.get().unregister("orderCancelRxBus", orderCancelRxBus);
-        RxBus.get().unregister("orderDeleteRxBus", orderDeleteRxBus);
-        RxBus.get().unregister("orderPayRxBus", orderPayRxBus);
-        RxBus.get().unregister("orderBackRxBus", orderBackRxBus);
-        RxBus.get().unregister("orderReceRxBus", orderReceRxBus);
-    }
 
 }

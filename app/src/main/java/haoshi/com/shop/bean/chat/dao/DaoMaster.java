@@ -30,12 +30,12 @@ public class DaoMaster extends AbstractDaoMaster {
         ChatFriendBeanDao.createTable(db, ifNotExists);
         ChatFriendGroupBeanDao.createTable(db, ifNotExists);
         ChatViewBeanDao.createTable(db, ifNotExists);
+        SendBeanDao.createTable(db, ifNotExists);
         FileBeanDao.createTable(db, ifNotExists);
         MessageBeanDao.createTable(db, ifNotExists);
         PhotoBeanDao.createTable(db, ifNotExists);
         SoundBeanDao.createTable(db, ifNotExists);
         TextBeanDao.createTable(db, ifNotExists);
-        SendBeanDao.createTable(db, ifNotExists);
     }
 
     /** Drops underlying database table using DAOs. */
@@ -44,12 +44,12 @@ public class DaoMaster extends AbstractDaoMaster {
         ChatFriendBeanDao.dropTable(db, ifExists);
         ChatFriendGroupBeanDao.dropTable(db, ifExists);
         ChatViewBeanDao.dropTable(db, ifExists);
+        SendBeanDao.dropTable(db, ifExists);
         FileBeanDao.dropTable(db, ifExists);
         MessageBeanDao.dropTable(db, ifExists);
         PhotoBeanDao.dropTable(db, ifExists);
         SoundBeanDao.dropTable(db, ifExists);
         TextBeanDao.dropTable(db, ifExists);
-        SendBeanDao.dropTable(db, ifExists);
     }
 
     /**
@@ -72,12 +72,12 @@ public class DaoMaster extends AbstractDaoMaster {
         registerDaoClass(ChatFriendBeanDao.class);
         registerDaoClass(ChatFriendGroupBeanDao.class);
         registerDaoClass(ChatViewBeanDao.class);
+        registerDaoClass(SendBeanDao.class);
         registerDaoClass(FileBeanDao.class);
         registerDaoClass(MessageBeanDao.class);
         registerDaoClass(PhotoBeanDao.class);
         registerDaoClass(SoundBeanDao.class);
         registerDaoClass(TextBeanDao.class);
-        registerDaoClass(SendBeanDao.class);
     }
 
     public DaoSession newSession() {

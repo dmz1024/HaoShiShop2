@@ -3,10 +3,13 @@ package haoshi.com.shop.fragment.zongqinghui;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Map;
 
+import base.bean.rxbus.AddFragmentBean;
 import base.fragment.SingleNetWorkBaseFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -18,6 +21,7 @@ import haoshi.com.shop.bean.GeneralBean;
 import haoshi.com.shop.bean.RegFriendRecommendBean;
 import haoshi.com.shop.constant.ApiConstant;
 import haoshi.com.shop.constant.UserInfo;
+import util.RxBus;
 
 /**
  * Created by dengmingzhi on 2017/3/14.
@@ -28,6 +32,8 @@ public class IndexFourFlockFragment extends SingleNetWorkBaseFragment<RegFriendR
     RecyclerView rv_search;
     @BindView(R.id.rv_content)
     RecyclerView rv_content;
+    @BindView(R.id.tv_tips)
+    TextView tv_tips;
 
     @Override
     protected String url() {
@@ -44,18 +50,34 @@ public class IndexFourFlockFragment extends SingleNetWorkBaseFragment<RegFriendR
     @Override
     protected void writeData(boolean isWrite, RegFriendRecommendBean bean) {
         super.writeData(isWrite, bean);
-        rv_content.setAdapter(new FlockRecommendAdapter(getContext(), bean.data.group));
-        LinearLayoutManager manager = new LinearLayoutManager(getContext());
-        manager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        rv_content.setLayoutManager(manager);
+        if (bean.data.group != null && bean.data.group.size() > 0) {
+            rv_content.setAdapter(new FlockRecommendAdapter(getContext(), bean.data.group));
+            LinearLayoutManager manager = new LinearLayoutManager(getContext());
+            manager.setOrientation(LinearLayoutManager.HORIZONTAL);
+            rv_content.setLayoutManager(manager);
+            rv_content.setVisibility(View.VISIBLE);
+        } else {
+            tv_tips.setVisibility(View.VISIBLE);
+
+        }
+
     }
 
     @Override
     protected void initData() {
         super.initData();
         ArrayList<GeneralBean> datas = new ArrayList<>();
-        datas.add(new GeneralBean("按我的信息匹配", R.mipmap.zqh_shaixuan, new FindFlockAndFriendFragment(), 13));
-        rv_search.setAdapter(new GeneralAdapter(getContext(), datas));
+        datas.add(new GeneralBean("按我的信息匹配", R.mipmap.zqh_shaixuan, null, 13));
+        rv_search.setAdapter(new GeneralAdapter(getContext(), datas) {
+            @Override
+            protected void chooseItem(int position) {
+                switch (position) {
+                    case 0:
+                        RxBus.get().post("addFragment", new AddFragmentBean(FindFlockAndFriendFragment.getInstance(0)));
+                        break;
+                }
+            }
+        });
         rv_search.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
@@ -93,11 +115,11 @@ public class IndexFourFlockFragment extends SingleNetWorkBaseFragment<RegFriendR
 
     @OnClick(R.id.tv_more)
     void more() {
-
+        RxBus.get().post("addFragment", new AddFragmentBean(SexFlockFragment.getInstance("更多群组")));
     }
 
     @OnClick(R.id.fg_search)
     void search() {
-
+        RxBus.get().post("addFragment", new AddFragmentBean(SearchFriendFragment.getInstance(1)));
     }
 }

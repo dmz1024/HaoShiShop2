@@ -23,6 +23,7 @@ public class PopContactService extends PopBaseView {
         super(ctx);
     }
 
+
     @Override
     protected View getView() {
         View view = View.inflate(ctx, R.layout.pop_contact_service, null);
@@ -49,8 +50,18 @@ public class PopContactService extends PopBaseView {
         datas.add(new GeneralBean("电话客服", R.mipmap.wode_phone, null, 3));
         datas.add(new GeneralBean("在线反馈", R.mipmap.wode_mail, null, 3));
         GridLayoutManager manager = new GridLayoutManager(ctx, 3);
-        GeneralAdapter mAdatper = new GeneralAdapter(ctx, datas);
+        GeneralAdapter mAdatper = new GeneralAdapter(ctx, datas) {
+            @Override
+            protected void chooseItem(int position) {
+                dismiss();
+                choose(position);
+            }
+        };
         rv_content.setAdapter(mAdatper);
         rv_content.setLayoutManager(manager);
+    }
+
+
+    protected void choose(int position) {
     }
 }

@@ -9,12 +9,14 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import base.bean.rxbus.AddFragmentBean;
 import base.fragment.ListNetWorkBaseFragment;
 import base.fragment.NotNetWorkBaseFragment;
 import butterknife.BindView;
 import butterknife.OnClick;
 import haoshi.com.shop.R;
 import haoshi.com.shop.bean.zongqinghui.FriendDynamicBean;
+import haoshi.com.shop.fragment.chat.ChatViewFragment;
 import interfaces.OnTitleBarListener;
 import util.GlideUtil;
 import util.RxBus;
@@ -33,6 +35,8 @@ public class MyFriendDynamicRootFragment extends NotNetWorkBaseFragment implemen
     TextView tv_name;
     @BindView(R.id.tv_content)
     TextView tv_content;
+    @BindView(R.id.tv_chat)
+    TextView tv_chat;
     @BindView(R.id.rl_top)
     RelativeLayout rl_top;
     @BindView(R.id.fg_content)
@@ -40,13 +44,28 @@ public class MyFriendDynamicRootFragment extends NotNetWorkBaseFragment implemen
 
     @OnClick(R.id.tv_chat)
     void chat() {
-
+        RxBus.get().post("back", "back");
+        RxBus.get().post("back", "back");
+        if (type == 1) {
+            RxBus.get().post("back", "back");
+            RxBus.get().post("addFragment", new AddFragmentBean(ChatViewFragment.getInstance(id)));
+        }
     }
 
-    public static MyFriendDynamicRootFragment getInstance(String id) {
+
+    @Override
+    protected void initView() {
+        super.initView();
+        if (type == 2) {
+            tv_chat.setVisibility(View.GONE);
+        }
+    }
+
+    public static MyFriendDynamicRootFragment getInstance(String id, int type) {
         MyFriendDynamicRootFragment fragment = new MyFriendDynamicRootFragment();
         Bundle bundle = new Bundle();
         bundle.putString("id", id);
+        bundle.putInt("type", type);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -55,9 +74,11 @@ public class MyFriendDynamicRootFragment extends NotNetWorkBaseFragment implemen
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         id = getArguments().getString("id");
+        type = getArguments().getInt("type");
     }
 
     private String id;
+    private int type;
 
 
     private MyFriendDynamicFragment fragment;
@@ -107,13 +128,13 @@ public class MyFriendDynamicRootFragment extends NotNetWorkBaseFragment implemen
         fragment.setOnScrollListener(new ListNetWorkBaseFragment.OnListBaseScrollListener() {
             @Override
             public void toDown(int dy, boolean firstShow) {
-                Log.d("滑动", "toDown"+firstShow);
+                Log.d("滑动", "toDown" + firstShow);
 
             }
 
             @Override
             public void toTop(int dy, boolean firstShow) {
-                Log.d("滑动", "toTop"+firstShow);
+                Log.d("滑动", "toTop" + firstShow);
             }
         });
         getChildFragmentManager().beginTransaction().add(R.id.fg_content, fragment).commit();
@@ -128,4 +149,6 @@ public class MyFriendDynamicRootFragment extends NotNetWorkBaseFragment implemen
     private void toDown() {
 
     }
+
+
 }

@@ -46,14 +46,13 @@ public class MessagesImpl extends ChatBaseBean<MessageBean, MessageBeanDao> {
     }
 
     public void add(ChatMessageBean chat, String sign) {
-        boolean isU = TextUtils.isEmpty(chat.getTouid());
-        String id = isU ? chat.getGroupid() : chat.getTouid();
+        String id = chat.getId();
         MessageBean bean = select(id);
         if (bean != null) {
             delete(bean);
         }
         bean = new MessageBean();
-        bean.setType(chat.getType());
+        bean.setType(chat.getIntType());
         bean.setFrom(1);
         bean.setId(id);
         bean.setNum(10);
@@ -62,11 +61,27 @@ public class MessagesImpl extends ChatBaseBean<MessageBean, MessageBeanDao> {
         add(bean);
     }
 
-    public void addM(MessageBean bean){
+    public void addOnLine(ChatMessageBean chat, String sign) {
+        String id = chat.getId();
+        MessageBean bean = select(id);
+        if (bean != null) {
+            delete(bean);
+        }
+        bean = new MessageBean();
+        bean.setType(chat.getFiletype());
+        bean.setFrom(1);
+        bean.setId(id);
+        bean.setNum(10);
+        bean.setSign(sign);
+        bean.setTime(chat.getTime());
+        add(bean);
+    }
+
+    public void addM(MessageBean bean) {
         MessageBean select = select(bean.getId());
-        if(select!=null){
+        if (select != null) {
             update(bean);
-        }else {
+        } else {
             add(bean);
         }
     }

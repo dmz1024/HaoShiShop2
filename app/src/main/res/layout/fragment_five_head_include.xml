@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@mipmap/touxiang" />
+        />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -22,7 +22,6 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/size12"
             android:scaleType="fitXY"
-            android:src="@mipmap/touxiang"
             app:frame_color="#55ffffff"
             app:frame_width="@dimen/size4"
              />

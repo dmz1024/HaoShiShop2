@@ -1,5 +1,7 @@
 package haoshi.com.shop.fragment.zongqinghui;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import base.bean.rxbus.AddFragmentBean;
 import base.fragment.NotNetWorkBaseFragment;
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -26,6 +29,25 @@ import util.SharedPreferenUtil;
  */
 
 public class SearchFriendFragment extends NotNetWorkBaseFragment {
+    private int type;
+
+    public static SearchFriendFragment getInstance(int type) {
+        SearchFriendFragment fragment = new SearchFriendFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt("type", type);
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            type = bundle.getInt("type");
+        }
+    }
+
     @BindView(R.id.tv_cancel)
     TextView tv_cancel;
     @BindView(R.id.et_search)
@@ -37,13 +59,13 @@ public class SearchFriendFragment extends NotNetWorkBaseFragment {
 
     @Override
     protected void initData() {
-        datas = JsonUtil.json2List(new SharedPreferenUtil(getContext(), "friend_history" + UserInfo.userId).getString("datas"), String.class);
+        datas = JsonUtil.json2List(new SharedPreferenUtil(getContext(), type == 0 ? "friend_history" : "flock_history" + UserInfo.userId).getString("datas"), String.class);
         if (datas == null) {
             datas = new ArrayList<>();
         }
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
 
-        mAdapter = new MySearchFriendHistoryAdapter(getContext(), datas);
+        mAdapter = new MySearchFriendHistoryAdapter(getContext(), datas, type);
         rv_history.setLayoutManager(manager);
         rv_history.setAdapter(mAdapter);
 
@@ -51,6 +73,11 @@ public class SearchFriendFragment extends NotNetWorkBaseFragment {
 
     @Override
     protected void initView() {
+
+        if (type != 0) {
+            et_search.setHint("群组名称/群号");
+        }
+
         et_search.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -78,7 +105,7 @@ public class SearchFriendFragment extends NotNetWorkBaseFragment {
     @OnClick(R.id.tv_clear)
     void clear() {
         datas.clear();
-        new SharedPreferenUtil(getContext(), "friend_history" + UserInfo.userId).setData("datas", JsonUtil.javaBean2Json(datas));
+        new SharedPreferenUtil(getContext(), type == 0 ? "friend_history" : "flock_history" + UserInfo.userId).setData("datas", JsonUtil.javaBean2Json(datas));
         mAdapter.notifyDataSetChanged();
     }
 
@@ -87,10 +114,16 @@ public class SearchFriendFragment extends NotNetWorkBaseFragment {
         if (TextUtils.equals("取消", tv_cancel.getText())) {
             RxBus.get().post("back", "back");
         } else {
-            //TODO 搜索好友
-            datas.add(et_search.getText().toString());
+            String value = et_search.getText().toString();
+
+            datas.add(0, value);
             mAdapter.notifyDataSetChanged();
-            new SharedPreferenUtil(getContext(), "friend_history" + UserInfo.userId).setData("datas", JsonUtil.javaBean2Json(datas));
+            new SharedPreferenUtil(getContext(), type == 0 ? "friend_history" : "flock_history" + UserInfo.userId).setData("datas", JsonUtil.javaBean2Json(datas));
+            if (type == 0) {
+                RxBus.get().post("addFragment", new AddFragmentBean(MoreFriendFragment.getInstance("name", value, value)));
+            } else {
+                RxBus.get().post("addFragment", new AddFragmentBean(SexFlockFragment.getInstance("name", value, value)));
+            }
         }
     }
 

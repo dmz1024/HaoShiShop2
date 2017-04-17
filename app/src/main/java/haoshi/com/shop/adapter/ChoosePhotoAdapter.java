@@ -90,6 +90,7 @@ public class ChoosePhotoAdapter extends BaseAdapter<String> {
             if (isCanChoose) {
                 itemView.setOnClickListener(this);
                 iv_delete.setOnClickListener(this);
+                itemView.setOnLongClickListener(this);
             }
 
         }

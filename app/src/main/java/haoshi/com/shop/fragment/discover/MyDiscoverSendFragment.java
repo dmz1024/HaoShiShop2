@@ -104,4 +104,7 @@ public class MyDiscoverSendFragment extends ListNetWorkBaseFragment<DiscoverBean
     public void center() {
 
     }
+
+
+
 }

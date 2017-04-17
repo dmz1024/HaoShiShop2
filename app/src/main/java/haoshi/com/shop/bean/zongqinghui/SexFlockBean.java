@@ -9,4 +9,5 @@ import base.bean.ListBaseBean;
  */
 
 public class SexFlockBean extends ListBaseBean<ArrayList<FlockBean>> {
+
 }

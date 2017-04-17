@@ -45,6 +45,7 @@ public class SendMessageController {
         ChatViewBean vb = new ChatViewBean();
         vb.setSign(sign);
         vb.setFid(content[0]);
+        vb.setUid(UserInfo.userId);
         vb.setStatus(0);
         vb.setFrom(2);
         vb.setIsRead(0);
@@ -72,6 +73,7 @@ public class SendMessageController {
         vb.setSign(sign);
         vb.setFid(content[0]);
         vb.setStatus(0);
+        vb.setUid(UserInfo.userId);
         vb.setFrom(2);
         vb.setIsRead(0);
         long time = System.currentTimeMillis();
@@ -98,6 +100,7 @@ public class SendMessageController {
         vb.setFid(content[0]);
         vb.setStatus(0);
         vb.setFrom(2);
+        vb.setUid(UserInfo.userId);
         vb.setIsRead(0);
         long time = System.currentTimeMillis();
         vb.setTime(time);
@@ -156,6 +159,7 @@ public class SendMessageController {
         vb.setStatus(0);
         vb.setFrom(2);
         vb.setIsRead(0);
+        vb.setUid(UserInfo.userId);
         long time = System.currentTimeMillis();
         vb.setTime(time);
         vb.setType(5);

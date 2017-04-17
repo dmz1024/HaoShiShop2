@@ -43,7 +43,7 @@ public class ChatFriendAdapter extends BaseAdapter<ChatFriendBean> {
         ChatFriendBean data = list.get(position);
         ViewHolder viewHolder = (ViewHolder) holder;
         viewHolder.tv_name.setText(data.getName());
-        GlideUtil.GlideErrAndOc(ctx, data.getName(), viewHolder.iv_head);
+        GlideUtil.GlideErrAndOc(ctx, data.getLogo(), viewHolder.iv_head);
     }
 
     public class ViewHolder extends BaseViewHolder {
@@ -64,7 +64,7 @@ public class ChatFriendAdapter extends BaseAdapter<ChatFriendBean> {
                 RxBus.get().post("back", "back");
                 RxBus.get().post("initSendFriendRxBus", new String[]{chatFriendBean.getFid(), chatFriendBean.getType() + ""});
             } else {
-                RxBus.get().post("addFragment", new AddFragmentBean(ChatViewFragment.getInstance(chatFriendBean.getType(), chatFriendBean.getName(), chatFriendBean.getFid())));
+                RxBus.get().post("addFragment", new AddFragmentBean(ChatViewFragment.getInstance(chatFriendBean.getFid())));
             }
 
         }

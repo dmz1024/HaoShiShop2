@@ -12,5 +12,6 @@ public class LoginBean extends BaseBean<LoginBean.Data> {
         public String userId;
         public String userName;
         public String userPhone;
+        public String userPhoto;
     }
 }

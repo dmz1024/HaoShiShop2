@@ -52,40 +52,7 @@ public class PeosonInfoFragment extends ListNetWorkBaseFragment<PersonInfoBean> 
 
     @Override
     public void right() {
-//        ArrayList<PersonInfoBean.Data> list = (ArrayList<PersonInfoBean.Data>) this.totalList;
-//        StringBuilder sbTag = new StringBuilder("[");
-//        StringBuilder sbWrite = new StringBuilder();
-//        int count = 0;
-//        for (PersonInfoBean.Data bean : list) {
-//            if (!TextUtils.isEmpty(bean.result)) {
-//                count += 1;
-//                switch (bean.key) {
-//                    case 0:
-//                    case 2:
-//                        if (sbTag.length() > 1) {
-//                            sbTag.append(",");
-//                        }
-//                        sbTag.append(bean.result);
-//                        break;
-//                    case 1:
-//                        if (sbWrite.length() > 0) {
-//                            sbWrite.append("!ss!");
-//                        }
-//                        sbWrite.append(bean.result);
-//                        break;
-//                }
-//            }
-//        }
-//        if (count != totalList.size()) {
-//            MyToast.showToast("请完善所有信息");
-//            return;
-//        }
-//
-//        if (sbTag.length() > 1) {
-//            sbTag.append("]");
-//        }
-//
-//        editFriend(sbTag.toString(), sbWrite.toString());
+
 
     }
 

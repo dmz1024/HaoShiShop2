@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/et_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        android:gravity="left"
+        android:hint="这一刻的想法"
+        android:minHeight="@dimen/size100"
+        android:padding="@dimen/size5"
+        android:textColor="#666"
+        android:textColorHint="#999"
+        android:textSize="@dimen/sp14" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size10"
+        android:background="#ddd"
+        android:padding="@dimen/size5">
+
+        <ImageView
+            android:id="@+id/iv_img"
+            android:layout_width="@dimen/size55"
+            android:layout_height="@dimen/size55"
+            android:scaleType="fitXY" />
+
+        <TextView
+            android:id="@+id/tv_content"
+            style="@style/TextSize14Color333"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/size10"
+            android:layout_toRightOf="@id/iv_img"
+            android:ellipsize="end"
+            android:maxLines="2" />
+    </RelativeLayout>
+</LinearLayout>

@@ -128,11 +128,7 @@ public class ChatFriendFragment extends ListNetWorkBaseFragment<ChatFriendGroupN
                                 }.showAtLocation(false);
                                 break;
                             case 1:
-                                if (layoutPosition == 0) {
-                                    MyToast.showToast("不可删除默认分组");
-                                    return;
-                                }
-                                new TipMessage(getContext(), new TipMessage.TipMessageBean("提示", "是否确认删除分组？\n删除后好友将移至默认分组", "取消", "确认")) {
+                                new TipMessage(getContext(), new TipMessage.TipMessageBean("提示", "是否确认删除分组？\n删除后好友将移至我的好友分组", "取消", "删除")) {
                                     @Override
                                     protected void right() {
                                         super.right();
@@ -140,17 +136,18 @@ public class ChatFriendFragment extends ListNetWorkBaseFragment<ChatFriendGroupN
                                             @Override
                                             public void succes(boolean isWrite, SingleBaseBean bean) {
 
-                                                ArrayList<ChatFriendBean> friends = list.get(layoutPosition).getFriends();
-                                                String id = list.get(layoutPosition).getID();
-                                                for (ChatFriendBean friend : friends) {
-                                                    friend.setGid(id);
-                                                }
-
-                                                ChatFriendsImpl.getInstance().addAll(friends);
-                                                ChatFriendGroupImpl.getInstance().delete(list.get(layoutPosition));
-                                                totalList.clear();
-                                                ((ArrayList<ChatFriendGroupBean>) totalList).addAll(ChatFriendGroupImpl.getInstance().getDatas());
-                                                notifyDataSetChanged();
+//                                                ArrayList<ChatFriendBean> friends = list.get(layoutPosition).getFriends();
+//                                                String id = list.get(layoutPosition).getID();
+//                                                for (ChatFriendBean friend : friends) {
+//                                                    friend.setGid(id);
+//                                                }
+//
+//                                                ChatFriendsImpl.getInstance().addAll(friends);
+//                                                ChatFriendGroupImpl.getInstance().delete(list.get(layoutPosition));
+//                                                totalList.clear();
+//                                                ((ArrayList<ChatFriendGroupBean>) totalList).addAll(ChatFriendGroupImpl.getInstance().getDatas());
+//                                                notifyDataSetChanged();
+                                                getData();
                                             }
 
                                             @Override
@@ -237,5 +234,10 @@ public class ChatFriendFragment extends ListNetWorkBaseFragment<ChatFriendGroupN
     @Override
     public void center() {
 
+    }
+
+    @Override
+    protected boolean getLoadMore() {
+        return false;
     }
 }

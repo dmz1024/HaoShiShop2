@@ -2,6 +2,7 @@ package haoshi.com.shop.service;
 
 import android.app.IntentService;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.yolanda.nohttp.Binary;
@@ -42,6 +43,7 @@ public class SendDiscoverService extends IntentService {
         final String token = intent.getStringExtra("token");
         final String goodsCatId = intent.getStringExtra("goodsCatId");
         final String goodsName = intent.getStringExtra("goodsName");
+        final String goodsDesc = intent.getStringExtra("goodsDesc");
         final String attr = intent.getStringExtra("attr");
 
         final String[] photo = intent.getStringExtra("photo").split("、");
@@ -81,14 +83,14 @@ public class SendDiscoverService extends IntentService {
                 SendDiscoverController.getInstance().sendDiscover(attr, new OnSingleRequestListener<SingleBaseBean>() {
                     @Override
                     public void succes(boolean isWrite, SingleBaseBean bean) {
-                        MyToast.showToast("动态发表成功");
+                        MyToast.showToast("动态发布成功");
                     }
 
                     @Override
                     public void error(boolean isWrite, SingleBaseBean bean, String msg) {
-                        MyToast.showToast("动态发表失败");
+                        MyToast.showToast("动态发布失败");
                     }
-                }, false, goodsName, goodsCatId, userId, token, sb.toString());
+                }, false, goodsName, goodsCatId, userId, token, goodsDesc, sb.toString());
             }
 
             @Override

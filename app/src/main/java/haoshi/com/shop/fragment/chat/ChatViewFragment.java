@@ -1,14 +1,11 @@
 package haoshi.com.shop.fragment.chat;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.format.Formatter;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -23,7 +20,6 @@ import android.widget.RelativeLayout;
 
 import com.yanzhenjie.album.Album;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import audio.MediaPlayerUtils;
@@ -35,25 +31,15 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import haoshi.com.shop.R;
 import haoshi.com.shop.adapter.ChatAdapter;
-import haoshi.com.shop.bean.chat.MessageBean;
+import haoshi.com.shop.bean.chat.dao.ChatFriendBean;
 import haoshi.com.shop.bean.chat.dao.SendBean;
+import haoshi.com.shop.bean.chat.impl.ChatFriendsImpl;
 import haoshi.com.shop.bean.chat.impl.ChatViewsImpl;
-import haoshi.com.shop.bean.chat.FileBean;
-import haoshi.com.shop.bean.chat.PhotoBean;
-import haoshi.com.shop.bean.chat.SoundBean;
-import haoshi.com.shop.bean.chat.TextBean;
 import haoshi.com.shop.bean.chat.dao.ChatViewBean;
-import haoshi.com.shop.bean.chat.impl.FileImpl;
-import haoshi.com.shop.bean.chat.impl.MessagesImpl;
-import haoshi.com.shop.bean.chat.impl.PhotoImpl;
-import haoshi.com.shop.bean.chat.impl.SoundImpl;
-import haoshi.com.shop.bean.chat.impl.TextImpl;
 
 import haoshi.com.shop.controller.SendMessageController;
 import haoshi.com.shop.fragment.discover.MyDiscoverSendFragment;
 import haoshi.com.shop.fragment.zongqinghui.FlockInfoFragment;
-import haoshi.com.shop.constant.UserInfo;
-import haoshi.com.shop.controller.ChatSendMessageController;
 import haoshi.com.shop.fragment.zongqinghui.FriendInfoFragment;
 import constant.ChooseFileIndex;
 import constant.ConstantForResult;
@@ -61,13 +47,10 @@ import constant.PhotoIndex;
 import interfaces.OnTitleBarListener;
 import rx.Observable;
 import rx.functions.Action1;
-import util.BitmapUtil;
 import util.ContextUtil;
-import util.FileUtil;
 import util.RxBus;
 import util.Util;
 import view.DefaultTitleBarView;
-import view.KeyboardListenRelativeLayout;
 import view.MyButton;
 import view.pop.SendSoundView;
 
@@ -91,7 +74,7 @@ public class ChatViewFragment extends NotNetWorkBaseFragment implements MyButton
     @BindView(R.id.ll_bottom)
     LinearLayout ll_bottom;
     @BindView(R.id.rl_root)
-    KeyboardListenRelativeLayout rl_root;
+    RelativeLayout rl_root;
     private ArrayList<ChatViewBean> datas = new ArrayList<>();
     private ChatAdapter mAdapter;
     LinearLayoutManager manager;
@@ -124,16 +107,22 @@ public class ChatViewFragment extends NotNetWorkBaseFragment implements MyButton
     private String id;
     private String name;
 
-    public static ChatViewFragment getInstance(int type, String name, String id) {
+    public static ChatViewFragment getInstance(String id) {
+        return getInstance(id, false);
+    }
+
+    public static ChatViewFragment getInstance(String id, boolean isFromOther) {
         ChatViewFragment chatViewFragment = new ChatViewFragment();
         Bundle bundle = new Bundle();
         bundle.putString("id", id);
-        bundle.putInt("type", type);
-        bundle.putString("name", name);
+        bundle.putBoolean("isFromOther", isFromOther);
         chatViewFragment.setArguments(bundle);
         return chatViewFragment;
     }
 
+
+    private ChatFriendBean fUser;
+    private boolean isFromOther;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -141,8 +130,10 @@ public class ChatViewFragment extends NotNetWorkBaseFragment implements MyButton
         Bundle bundle = getArguments();
         if (bundle != null) {
             id = bundle.getString("id");
-            type = bundle.getInt("type");
-            name = bundle.getString("name");
+            isFromOther = bundle.getBoolean("isFromOther");
+            fUser = ChatFriendsImpl.getInstance().select(id);
+            type = fUser.getType();
+            name = fUser.getName();
         }
     }
 
@@ -150,7 +141,7 @@ public class ChatViewFragment extends NotNetWorkBaseFragment implements MyButton
     protected void initData() {
         initMessageRxBus();
         manager = new LinearLayoutManager(getContext());
-        mAdapter = new ChatAdapter(getContext(), datas);
+        mAdapter = new ChatAdapter(getContext(), datas,isFromOther);
         rv_content.setLayoutManager(manager);
         rv_content.setAdapter(mAdapter);
         initDatas();
@@ -171,8 +162,11 @@ public class ChatViewFragment extends NotNetWorkBaseFragment implements MyButton
     protected void initTitleView() {
         ((DefaultTitleBarView) getTitleBar())
                 .setTitleContent(name)
-                .setOnTitleBarListener(this)
-                .setRightImage(type == 1 ? R.mipmap.zqh_qunzu : type == 3 ? R.mipmap.tab_shangcheng_wei : R.mipmap.lianxiren);
+                .setOnTitleBarListener(this);
+        if (!isFromOther) {
+            ((DefaultTitleBarView) getTitleBar()).setRightImage(type == 1 ? R.mipmap.zqh_qunzu : R.mipmap.lianxiren);
+        }
+
     }
 
 
@@ -379,6 +373,7 @@ public class ChatViewFragment extends NotNetWorkBaseFragment implements MyButton
     @Override
     public void onFocusChange(View view, boolean hasFocus) {
         RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) ll_bottom.getLayoutParams();
+        Log.d("rootInvisibleHeight", hasFocus + "");
         params.setMargins(0, 0, 0, hasFocus ? rootInvisibleHeight : 0);
         ll_bottom.setLayoutParams(params);
         ChatViewFragment.this.hasFocus = hasFocus;
@@ -400,9 +395,10 @@ public class ChatViewFragment extends NotNetWorkBaseFragment implements MyButton
         //取得 rootView 不可视区域高度 (被其他View遮挡的区域高度)
         int height = Util.getHeight() - (rect.bottom);
 //                要是不可视区域高度大于100，则输入键盘就显示
-        if (height > Util.getHeight() / 3 && rootInvisibleHeight == 100) {
-            rootInvisibleHeight = height;
+
+        if (height > Util.getHeight() / 3 && rootInvisibleHeight == 0) {
             RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) ll_bottom.getLayoutParams();
+            rootInvisibleHeight = height;
             params.setMargins(0, 0, 0, rootInvisibleHeight);
             ll_bottom.setLayoutParams(params);
         }
@@ -431,12 +427,12 @@ public class ChatViewFragment extends NotNetWorkBaseFragment implements MyButton
                 RxBus.get().post("addFragment", new AddFragmentBean(FlockInfoFragment.getInstance(id)));
                 break;
             case 2:
-                RxBus.get().post("addFragment", new AddFragmentBean(FriendInfoFragment.getInstance(id)));
+                RxBus.get().post("addFragment", new AddFragmentBean(FriendInfoFragment.getInstance(id, type)));
                 break;
             case 3:
                 break;
             default:
-                RxBus.get().post("addFragment", new AddFragmentBean(FriendInfoFragment.getInstance(id)));
+                RxBus.get().post("addFragment", new AddFragmentBean(FriendInfoFragment.getInstance(id, type)));
         }
     }
 

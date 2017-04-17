@@ -17,4 +17,15 @@ public class FindFriendBean extends ListBaseBean<ArrayList<FindFriendBean.Data>>
         public ArrayList<FriendBean> data;
     }
     public FindFlockBean.User user;
+
+    @Override
+    public ArrayList<FindFriendBean.Data> getData() {
+        ArrayList<FindFriendBean.Data> d = new ArrayList<>();
+        for (FindFriendBean.Data f : data) {
+            if (f.data != null && f.data.size() > 0) {
+                d.add(f);
+            }
+        }
+        return d;
+    }
 }

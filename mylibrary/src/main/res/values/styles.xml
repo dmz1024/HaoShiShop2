@@ -4,7 +4,7 @@
 
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+    <style name="AppTheme" parent="Theme.Design.NoActionBar">
         <!-- 状态栏颜色 -->
         <item name="colorPrimaryDark">#f5f5f5</item>
         <item name="windowActionBar">false</item>

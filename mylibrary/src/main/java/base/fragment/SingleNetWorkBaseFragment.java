@@ -21,9 +21,11 @@ public abstract class SingleNetWorkBaseFragment<D extends BaseBean> extends Netw
         return ShowCurrentViewENUM.VIEW_IS_LOADING;
     }
 
+    protected boolean isWriteData;
 
     @Override
     protected void writeData(boolean isWrite, D bean) {
+        isWriteData = true;
         if (!isWrite) {
             stopRefresh();
         }

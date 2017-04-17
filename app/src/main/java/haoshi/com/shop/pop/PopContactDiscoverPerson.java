@@ -2,14 +2,32 @@ package haoshi.com.shop.pop;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewStub;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.jph.takephoto.model.TException;
+
+import java.util.ArrayList;
+
+import base.bean.ChooseStringBean;
 import base.other.PopBaseView;
 import haoshi.com.shop.R;
+import haoshi.com.shop.bean.shop.OrderIdBean;
+import haoshi.com.shop.controller.DiscoverController;
+import haoshi.com.shop.controller.MyOrderController;
+import haoshi.com.shop.pay.PayController;
+import haoshi.com.shop.pay.PayUtil;
+import interfaces.OnSingleRequestListener;
+import rx.Observable;
+import rx.functions.Action1;
+import util.MyToast;
+import util.RxBus;
 import util.Util;
+import view.pop.ChooseStringView;
 
 /**
  * Created by dengmingzhi on 2017/2/22.
@@ -19,6 +37,13 @@ public class PopContactDiscoverPerson extends PopBaseView implements View.OnClic
 
     public PopContactDiscoverPerson(Context ctx) {
         super(ctx);
+    }
+
+    private String[] content;
+
+    public PopContactDiscoverPerson(Context ctx, String... content) {
+        super(ctx);
+        this.content = content;
     }
 
     @Override
@@ -63,14 +88,48 @@ public class PopContactDiscoverPerson extends PopBaseView implements View.OnClic
         } else if (view == tv_contact) {
             initPhone();
         } else if (view == tv_call_phone) {
-            Util.tel(ctx, "18326167257");
+            Util.tel(ctx, content[0]);
             showComment();
         } else if (view == tv_call_sms) {
-            Util.sms(ctx, "18515982882", "您好，我看了您的文章........");
+            Util.sms(ctx, content[0], "您好，我看了您的文章:" + content[1]);
             showComment();
-        }else if(view==tv_call_comment){
+        } else if (view == tv_call_comment) {
             dismiss();
             goComment();
+        } else if (view == bt_pay) {
+            initPayRxBus();
+            DiscoverController.getInstance().getDssubmitId(new OnSingleRequestListener<OrderIdBean>() {
+                @Override
+                public void succes(boolean isWrite, final OrderIdBean bean) {
+                    final ArrayList<ChooseStringBean> datas = new ArrayList<>();
+                    datas.add(new ChooseStringBean("支付宝安全支付"));
+                    datas.add(new ChooseStringBean("微信安全支付"));
+                    new ChooseStringView<ChooseStringBean>(ctx, datas) {
+                        @Override
+                        protected void itemClick(final int position) {
+                            super.itemClick(position);
+                            switch (position) {
+                                case 0:
+                                    PayController.getInstance().ali(bean.data.orderId);
+                                    break;
+                                case 1:
+                                    MyToast.showToast("微信支付正在建设中。。。", 5000);
+                                    break;
+                            }
+                        }
+
+                        @Override
+                        protected float getAlpha() {
+                            return 1f;
+                        }
+                    }.showAtLocation(false);
+                }
+
+                @Override
+                public void error(boolean isWrite, OrderIdBean bean, String msg) {
+
+                }
+            }, content[2], tv_money.getText().toString().substring(1));
         }
     }
 
@@ -87,13 +146,14 @@ public class PopContactDiscoverPerson extends PopBaseView implements View.OnClic
                 ll_phone.setVisibility(View.GONE);
                 tv_call_comment.setVisibility(View.VISIBLE);
             }
-        },1000);
+        }, 1000);
 
     }
 
 
     private View inflatePhone;
     private View ll_phone;
+
     private void initPhone() {
         inflateChooseMoney.setVisibility(View.GONE);
         inflatePhone = subPhone.inflate();
@@ -101,10 +161,13 @@ public class PopContactDiscoverPerson extends PopBaseView implements View.OnClic
         ll_phone = inflatePhone.findViewById(R.id.ll_phone);
         tv_call_sms = (TextView) inflatePhone.findViewById(R.id.tv_call_sms);
         tv_phone_num = (TextView) inflatePhone.findViewById(R.id.tv_phone_num);
+        TextView tv_phone_name = (TextView) inflatePhone.findViewById(R.id.tv_phone_name);
         tv_call_comment = (TextView) inflatePhone.findViewById(R.id.tv_call_comment);
         tv_call_phone.setOnClickListener(this);
         tv_call_comment.setOnClickListener(this);
         tv_call_sms.setOnClickListener(this);
+        tv_phone_num.setText(content[0]);
+        tv_phone_name.setText(content[3]);
     }
 
     private TextView tv_call_phone;
@@ -119,6 +182,7 @@ public class PopContactDiscoverPerson extends PopBaseView implements View.OnClic
     private TextView tv_contact;
     private TextView tv_call_comment;
     private TextView tv_phone_num;
+    private Button bt_pay;
 
     /**
      * 选择打赏金额
@@ -135,9 +199,11 @@ public class PopContactDiscoverPerson extends PopBaseView implements View.OnClic
         tv_money_1 = (TextView) inflate.findViewById(R.id.tv_money_1);
         tv_money_2 = (TextView) inflate.findViewById(R.id.tv_money_2);
         tv_money_3 = (TextView) inflate.findViewById(R.id.tv_money_3);
+        bt_pay = (Button) inflate.findViewById(R.id.bt_pay);
         tv_money_1.setOnClickListener(this);
         tv_money_2.setOnClickListener(this);
         tv_money_3.setOnClickListener(this);
+        bt_pay.setOnClickListener(this);
 
     }
 
@@ -161,5 +227,27 @@ public class PopContactDiscoverPerson extends PopBaseView implements View.OnClic
         tv_money.setText("￥" + tv.getText().toString());
     }
 
+    private Observable<Integer> payRxBus;
 
+    private void initPayRxBus() {
+        PayUtil.PAYRESULT = 60000;
+        if (payRxBus == null) {
+            payRxBus = RxBus.get().register("payRxBus", Integer.class);
+            payRxBus.subscribe(new Action1<Integer>() {
+                @Override
+                public void call(Integer s) {
+                    if (s == 60000) {
+                        initPhone();
+                    }
+                }
+            });
+        }
+
+    }
+
+    @Override
+    public void onDismiss() {
+        super.onDismiss();
+        RxBus.get().unregister("payRxBus", payRxBus);
+    }
 }

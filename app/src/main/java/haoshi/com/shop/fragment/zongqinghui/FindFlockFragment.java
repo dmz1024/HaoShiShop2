@@ -1,5 +1,7 @@
 package haoshi.com.shop.fragment.zongqinghui;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -17,6 +19,30 @@ import haoshi.com.shop.constant.UserInfo;
  */
 
 public class FindFlockFragment extends ListNetWorkBaseFragment<FindFlockBean> {
+    private boolean isCanFirst;
+
+    public static FindFlockFragment getInstance(boolean isCanFirst) {
+        FindFlockFragment fragment = new FindFlockFragment();
+        Bundle bundle = new Bundle();
+        bundle.putBoolean("isCanFirst", isCanFirst);
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            isCanFirst = bundle.getBoolean("isCanFirst");
+        }
+    }
+
+    @Override
+    protected boolean isCanFirstInitData() {
+        return isCanFirst;
+    }
+
     @Override
     protected RecyclerView.Adapter getAdapter() {
         return new FindFlockAdapter(getContext(), (ArrayList<FindFlockBean.Data>) totalList);
@@ -32,7 +58,7 @@ public class FindFlockFragment extends ListNetWorkBaseFragment<FindFlockBean> {
     protected void writeData(boolean isWrite, FindFlockBean bean) {
         super.writeData(isWrite, bean);
         if (bean.user != null) {
-            if(onUserInfoInterface!=null){
+            if (onUserInfoInterface != null) {
                 onUserInfoInterface.user(bean.user);
             }
         }
@@ -70,4 +96,12 @@ public class FindFlockFragment extends ListNetWorkBaseFragment<FindFlockBean> {
     protected String getBackColor() {
         return "#f6f6f6";
     }
+
+    @Override
+    protected boolean getLoadMore() {
+        return false;
+    }
+
+
+
 }

@@ -1,128 +1,112 @@
 package haoshi.com.shop.bean.chat.dao;
 
+import android.text.TextUtils;
+
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by dengmingzhi on 2017/3/1.
  */
 
 public class ChatMessageBean {
-    private Long id;
-    private String uid;
-    private String touid;
-    private String groupid;
-    private String content;
-    private String file;
-    private String name;
-    private String logo;
-    private int nums;
-    private int type;
-    private String extend;
-    private long createtime;
+    public String from_client_name;
+    public int filetype;
+    public long time;
+    public String ID;
+    public String uid;
+    public String touid;
+    public String groupid;
+    public String content;
+    public String file;
+    public String extend;
+    public String type;
+    public long createtime;
+    public String name;
+    public String logo;
+    public int nums;
 
-    public Long getId() {
-        return id;
+    public String groupname;
+    public String grouplogo;
+    public String linkurl;
+
+
+    /**
+     * 是否是群组
+     *
+     * @return
+     */
+    public boolean isGroup() {
+        return TextUtils.isEmpty(touid);
     }
 
-    public ChatMessageBean setId(Long id) {
-        this.id = id;
-        return this;
+    /**
+     * 用户id
+     *
+     * @return
+     */
+    public String getId() {
+        return isGroup() ? groupid : uid;
     }
 
-    public String getUid() {
-        return uid;
+
+    public String getType() {
+        return type;
     }
 
-    public ChatMessageBean setUid(String uid) {
-        this.uid = uid;
-        return this;
+    public long getCreatetime() {
+        return createtime * 1000;
     }
 
-    public String getTouid() {
-        return touid;
-    }
-
-    public ChatMessageBean setTouid(String touid) {
-        this.touid = touid;
-        return this;
-    }
-
-    public String getGroupid() {
-        return groupid;
-    }
-
-    public ChatMessageBean setGroupid(String groupid) {
-        this.groupid = groupid;
-        return this;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public ChatMessageBean setContent(String content) {
-        this.content = content;
-        return this;
-    }
-
-    public String getFile() {
-        return file;
-    }
-
-    public ChatMessageBean setFile(String file) {
-        this.file = file;
-        return this;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public ChatMessageBean setName(String name) {
-        this.name = name;
-        return this;
+    public long getTime() {
+        return time * 1000;
     }
 
     public String getLogo() {
         return logo;
     }
 
-    public ChatMessageBean setLogo(String logo) {
-        this.logo = logo;
-        return this;
+    public String getName() {
+        return name;
     }
 
-    public int getNums() {
-        return nums;
+    public String getFrom_client_name() {
+        return from_client_name;
     }
 
-    public ChatMessageBean setNums(int nums) {
-        this.nums = nums;
-        return this;
+    public String getLogoOnLine() {
+        return isGroup() ? grouplogo : logo;
     }
 
-    public int getType() {
-        return type;
+    public String getGrouplogo() {
+        return grouplogo;
     }
 
-    public ChatMessageBean setType(int type) {
-        this.type = type;
-        return this;
+    public int getIntType() {
+        return Integer.parseInt(type);
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+
+    public String getContent() {
+        return content;
+    }
+
+    public String getFile() {
+        return file;
     }
 
     public String getExtend() {
         return extend;
     }
 
-    public ChatMessageBean setExtend(String extend) {
-        this.extend = extend;
-        return this;
+    public String getNameOnLine() {
+        return isGroup() ? groupname : from_client_name;
     }
 
-    public long getCreatetime() {
-        return createtime;
-    }
-
-    public ChatMessageBean setCreatetime(long createtime) {
-        this.createtime = createtime;
-        return this;
+    public int getFiletype() {
+        return filetype;
     }
 }

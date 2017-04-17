@@ -57,7 +57,7 @@ public class ZanAdapter extends BaseAdapter<ZanBean.Data> {
 
         @Override
         protected void onClick(final int layoutPosition) {
-            DiscoverZanController.getInstance().lookCollect(list.get(layoutPosition).articleId, new OnSingleRequestListener<SingleBaseBean>() {
+            DiscoverZanController.getInstance().lookZan(list.get(layoutPosition).articleId, new OnSingleRequestListener<SingleBaseBean>() {
                 @Override
                 public void succes(boolean isWrite, SingleBaseBean bean) {
                     list.get(layoutPosition).isSee = 1;

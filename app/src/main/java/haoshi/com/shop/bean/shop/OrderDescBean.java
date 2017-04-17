@@ -75,7 +75,7 @@ public class OrderDescBean extends BaseBean<OrderDescBean.Data> {
         public String shopId;
         public String userId;
         public int orderStatus;
-        public String goodsMoney;
+        public double goodsMoney;
         public int deliverType;
         public String deliverMoney;
         public String totalMoney;
@@ -126,6 +126,9 @@ public class OrderDescBean extends BaseBean<OrderDescBean.Data> {
         public ArrayList<?> voucherImg;
         public ArrayList<LogBean> log;
         public ArrayList<MyOrderBean.Data.OrderGoodBean> goods;
+        public String shopUserId;
+        public String shopUserPhoto;
+        public String shopUserName;
 
         public static class LogBean {
             /**

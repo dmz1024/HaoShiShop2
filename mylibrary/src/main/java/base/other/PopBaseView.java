@@ -31,7 +31,7 @@ public abstract class PopBaseView implements PopupWindow.OnDismissListener {
         this.ctx = ctx;
 //        ViewAnimator.animate(((Activity) ctx).findViewById(android.R.id.content)).alpha(1f, getAlpha()).duration(getShowTime()).start();
 
-        if (isAlpha()) {
+        if (getAlpha()<1) {
             ((Activity) ctx).findViewById(android.R.id.content).setAlpha(getAlpha());
         }
     }
@@ -129,7 +129,10 @@ public abstract class PopBaseView implements PopupWindow.OnDismissListener {
     public void onDismiss() {
 //        ViewAnimator.animate(((Activity) ctx).findViewById(android.R.id.content)).alpha(getAlpha(), 1f).duration(getShowTime() + getDismissTime()).start();
 //        (Activity) ctx).findViewById(android.R.id.content
-        ((Activity) ctx).findViewById(android.R.id.content).setAlpha(1f);
+        if(getAlpha()<1){
+            ((Activity) ctx).findViewById(android.R.id.content).setAlpha(1f);
+        }
+
         popupWindow = null;
     }
 

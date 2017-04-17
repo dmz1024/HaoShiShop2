@@ -27,8 +27,9 @@ public class SendDiscoverController {
                 map.put("goodsCatId", g[1]);
                 map.put("userId", g[2]);
                 map.put("token", g[3]);
-                if (g.length == 5) {
-                    map.put("gallery", g[4]);
+                map.put("goodsDesc", g[4]);
+                if (g.length == 6) {
+                    map.put("gallery", g[5]);
                 }
                 if (attr.length() > 0) {
                     String[] at = attr.split("&&&");

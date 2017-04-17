@@ -23,7 +23,7 @@ public class GlideConfiguration implements GlideModule {
     @Override
     public void applyOptions(Context context, GlideBuilder builder) {
         //自定义缓存目录，磁盘缓存给150M
-        builder.setDiskCache(new DiskLruCacheFactory(FileUtil.getRootPath(context).getAbsolutePath(), "glide", 150 * 1024 * 1024));
+        builder.setDiskCache(new DiskLruCacheFactory(FileUtil.getRootPath(context).getAbsolutePath(), "haoshi_glide", 150 * 1024 * 1024));
         builder.setDecodeFormat(DecodeFormat.PREFER_RGB_565);
     }
 

@@ -136,7 +136,7 @@ public class GeneralAdapter extends BaseAdapter<GeneralBean> {
             case 9:
                 MessageSetViewHolder mHolderMessageSet = ((MessageSetViewHolder) holder);
                 mHolderMessageSet.tv_title.setText(data.title);
-                mHolderMessageSet.tv_title.setCompoundDrawables(null, null, DrawableUtil.setBounds(ctx.getResources().getDrawable(list.get(position).num == 0 ? R.mipmap.wode_kaiguan : R.mipmap.wode_kaiguan_you)), null);
+                mHolderMessageSet.tv_title.setCompoundDrawables(null, null, DrawableUtil.setBounds(ctx.getResources().getDrawable(list.get(position).num == 1 ? R.mipmap.wode_kaiguan : R.mipmap.wode_kaiguan_you)), null);
                 break;
             case 10:
                 PerfectRegChooseUserInfoViewHolder regUserInfoViewHolder = (PerfectRegChooseUserInfoViewHolder) holder;
@@ -284,10 +284,7 @@ public class GeneralAdapter extends BaseAdapter<GeneralBean> {
 
         @Override
         protected void onClick(int layoutPosition) {
-            Fragment fragment = list.get(layoutPosition).fragment;
-            if (fragment != null) {
-                RxBus.get().post("addFragment", new AddFragmentBean(fragment));
-            }
+            chooseItem(layoutPosition);
         }
     }
 
@@ -299,6 +296,13 @@ public class GeneralAdapter extends BaseAdapter<GeneralBean> {
 
         public TitleContentViewHolder(View itemView) {
             super(itemView);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        protected void onClick(int layoutPosition) {
+            super.onClick(layoutPosition);
+            chooseItem(layoutPosition);
         }
     }
 
@@ -357,12 +361,12 @@ public class GeneralAdapter extends BaseAdapter<GeneralBean> {
         public MessageSetViewHolder(View itemView) {
             super(itemView);
             tv_title.setOnClickListener(this);
+
         }
 
         @Override
         protected void itemOnclick(int id, int layoutPosition) {
-            list.get(layoutPosition).num = list.get(layoutPosition).num == 0 ? 1 : 0;
-            tv_title.setCompoundDrawables(null, null, DrawableUtil.setBounds(ctx.getResources().getDrawable(list.get(layoutPosition).num == 0 ? R.mipmap.wode_kaiguan : R.mipmap.wode_kaiguan_you)), null);
+            chooseItem(layoutPosition);
         }
     }
 

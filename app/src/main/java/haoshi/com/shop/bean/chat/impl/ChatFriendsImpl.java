@@ -1,7 +1,5 @@
 package haoshi.com.shop.bean.chat.impl;
 
-import android.text.TextUtils;
-
 import org.greenrobot.greendao.query.QueryBuilder;
 
 import java.util.ArrayList;
@@ -51,7 +49,7 @@ public class ChatFriendsImpl extends ChatBaseBean<ChatFriendBean, ChatFriendBean
         setDao(getDaoSession().getChatFriendBeanDao());
     }
 
-    public void delete(String fid){
+    public void delete(String fid) {
         getDao().queryBuilder().where(ChatFriendBeanDao.Properties.Fid.eq(fid)).buildDelete().executeDeleteWithoutDetachingEntities();
     }
 
@@ -75,23 +73,87 @@ public class ChatFriendsImpl extends ChatBaseBean<ChatFriendBean, ChatFriendBean
         return queryBuilder.where(ChatFriendBeanDao.Properties.Type.eq(type)).build().list();
     }
 
+    /**
+     * 这是添加从未接收消息记录的好友信息
+     *
+     * @param bean
+     */
     public void add(ChatMessageBean bean) {
-        boolean isU = TextUtils.isEmpty(bean.getTouid());
-        String id = isU ? bean.getGroupid() : bean.getTouid();
+        String id = bean.getId();
         ChatFriendBean f = select(id);
         if (f == null) {
             f = new ChatFriendBean();
-            f.setType(isU ? 1 : 2);
+            f.setType(bean.isGroup() ? 1 : 2);//1是群组2是好友
             f.setFid(id);
-            f.setHeader(bean.getLogo());
+            f.setLogo(bean.getLogo());
             f.setName(bean.getName());
             f.setGid("-1");
             add(f);
         } else {
-            f.setHeader(bean.getLogo());
+            f.setLogo(bean.getLogo());
             f.setName(bean.getName());
             update(f);
         }
+
+    }
+
+
+    /**
+     * 这是从在线消息
+     *
+     * @param bean
+     */
+    public void addOnline(ChatMessageBean bean) {
+        String id = bean.getId();
+        ChatFriendBean f = select(id);
+        if (bean.isGroup()) {
+            if (f == null) {
+                f = new ChatFriendBean();
+                f.setType(1);//1是群组2是好友
+                f.setFid(id);
+                f.setLogo(bean.getGrouplogo());
+                f.setName(bean.getNameOnLine());
+                f.setGid("-1");
+                add(f);
+            } else {
+                f.setLogo(bean.getGrouplogo());
+                f.setName(bean.getNameOnLine());
+                update(f);
+            }
+
+            String uId = bean.getUid();
+            ChatFriendBean g = select(uId);
+            if (g == null) {
+                g = new ChatFriendBean();
+                g.setType(2);//1是群组2是好友
+                g.setFid(uId);
+                g.setLogo(bean.getLogo());
+                g.setName(bean.getFrom_client_name());
+                g.setGid("-1");
+                add(g);
+            } else {
+                g.setLogo(bean.getLogo());
+                g.setName(bean.getFrom_client_name());
+                update(g);
+            }
+
+        } else {
+            if (f == null) {
+                f = new ChatFriendBean();
+                f.setType(2);//1是群组2是好友
+                f.setFid(id);
+                f.setLogo(bean.getLogo());
+                f.setName(bean.getFrom_client_name());
+                f.setGid("-1");
+                add(f);
+            } else {
+                f.setLogo(bean.getLogo());
+                f.setName(bean.getFrom_client_name());
+                update(f);
+            }
+
+        }
+
 
     }
 

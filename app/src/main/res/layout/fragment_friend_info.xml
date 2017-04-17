@@ -39,6 +39,7 @@
             style="@style/TextSize13Color999" />
     </RelativeLayout>
     <RelativeLayout
+        android:id="@+id/rl_bei"
         android:background="#fff"
         android:paddingLeft="@dimen/size10"
         android:paddingRight="@dimen/size10"

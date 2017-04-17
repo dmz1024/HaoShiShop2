@@ -23,7 +23,7 @@ public class ChatFlockNetBean extends ListBaseBean<ArrayList<ChatFlockBean>> {
             b.setType(1);
             b.setGid("-1");
             b.setName(f.getGroupname());
-            b.setHeader(f.getGrouplogo());
+            b.setLogo(f.getGrouplogo());
             b.setFid(f.getGroupid());
             ChatFriendsImpl.getInstance().add(b);
         }

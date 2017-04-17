@@ -17,5 +17,9 @@ public class PersonSetBean extends BaseBean<PersonSetBean.Data> {
         public int isTrue;
         public int person;
         public int shops;
+        public int wx;
+        public int qq;
+        public String wrongReason;
+        public String handleDesc;
     }
 }

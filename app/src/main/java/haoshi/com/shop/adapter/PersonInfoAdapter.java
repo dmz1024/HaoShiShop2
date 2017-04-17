@@ -156,6 +156,11 @@ public class PersonInfoAdapter extends BaseAdapter<PersonInfoBean.Data> {
             }
 
             @Override
+            protected boolean getShowSucces() {
+                return false;
+            }
+
+            @Override
             protected String getUrl() {
                 return ApiConstant.PERFECT_EDITFRIEND;
             }
@@ -170,11 +175,12 @@ public class PersonInfoAdapter extends BaseAdapter<PersonInfoBean.Data> {
                 RxBus.get().post("fivegetdata", "");
             }
 
+
             @Override
             public void error(boolean isWrite, SingleBaseBean bean, String msg) {
 
             }
-        }).post(new TipLoadingBean("正在保存" + content[0], "保存成功", "保存失败"));
+        }).post(new TipLoadingBean());
     }
 
 

@@ -42,6 +42,7 @@ public class ForgotPasswordTelFragment extends NotNetWorkBaseFragment implements
             MyToast.showToast("请输入正确的手机号");
             return;
         }
+        RxBus.get().post("back","back");
         RxBus.get().post("addFragment", new AddFragmentBean(ForgotPasswordFragment.getInstance(name)));
     }
 

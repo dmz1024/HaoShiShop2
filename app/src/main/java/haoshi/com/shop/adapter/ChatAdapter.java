@@ -39,6 +39,7 @@ import haoshi.com.shop.bean.chat.impl.PhotoImpl;
 import haoshi.com.shop.bean.chat.impl.SendImpl;
 import haoshi.com.shop.bean.chat.impl.SoundImpl;
 import haoshi.com.shop.bean.chat.impl.TextImpl;
+import haoshi.com.shop.constant.UserInfo;
 import haoshi.com.shop.controller.ChatSendMessageController;
 import haoshi.com.shop.fragment.discover.DiscoverDescFragment;
 import haoshi.com.shop.fragment.shop.GoodDescFragment;
@@ -56,8 +57,11 @@ import view.pop.PopShowBigImage;
  */
 
 public class ChatAdapter extends BaseAdapter<ChatViewBean> {
-    public ChatAdapter(Context ctx, ArrayList<ChatViewBean> list) {
+    private boolean isFromOther;
+
+    public ChatAdapter(Context ctx, ArrayList<ChatViewBean> list, boolean isFromOther) {
         super(ctx, list);
+        this.isFromOther = isFromOther;
     }
 
     @Override
@@ -113,8 +117,7 @@ public class ChatAdapter extends BaseAdapter<ChatViewBean> {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ChatViewBean data = list.get(position);
         ChatBaseHolder baseHolder = (ChatBaseHolder) holder;
-        ChatFriendBean fUser = ChatFriendsImpl.getInstance().select(data.getFid());
-        GlideUtil.GlideErrAndOc(ctx, fUser.getHeader(), baseHolder.iv_head);
+
         baseHolder.tv_time.setText(TimeUtils.formatTime(data.getTime()));
         int from = data.getFrom();
         int type = 0;
@@ -285,7 +288,7 @@ public class ChatAdapter extends BaseAdapter<ChatViewBean> {
                 SendBean sendBean = SendImpl.getInstance().select(data.getSign());
                 sendLeftHolder.tv_content.setText(sendBean.getDesc());
                 sendLeftHolder.tv_title.setText(sendBean.getName());
-                GlideUtil.GlideErrAndOc(ctx,sendBean.getImg(),sendLeftHolder.iv_img);
+                GlideUtil.GlideErrAndOc(ctx, sendBean.getImg(), sendLeftHolder.iv_img);
                 if (type == 10) {
                     SendRightHolder textRightHolder = (SendRightHolder) holder;
                     int status = sendBean.getStatus();
@@ -307,6 +310,16 @@ public class ChatAdapter extends BaseAdapter<ChatViewBean> {
                 }
                 break;
         }
+
+        String id = data.getFid();
+        Log.d("这里", "1");
+        if (from == 2 || ChatFriendsImpl.getInstance().select(id).getType() == 1) {
+            id = data.getUid();
+        }
+
+
+        ChatFriendBean fUser = ChatFriendsImpl.getInstance().select(id);
+        GlideUtil.GlideErrAndOc(ctx, fUser.getLogo(), baseHolder.iv_head);
     }
 
 
@@ -593,14 +606,23 @@ public class ChatAdapter extends BaseAdapter<ChatViewBean> {
 
         public ChatBaseHolder(View itemView) {
             super(itemView);
-            iv_head.setOnClickListener(this);
+            if (!isFromOther) {
+                iv_head.setOnClickListener(this);
+            }
+
         }
 
         @Override
         protected void itemOnclick(int id, int layoutPosition) {
             switch (id) {
                 case R.id.iv_head:
-                    RxBus.get().post("addFragment", new AddFragmentBean(FriendInfoFragment.getInstance(list.get(layoutPosition).getFid())));
+                    ChatFriendBean select = ChatFriendsImpl.getInstance().select(list.get(layoutPosition).getFid());
+                    String uid = select.getFid();
+                    int type = select.getType();
+                    if (type == 1) {
+                        uid = list.get(layoutPosition).getUid();
+                    }
+                    RxBus.get().post("addFragment", new AddFragmentBean(FriendInfoFragment.getInstance(uid, type)));
                     break;
             }
         }

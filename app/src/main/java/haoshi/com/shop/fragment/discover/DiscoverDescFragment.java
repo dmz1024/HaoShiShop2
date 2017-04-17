@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -31,20 +32,26 @@ import haoshi.com.shop.adapter.AllDiscoverCommentAdapter;
 import haoshi.com.shop.adapter.AttrAdapter;
 import haoshi.com.shop.adapter.DiscoverAdapter;
 import haoshi.com.shop.bean.AttrsBean;
+import haoshi.com.shop.bean.chat.dao.ChatFriendBean;
 import haoshi.com.shop.bean.chat.dao.SendBean;
+import haoshi.com.shop.bean.chat.impl.ChatFriendsImpl;
 import haoshi.com.shop.bean.discover.AllDiscoverCommentBean;
 import haoshi.com.shop.bean.discover.DiscoverBean;
 import haoshi.com.shop.bean.discover.DiscoverDescBean;
 import haoshi.com.shop.constant.ApiConstant;
 import haoshi.com.shop.constant.UserInfo;
 import haoshi.com.shop.controller.DiscoverController;
+import haoshi.com.shop.controller.DiscoverZanController;
 import haoshi.com.shop.controller.ShareUtil;
 import haoshi.com.shop.fragment.BaseShapeFragment;
+import haoshi.com.shop.fragment.chat.ChatViewFragment;
+import haoshi.com.shop.fragment.zongqinghui.MyFriendDynamicRootFragment;
 import haoshi.com.shop.pop.PopContactDiscoverPerson;
 import interfaces.OnSingleRequestListener;
 import interfaces.OnTitleBarListener;
 import util.DrawableUtil;
 import util.GlideUtil;
+import util.JLogUtils;
 import util.MyToast;
 import util.RxBus;
 import util.Util;
@@ -77,8 +84,14 @@ public class DiscoverDescFragment extends BaseShapeFragment<DiscoverDescBean> im
     TextView tv_info;
     @BindView(R.id.tv_desc)
     TextView tv_desc;
+    @BindView(R.id.tv_send_name)
+    TextView tv_send_name;
+    @BindView(R.id.tv_send_tel)
+    TextView tv_send_tel;
     @BindView(R.id.iv_discover_person)
     ImageView iv_discover_person;
+    @BindView(R.id.iv_zan)
+    ImageView iv_zan;
 
     @BindView(R.id.tv_person)
     SuperTextView tv_person;
@@ -168,11 +181,29 @@ public class DiscoverDescFragment extends BaseShapeFragment<DiscoverDescBean> im
     }
 
 
+    @OnClick(R.id.tv_online)
+    void online() {
+        ChatFriendBean select = ChatFriendsImpl.getInstance().select(bean.data.userId);
+        if (select == null) {
+            select = new ChatFriendBean();
+            select.setName(bean.data.userName);
+            select.setFid(bean.data.userId);
+            select.setGid("-1");
+            select.setType(2);
+            select.setLogo(bean.data.userPhoto);
+            ChatFriendsImpl.getInstance().add(select);
+        }
+        RxBus.get().post("addFragment", new AddFragmentBean(ChatViewFragment.getInstance(bean.data.userId, true)));
+
+    }
+
+
     private RichText richText;
 
     private void initDesc(String content) {
+        JLogUtils.D(content);
         if (!TextUtils.isEmpty(content)) {
-            richText = RichText.from(content).into(tv_desc);
+            richText = RichText.fromHtml(content).into(tv_desc);
         } else {
             tv_desc.setText("暂无介绍");
         }
@@ -216,6 +247,9 @@ public class DiscoverDescFragment extends BaseShapeFragment<DiscoverDescBean> im
         tv_dis_name.setText(data.goodsName);
         tv_dis_time.setText(data.createTime);
         tv_dis_count.setText(data.liulan + "次浏览");
+        iv_zan.setImageResource((isZan = data.is_zan == 1) ? R.mipmap.icon_zan_ok : R.mipmap.icon_zan);
+        tv_send_name.setText(data.userName);
+        tv_send_tel.setText(data.userPhone.substring(0, 4) + "****" + data.userPhone.substring(7, 11));
     }
 
 
@@ -265,6 +299,39 @@ public class DiscoverDescFragment extends BaseShapeFragment<DiscoverDescBean> im
 
     }
 
+    private boolean isZan;
+
+    @OnClick(R.id.iv_zan)
+    void zan() {
+        if (isZan) {
+            DiscoverZanController.getInstance().cancelZan(goodsId, new OnSingleRequestListener<SingleBaseBean>() {
+                @Override
+                public void succes(boolean isWrite, SingleBaseBean bean) {
+                    iv_zan.setImageResource(R.mipmap.icon_zan);
+                    isZan = false;
+                }
+
+                @Override
+                public void error(boolean isWrite, SingleBaseBean bean, String msg) {
+
+                }
+            });
+        } else {
+            DiscoverZanController.getInstance().addZan(goodsId, bean.data.goodsName, new OnSingleRequestListener<SingleBaseBean>() {
+                @Override
+                public void succes(boolean isWrite, SingleBaseBean bean) {
+                    iv_zan.setImageResource(R.mipmap.icon_zan_ok);
+                    isZan = true;
+                }
+
+                @Override
+                public void error(boolean isWrite, SingleBaseBean bean, String msg) {
+
+                }
+            });
+        }
+    }
+
     @Override
     protected String url() {
         return ApiConstant.DISCOVER_DETAIL;
@@ -288,6 +355,11 @@ public class DiscoverDescFragment extends BaseShapeFragment<DiscoverDescBean> im
         View view = View.inflate(getContext(), R.layout.fragment_discover_desc, null);
         ButterKnife.bind(this, view);
         return view;
+    }
+
+    @OnClick(R.id.tv_person)
+    void person() {
+        RxBus.get().post("addFragment", new AddFragmentBean(MyFriendDynamicRootFragment.getInstance(bean.data.publishNum.userId,2)));
     }
 
 
@@ -349,7 +421,7 @@ public class DiscoverDescFragment extends BaseShapeFragment<DiscoverDescBean> im
 
     @OnClick(R.id.tv_phone)
     void phone() {
-        new PopContactDiscoverPerson(getContext()) {
+        new PopContactDiscoverPerson(getContext(), bean.data.publishNum.userPhone, bean.data.goodsName, goodsId, bean.data.userName) {
             @Override
             protected void goComment() {
                 RxBus.get().post("addFragment", new AddFragmentBean(DiscoverContactCommentFragment.getInstance(goodsId)));
@@ -389,5 +461,21 @@ public class DiscoverDescFragment extends BaseShapeFragment<DiscoverDescBean> im
         shareInfo.logo = bean.data.fx_logo;
         shareInfo.url = bean.data.fx_url;
         return shareInfo;
+    }
+
+
+    @Override
+    protected String getImg() {
+        return bean.data.fx_logo;
+    }
+
+    @Override
+    public String getGoodsId() {
+        return goodsId;
+    }
+
+    @Override
+    protected String getGoodsName() {
+        return bean.data.goodsName;
     }
 }

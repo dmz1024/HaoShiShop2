@@ -69,7 +69,8 @@ public class FindFlockAdapter extends BaseAdapter<FindFlockBean.Data> {
         protected void itemOnclick(int id, int layoutPosition) {
             switch (id) {
                 case R.id.tv_more:
-                    RxBus.get().post("addFragment",new AddFragmentBean(new SexFlockFragment()));
+                    FindFlockBean.Data data = list.get(layoutPosition);
+                    RxBus.get().post("addFragment", new AddFragmentBean(SexFlockFragment.getInstance(data.keyword, "{\"" + data.type + "\":\"" + data.fid + "\"}", data.name)));
                     break;
             }
         }

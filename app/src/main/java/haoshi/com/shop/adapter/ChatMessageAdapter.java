@@ -22,6 +22,7 @@ import haoshi.com.shop.bean.chat.SoundBean;
 import haoshi.com.shop.bean.chat.TextBean;
 import haoshi.com.shop.bean.chat.dao.ChatFriendBean;
 import haoshi.com.shop.bean.chat.dao.SendBean;
+import haoshi.com.shop.bean.chat.impl.ChatFriendsImpl;
 import haoshi.com.shop.bean.chat.impl.FileImpl;
 import haoshi.com.shop.bean.chat.impl.PhotoImpl;
 import haoshi.com.shop.bean.chat.impl.SendImpl;
@@ -51,8 +52,8 @@ public class ChatMessageAdapter extends BaseAdapter<MessageBean> {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         MessageBean data = list.get(position);
         ViewHolder viewHolder = (ViewHolder) holder;
-        ChatFriendBean fUser = data.getFUser();
-        GlideUtil.GlideErrAndOc(ctx, fUser.getHeader(), viewHolder.iv_head);
+        ChatFriendBean fUser = ChatFriendsImpl.getInstance().select(data.getId());
+        GlideUtil.GlideErrAndOc(ctx, fUser.getLogo(), viewHolder.iv_head);
         viewHolder.tv_time.setText(TimeUtils.formatTime(data.getTime()));
         viewHolder.tv_name.setText(fUser.getName());
         String content = "";
@@ -118,7 +119,7 @@ public class ChatMessageAdapter extends BaseAdapter<MessageBean> {
                 if (from == 1) {
                     content = "[文件]";
                 } else {
-                    FileBean fb= FileImpl.getInstance().select(sign);
+                    FileBean fb = FileImpl.getInstance().select(sign);
                     switch (fb.getStatus()) {
                         case 1:
                             content = "[文件]发送中...";
@@ -136,7 +137,7 @@ public class ChatMessageAdapter extends BaseAdapter<MessageBean> {
                 if (from == 1) {
                     content = "[链接]";
                 } else {
-                    SendBean fb= SendImpl.getInstance().select(sign);
+                    SendBean fb = SendImpl.getInstance().select(sign);
                     switch (fb.getStatus()) {
                         case 1:
                             content = "[链接]发送中...";
@@ -174,7 +175,8 @@ public class ChatMessageAdapter extends BaseAdapter<MessageBean> {
         @Override
         protected void onClick(int layoutPosition) {
             MessageBean data = list.get(layoutPosition);
-            RxBus.get().post("addFragment", new AddFragmentBean(ChatViewFragment.getInstance(data.getFUser().getType(), data.getFUser().getName(), data.getId())));
+
+            RxBus.get().post("addFragment", new AddFragmentBean(ChatViewFragment.getInstance(data.getId())));
         }
     }
 }

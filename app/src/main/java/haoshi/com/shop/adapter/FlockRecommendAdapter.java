@@ -12,11 +12,13 @@ import java.util.ArrayList;
 
 import base.adapter.BaseAdapter;
 import base.adapter.BaseViewHolder;
+import base.bean.SingleBaseBean;
 import butterknife.BindView;
 import haoshi.com.shop.R;
 import haoshi.com.shop.bean.zongqinghui.FlockBean;
 import haoshi.com.shop.controller.FriendAndFlockController;
 import haoshi.com.shop.pop.PopAddFlockDesc;
+import interfaces.OnSingleRequestListener;
 import util.GlideUtil;
 import util.MyToast;
 
@@ -96,7 +98,18 @@ public class FlockRecommendAdapter extends BaseAdapter<FlockBean> {
         new PopAddFlockDesc(ctx, "申请加入" + list.get(layoutPosition).groupname + "的群") {
             @Override
             protected void add(String string) {
-                FriendAndFlockController.getInstance().addFlock(list.get(layoutPosition).ID, string, null);
+                FriendAndFlockController.getInstance().addFlock(list.get(layoutPosition).ID, string, new OnSingleRequestListener<SingleBaseBean>() {
+                    @Override
+                    public void succes(boolean isWrite, SingleBaseBean bean) {
+                        list.get(layoutPosition).isadd = 1;
+                        notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void error(boolean isWrite, SingleBaseBean bean, String msg) {
+
+                    }
+                });
             }
         }.showAtLocation(false);
     }

@@ -13,6 +13,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Map;
 
+import api.ApiRequest;
 import base.bean.SingleBaseBean;
 import base.bean.TipLoadingBean;
 import base.bean.rxbus.AddFragmentBean;
@@ -22,16 +23,19 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import haoshi.com.shop.R;
 import haoshi.com.shop.adapter.ChoosePhotoAdapter;
+import haoshi.com.shop.bean.discover.CustomCat;
 import haoshi.com.shop.constant.ApiConstant;
 import haoshi.com.shop.constant.UserInfo;
 import haoshi.com.shop.fragment.discover.AllDiscoverClassifyFragment;
 import haoshi.com.shop.service.SendCustomDynamicService;
+import interfaces.OnSingleRequestListener;
 import interfaces.OnTitleBarListener;
 import rx.Observable;
 import rx.functions.Action1;
 import util.MyToast;
 import util.RxBus;
 import view.DefaultTitleBarView;
+import view.pop.ChooseStringView;
 
 /**
  * Created by dengmingzhi on 2017/3/19.
@@ -66,6 +70,7 @@ public class CustomDynamicFragment extends SingleNetWorkBaseFragment<SingleBaseB
     @Override
     protected void writeData(boolean isWrite, SingleBaseBean bean) {
         super.writeData(isWrite, bean);
+        MyToast.showToast("发布成功");
         RxBus.get().post("back", "back");
     }
 
@@ -130,37 +135,64 @@ public class CustomDynamicFragment extends SingleNetWorkBaseFragment<SingleBaseB
     }
 
 
+    private ArrayList<CustomCat.Data> cats;
+
     @OnClick(R.id.rl_choose)
     void choose() {
-        initChoose();
-        RxBus.get().post("addFragment", new AddFragmentBean(AllDiscoverClassifyFragment.getInstance(true)));
-    }
-
-    private Observable<String[]> customChooseRxBus;
-
-    private void initChoose() {
-
-        if (customChooseRxBus == null) {
-            customChooseRxBus = RxBus.get().register("customChooseRxBus", String[].class);
-            customChooseRxBus.subscribe(new Action1<String[]>() {
+        if (cats == null) {
+            new ApiRequest<CustomCat>() {
                 @Override
-                public void call(String[] s) {
-                    tv_choose.setText(s[1]);
-                    choose = s[0];
+                protected Map<String, String> getMap() {
+                    return null;
+                }
+
+                @Override
+                protected String getUrl() {
+                    return ApiConstant.CUSTOMCATS;
+                }
+
+                @Override
+                protected Class<CustomCat> getClx() {
+                    return CustomCat.class;
+                }
+
+                @Override
+                protected boolean getShowSucces() {
+                    return false;
+                }
+            }.setOnRequestListeren(new OnSingleRequestListener<CustomCat>() {
+                @Override
+                public void succes(boolean isWrite, CustomCat bean) {
+                    cats = bean.getData();
+                    showCats();
+                }
+
+                @Override
+                public void error(boolean isWrite, CustomCat bean, String msg) {
 
                 }
-            });
+
+            }).post(new TipLoadingBean("正在获取分类信息", "", "分类获取失败"));
+        } else {
+            showCats();
         }
+
+
     }
+
+    private void showCats() {
+        new ChooseStringView<CustomCat.Data>(getContext(), cats) {
+            @Override
+            protected void itemClick(int position) {
+                choose = cats.get(position).catId;
+                tv_choose.setText(cats.get(position).catName);
+            }
+        }.showAtLocation(false);
+    }
+
 
     private String content;
     private String choose;
-    private String imgs;
-
-//    map.put("userId", UserInfo.userId);
-//    map.put("token", UserInfo.token);
-//    map.put("goodsCatId", choose);
-//    map.put("title", content);
 
     @OnClick(R.id.bt_send)
     void send() {
@@ -207,7 +239,6 @@ public class CustomDynamicFragment extends SingleNetWorkBaseFragment<SingleBaseB
     @Override
     public void onDestroy() {
         super.onDestroy();
-        RxBus.get().unregister("customChooseRxBus", customChooseRxBus);
         if (photoAdapter != null) {
             photoAdapter.onDestroy();
         }
@@ -227,7 +258,7 @@ public class CustomDynamicFragment extends SingleNetWorkBaseFragment<SingleBaseB
 
     @Override
     public void left() {
-        RxBus.get().post("back","back");
+        RxBus.get().post("back", "back");
     }
 
     @Override

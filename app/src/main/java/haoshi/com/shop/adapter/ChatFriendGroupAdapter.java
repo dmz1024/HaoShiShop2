@@ -15,7 +15,9 @@ import base.adapter.BaseViewHolder;
 import butterknife.BindView;
 import haoshi.com.shop.R;
 import haoshi.com.shop.bean.chat.dao.ChatFriendGroupBean;
+import haoshi.com.shop.bean.chat.impl.ChatFriendsImpl;
 import util.ListUtils;
+import util.MyToast;
 import util.RxBus;
 
 
@@ -40,7 +42,7 @@ public class ChatFriendGroupAdapter extends BaseAdapter<ChatFriendGroupBean> {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ViewHolder mHolder = (ViewHolder) holder;
         ChatFriendGroupBean data = list.get(position);
-        if (sendShape) {
+        if (sendShape || position == 0) {
             mHolder.iv_edit.setVisibility(View.GONE);
         }
         mHolder.tv_name.setText(data.getName() + "（" + data.getNumber() + ")");
@@ -50,7 +52,7 @@ public class ChatFriendGroupAdapter extends BaseAdapter<ChatFriendGroupBean> {
 
     private void initFriend(RecyclerView rv_friend, ChatFriendGroupBean data) {
         LinearLayoutManager manager = new LinearLayoutManager(ctx);
-        ChatFriendAdapter mAdapter = new ChatFriendAdapter(ctx, ListUtils.list2Array(data.getFbs()),sendShape);
+        ChatFriendAdapter mAdapter = new ChatFriendAdapter(ctx, ListUtils.list2Array(data.getFbs()), sendShape);
         rv_friend.setLayoutManager(manager);
         rv_friend.setAdapter(mAdapter);
         rv_friend.setVisibility(data.isShow() ? View.VISIBLE : View.GONE);
@@ -68,10 +70,10 @@ public class ChatFriendGroupAdapter extends BaseAdapter<ChatFriendGroupBean> {
 
         public ViewHolder(View itemView) {
             super(itemView);
+
             tv_name.setOnClickListener(this);
             iv_edit.setOnClickListener(this);
         }
-
 
         @Override
         protected void itemOnclick(int id, int layoutPosition) {

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#ececec"
+    android:padding="@dimen/size8">
+
+    <ImageView
+        android:id="@+id/iv_mode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:src="@mipmap/shangcheng_yuyin" />
+
+    <ImageView
+        android:id="@+id/iv_send"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:src="@mipmap/zqh_gengduo" />
+
+    <EditText
+        android:id="@+id/et_content"
+        android:textCursorDrawable="@null"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/size5"
+        android:layout_marginRight="@dimen/size5"
+        android:layout_toLeftOf="@id/iv_send"
+        android:layout_toRightOf="@id/iv_mode"
+        android:background="@drawable/rectangle_fff"
+        android:gravity="left"
+        android:imeOptions="actionSend"
+        android:maxLines="15"
+        android:minHeight="@dimen/size35"
+        android:padding="@dimen/size5"
+        android:textColor="#666"
+        android:textSize="@dimen/sp14" />
+
+    <view.MyButton
+        android:id="@+id/bt_send"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size35"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/size5"
+        android:layout_marginRight="@dimen/size5"
+        android:layout_toLeftOf="@id/iv_send"
+        android:layout_toRightOf="@id/iv_mode"
+        android:background="@drawable/rectangle_fff"
+        android:text="按住 说话"
+        android:textColor="#666"
+        android:textSize="@dimen/sp14"
+        android:visibility="gone" />
+</RelativeLayout>

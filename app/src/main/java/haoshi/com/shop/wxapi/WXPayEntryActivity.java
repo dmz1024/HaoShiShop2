@@ -7,6 +7,7 @@ import android.os.Bundle;
 import com.tencent.mm.sdk.modelmsg.SendAuth;
 
 import haoshi.com.shop.activity.MainActivity;
+import haoshi.com.shop.pay.PayUtil;
 import util.MyToast;
 import util.RxBus;
 
@@ -29,14 +30,15 @@ public class WXPayEntryActivity extends Activity {
         Intent intent1 = new Intent(this, MainActivity.class);
         if (resp.errCode == 0) {
             MyToast.showToast("支付成功");
-            RxBus.get().post("payRxBus","0");
+            RxBus.get().post("payRxBus", PayUtil.PAYRESULT);
         } else if (resp.errCode == -2) {
             MyToast.showToast("用户取消");
-            RxBus.get().post("payRxBus","1");
+            RxBus.get().post("payRxBus", PayUtil.PAYRESULT - 10000);
         } else {
             MyToast.showToast("支付失败");
-            RxBus.get().post("payRxBus","1");
+            RxBus.get().post("payRxBus", PayUtil.PAYRESULT - 10000);
         }
         startActivity(intent1);
     }
+
 }

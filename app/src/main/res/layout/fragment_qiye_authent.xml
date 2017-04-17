@@ -49,6 +49,7 @@
                         android:text="公司名称" />
 
                     <TextView
+                        android:id="@+id/tv_name"
                         style="@style/TextSize14Color999"
                         android:layout_width="match_parent"
                         android:layout_centerVertical="true"
@@ -76,6 +77,35 @@
                         android:text="公司地址" />
 
                     <TextView
+                        android:id="@+id/tv_address"
+                        style="@style/TextSize14Color999"
+                        android:layout_width="match_parent"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/size10"
+                        android:drawablePadding="@dimen/size5"
+                        android:drawableRight="@mipmap/wode_back_setting"
+                        android:gravity="center_vertical|right" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size0.5"
+                    android:background="#f6f6f6" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#fff"
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/size10"
+                    android:paddingTop="@dimen/size10">
+
+                    <TextView
+                        style="@style/TextSize15Color333"
+                        android:text="详细地址" />
+
+                    <TextView
+                        android:id="@+id/tv_address_desc"
                         style="@style/TextSize14Color999"
                         android:layout_width="match_parent"
                         android:layout_centerVertical="true"
@@ -103,6 +133,7 @@
                         android:text="行业" />
 
                     <TextView
+                        android:id="@+id/tv_hangye"
                         style="@style/TextSize14Color999"
                         android:layout_width="match_parent"
                         android:layout_centerVertical="true"
@@ -130,6 +161,7 @@
                         android:text="供应链身份" />
 
                     <TextView
+                        android:id="@+id/tv_gyshenfeng"
                         style="@style/TextSize14Color999"
                         android:layout_width="match_parent"
                         android:layout_centerVertical="true"
@@ -157,6 +189,7 @@
                         android:text="企业法人" />
 
                     <TextView
+                        android:id="@+id/tv_faren"
                         style="@style/TextSize14Color999"
                         android:layout_width="match_parent"
                         android:layout_centerVertical="true"
@@ -184,6 +217,7 @@
                         android:text="营业执照号" />
 
                     <TextView
+                        android:id="@+id/tv_sn"
                         style="@style/TextSize14Color999"
                         android:layout_width="match_parent"
                         android:layout_centerVertical="true"
@@ -211,8 +245,11 @@
                         android:text="营业执照" />
 
                     <ImageView
-                        android:layout_width="@dimen/size60"
-                        android:layout_height="@dimen/size60"
+                        android:id="@+id/iv_yyzz"
+                        android:scaleType="fitXY"
+                        android:src="@mipmap/wode_tianjiatu"
+                        android:layout_width="@dimen/size80"
+                        android:layout_height="@dimen/size80"
                         android:layout_below="@id/tv_yyzz_title"
                         android:layout_marginBottom="@dimen/size7"
                         android:layout_marginTop="@dimen/size17" />
@@ -227,16 +264,19 @@
                     <TextView
                         android:id="@+id/tv_work_authent_photo_title"
                         style="@style/TextSize15Color333"
-                        android:text="营业执照" />
+                        android:text="法人手持身份证照" />
 
-                    <TextView
-                        style="@style/TextSize15Color999"
-                        android:layout_toRightOf="@id/tv_work_authent_photo_title"
-                        android:text="（名片/工作证/工作证明）" />
+                    <!--<TextView-->
+                        <!--style="@style/TextSize15Color999"-->
+                        <!--android:layout_toRightOf="@id/tv_work_authent_photo_title"-->
+                        <!--android:text="（名片/工作证/工作证明）" />-->
 
                     <ImageView
-                        android:layout_width="@dimen/size60"
-                        android:layout_height="@dimen/size60"
+                        android:src="@mipmap/wode_tianjiatu"
+                        android:id="@+id/iv_sczz"
+                        android:scaleType="fitXY"
+                        android:layout_width="@dimen/size80"
+                        android:layout_height="@dimen/size80"
                         android:layout_below="@id/tv_work_authent_photo_title"
                         android:layout_marginBottom="@dimen/size7"
                         android:layout_marginTop="@dimen/size17" />
@@ -257,44 +297,47 @@
                     <TextView
                         android:id="@+id/tv_yyzj_title"
                         style="@style/TextSize15Color333"
-                        android:text="营业执照" />
+                        android:text="其他证件" />
 
-                    <TextView
-                        style="@style/TextSize15Color999"
-                        android:layout_toRightOf="@id/tv_yyzj_title"
-                        android:text="（法人手持身份证照片）" />
+                    <!--<TextView-->
+                        <!--style="@style/TextSize15Color999"-->
+                        <!--android:layout_toRightOf="@id/tv_yyzj_title"-->
+                        <!--android:text="（法人手持身份证照片）" />-->
 
                     <ImageView
-                        android:layout_width="@dimen/size60"
-                        android:layout_height="@dimen/size60"
+                        android:src="@mipmap/wode_tianjiatu"
+                        android:id="@+id/iv_qita"
+                        android:scaleType="fitXY"
+                        android:layout_width="@dimen/size80"
+                        android:layout_height="@dimen/size80"
                         android:layout_below="@id/tv_yyzj_title"
                         android:layout_marginBottom="@dimen/size7"
                         android:layout_marginTop="@dimen/size17" />
                 </RelativeLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/size0.5"
-                    android:background="#f6f6f6" />
+                <!--<View-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="@dimen/size0.5"-->
+                    <!--android:background="#f6f6f6" />-->
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:paddingBottom="@dimen/size10"
-                    android:paddingTop="@dimen/size10">
+                <!--<RelativeLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:paddingBottom="@dimen/size10"-->
+                    <!--android:paddingTop="@dimen/size10">-->
 
-                    <TextView
-                        android:id="@+id/tv_qtzj_title"
-                        style="@style/TextSize15Color333"
-                        android:text="营业执照" />
+                    <!--<TextView-->
+                        <!--android:id="@+id/tv_qtzj_title"-->
+                        <!--style="@style/TextSize15Color333"-->
+                        <!--android:text="营业执照" />-->
 
-                    <ImageView
-                        android:layout_width="@dimen/size60"
-                        android:layout_height="@dimen/size60"
-                        android:layout_below="@id/tv_qtzj_title"
-                        android:layout_marginBottom="@dimen/size7"
-                        android:layout_marginTop="@dimen/size17" />
-                </RelativeLayout>
+                    <!--<ImageView-->
+                        <!--android:layout_width="@dimen/size60"-->
+                        <!--android:layout_height="@dimen/size60"-->
+                        <!--android:layout_below="@id/tv_qtzj_title"-->
+                        <!--android:layout_marginBottom="@dimen/size7"-->
+                        <!--android:layout_marginTop="@dimen/size17" />-->
+                <!--</RelativeLayout>-->
 
             </LinearLayout>
         </RelativeLayout>

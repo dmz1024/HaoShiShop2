@@ -1,5 +1,7 @@
 package haoshi.com.shop.fragment.zongqinghui;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -17,6 +19,29 @@ import haoshi.com.shop.constant.UserInfo;
  */
 
 public class FindFriendFragment extends ListNetWorkBaseFragment<FindFriendBean> {
+    private boolean isCanFirst;
+
+    public static FindFriendFragment getInstance(boolean isCanFirst) {
+        FindFriendFragment fragment = new FindFriendFragment();
+        Bundle bundle = new Bundle();
+        bundle.putBoolean("isCanFirst", isCanFirst);
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            isCanFirst = bundle.getBoolean("isCanFirst");
+        }
+    }
+
+    @Override
+    protected boolean isCanFirstInitData() {
+        return isCanFirst;
+    }
     @Override
     protected RecyclerView.Adapter getAdapter() {
         return new FindFriendAdapter(getContext(), (ArrayList<FindFriendBean.Data>) totalList);
@@ -57,10 +82,6 @@ public class FindFriendFragment extends ListNetWorkBaseFragment<FindFriendBean> 
     }
 
 
-    @Override
-    protected boolean isCanFirstInitData() {
-        return false;
-    }
 
     @Override
     protected View getTitleBarView() {
@@ -74,6 +95,11 @@ public class FindFriendFragment extends ListNetWorkBaseFragment<FindFriendBean> 
 
     @Override
     protected boolean isCanRefresh() {
+        return false;
+    }
+
+    @Override
+    protected boolean getLoadMore() {
         return false;
     }
 }

@@ -90,8 +90,9 @@ public class OrderCommentFragment extends SingleNetWorkBaseFragment<SingleBaseBe
     @Override
     protected void writeData(boolean isWrite, SingleBaseBean bean) {
         super.writeData(isWrite, bean);
+        RxBus.get().post("orderManager", position);
+        RxBus.get().post("orderDescRxBus", "");
         RxBus.get().post("back", "back");
-        RxBus.get().post("orderCommentRxBus", position);
     }
 
     @Override

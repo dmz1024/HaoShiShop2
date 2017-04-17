@@ -11,10 +11,14 @@ import java.util.ArrayList;
 
 import base.adapter.BaseAdapter;
 import base.adapter.BaseViewHolder;
+import base.bean.rxbus.AddFragmentBean;
 import butterknife.BindView;
 import haoshi.com.shop.R;
 import haoshi.com.shop.constant.UserInfo;
+import haoshi.com.shop.fragment.zongqinghui.MoreFriendFragment;
+import haoshi.com.shop.fragment.zongqinghui.SexFlockFragment;
 import util.JsonUtil;
+import util.RxBus;
 import util.SharedPreferenUtil;
 
 /**
@@ -22,12 +26,11 @@ import util.SharedPreferenUtil;
  */
 
 public class MySearchFriendHistoryAdapter extends BaseAdapter<String> {
-    public MySearchFriendHistoryAdapter(Context ctx, ArrayList<String> list) {
-        super(ctx, list);
-    }
+    private int type;
 
-    public MySearchFriendHistoryAdapter(ArrayList<String> list) {
-        super(list);
+    public MySearchFriendHistoryAdapter(Context ctx, ArrayList<String> list, int type) {
+        super(ctx, list);
+        this.type = type;
     }
 
     @Override
@@ -37,7 +40,7 @@ public class MySearchFriendHistoryAdapter extends BaseAdapter<String> {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ((ViewHolder) holder).tv_content.setText(list.get(list.size()-1-position));
+        ((ViewHolder) holder).tv_content.setText(list.get(position));
     }
 
     public class ViewHolder extends BaseViewHolder {
@@ -49,12 +52,24 @@ public class MySearchFriendHistoryAdapter extends BaseAdapter<String> {
         public ViewHolder(View itemView) {
             super(itemView);
             iv_delete.setOnClickListener(this);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        protected void onClick(int layoutPosition) {
+            if (type == 0) {
+                RxBus.get().post("addFragment", new AddFragmentBean(MoreFriendFragment.getInstance("name", list.get(layoutPosition), list.get(layoutPosition))));
+            } else {
+                RxBus.get().post("addFragment", new AddFragmentBean(SexFlockFragment.getInstance("name", list.get(layoutPosition), list.get(layoutPosition))));
+            }
+
+
         }
 
         @Override
         protected void itemOnclick(int id, int layoutPosition) {
             remove(layoutPosition);
-            new SharedPreferenUtil(ctx,"friend_history" + UserInfo.userId).setData("datas", JsonUtil.javaBean2Json(list));
+            new SharedPreferenUtil(ctx, "friend_history" + UserInfo.userId).setData("datas", JsonUtil.javaBean2Json(list));
         }
     }
 }

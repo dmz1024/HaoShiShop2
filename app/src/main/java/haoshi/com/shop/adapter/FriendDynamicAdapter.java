@@ -96,8 +96,6 @@ public class FriendDynamicAdapter extends BaseAdapter<FriendDynamicBean.Data> {
         ImageView iv_head;
         @BindView(R.id.tv_name)
         TextView tv_name;
-        @BindView(R.id.tv_group)
-        TextView tv_group;
         @BindView(R.id.tv_time)
         TextView tv_time;
         @BindView(R.id.tv_content)

@@ -10,6 +10,7 @@ import haoshi.com.shop.bean.shop.OrderIdBean;
 import haoshi.com.shop.constant.ApiConstant;
 import haoshi.com.shop.constant.UserInfo;
 import interfaces.OnSingleRequestListener;
+import util.RxBus;
 
 /**
  * Created by dengmingzhi on 2017/3/23.
@@ -45,6 +46,7 @@ public class MyOrderController {
                     case 10002:
                         return "请检查地址是否正确";
                     case 10001:
+                        RxBus.get().post("back", "back");
                         return "请勿重复提交订单,可去个人中心查看生成的订单";
                 }
                 return super.getMsg(code);
@@ -127,6 +129,11 @@ public class MyOrderController {
             }
 
             @Override
+            protected boolean getShowSucces() {
+                return false;
+            }
+
+            @Override
             protected String getMsg(int code) {
                 switch (code) {
                     case 10001:
@@ -141,15 +148,94 @@ public class MyOrderController {
             protected Class<SingleBaseBean> getClx() {
                 return SingleBaseBean.class;
             }
-        }.setOnRequestListeren(listener).post(new TipLoadingBean("正在删除订单", "删除成功", "删除失败"));
+        }.setOnRequestListeren(listener).post(new TipLoadingBean("正在删除订单", "", "删除失败"));
     }
 
+    /**
+     * 取消退款
+     *
+     * @param orderId
+     */
+    public void cancelRefunds(final String orderId, OnSingleRequestListener<SingleBaseBean> listener) {
+        new ApiRequest<SingleBaseBean>() {
+            @Override
+            protected Map<String, String> getMap() {
+                Map<String, String> map = new HashMap<>();
+                map.put("userId", UserInfo.userId);
+                map.put("token", UserInfo.token);
+                map.put("orderId", orderId);
+                return map;
+            }
+
+            @Override
+            protected String getUrl() {
+                return ApiConstant.CANCELREFUNDS;
+            }
+
+            @Override
+            protected boolean getShowSucces() {
+                return false;
+            }
+
+            @Override
+            protected String getMsg(int code) {
+                switch (code) {
+                    case 10001:
+                        return "取消失败";
+                    case 10009:
+                        return "该订单状态已改变，取消失败,请刷新重试";
+                }
+                return super.getMsg(code);
+            }
+
+            @Override
+            protected Class<SingleBaseBean> getClx() {
+                return SingleBaseBean.class;
+            }
+        }.setOnRequestListeren(listener).post(new TipLoadingBean("正在取消退款", "", "取消失败"));
+    }
 
     /**
-     * 生成打赏订单
-     * @param content
+     * 确认收货
+     *
+     * @param orderId
      */
-    public void dssubmit(String... content){
+    public void receives(final String orderId, OnSingleRequestListener<SingleBaseBean> listener) {
+        new ApiRequest<SingleBaseBean>() {
+            @Override
+            protected Map<String, String> getMap() {
+                Map<String, String> map = new HashMap<>();
+                map.put("userId", UserInfo.userId);
+                map.put("token", UserInfo.token);
+                map.put("orderId", orderId);
+                return map;
+            }
 
+            @Override
+            protected String getUrl() {
+                return ApiConstant.RECEIVES;
+            }
+
+            @Override
+            protected boolean getShowSucces() {
+                return false;
+            }
+
+            @Override
+            protected String getMsg(int code) {
+                switch (code) {
+                    case 10001:
+                        return "确认收货失败";
+                    case 10009:
+                        return "该订单状态已改变，确认失败,请刷新重试";
+                }
+                return super.getMsg(code);
+            }
+
+            @Override
+            protected Class<SingleBaseBean> getClx() {
+                return SingleBaseBean.class;
+            }
+        }.setOnRequestListeren(listener).post(new TipLoadingBean("正在确认收货", "", "收货失败"));
     }
 }

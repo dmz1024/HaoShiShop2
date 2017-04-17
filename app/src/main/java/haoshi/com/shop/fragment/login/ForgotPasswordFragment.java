@@ -57,6 +57,7 @@ public class ForgotPasswordFragment extends SingleNetWorkBaseFragment<SingleBase
         }
     }
 
+
     @Override
     protected Map<String, String> map() {
         map.put("userPhone", tel);
@@ -88,7 +89,7 @@ public class ForgotPasswordFragment extends SingleNetWorkBaseFragment<SingleBase
     @Override
     protected void writeData(boolean isWrite, SingleBaseBean bean) {
         super.writeData(isWrite, bean);
-        initCodeTime();
+        RxBus.get().post("back","back");
     }
 
     @OnClick(R.id.tv_send)
@@ -110,6 +111,11 @@ public class ForgotPasswordFragment extends SingleNetWorkBaseFragment<SingleBase
     private void initCodeTime() {
         tv_send.setEnabled(false);
         timer.start();
+    }
+
+    @Override
+    protected boolean showSucces() {
+        return true;
     }
 
     private CountDownTimer timer = new CountDownTimer(60 * 1000, 1000) {
@@ -180,7 +186,6 @@ public class ForgotPasswordFragment extends SingleNetWorkBaseFragment<SingleBase
 
     @Override
     public void left() {
-        RxBus.get().post("back", "back");
         RxBus.get().post("back", "back");
     }
 

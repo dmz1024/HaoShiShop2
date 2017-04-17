@@ -40,7 +40,7 @@ public class AllDiscoverClassifyFragment extends ListNetWorkBaseFragment<AllDisc
 
     @Override
     protected RecyclerView.Adapter getAdapter() {
-        return new AllDiscoverClassifyAdapter(getContext(), (ArrayList<AllDiscoverClassifyBean.Data>) totalList,isChoose);
+        return new AllDiscoverClassifyAdapter(getContext(), (ArrayList<AllDiscoverClassifyBean.Data>) totalList);
     }
 
     @Override
@@ -71,5 +71,10 @@ public class AllDiscoverClassifyFragment extends ListNetWorkBaseFragment<AllDisc
     @Override
     public void center() {
 
+    }
+
+    @Override
+    protected boolean getLoadMore() {
+        return false;
     }
 }

@@ -40,7 +40,7 @@ public class ChatFlockAdapter extends BaseAdapter<ChatFriendBean> {
         ChatFriendBean data = list.get(position);
         ViewHolder viewHolder = (ViewHolder) holder;
         viewHolder.tv_name.setText(data.getName());
-        GlideUtil.GlideErrAndOc(ctx, data.getHeader(),viewHolder.iv_head);
+        GlideUtil.GlideErrAndOc(ctx, data.getLogo(),viewHolder.iv_head);
     }
 
     public class ViewHolder extends BaseViewHolder {
@@ -57,7 +57,8 @@ public class ChatFlockAdapter extends BaseAdapter<ChatFriendBean> {
         @Override
         protected void onClick(int layoutPosition) {
             ChatFriendBean data = list.get(layoutPosition);
-            RxBus.get().post("addFragment", new AddFragmentBean(ChatViewFragment.getInstance(data.getType(),data.getName(),data.getFid())));
+
+            RxBus.get().post("addFragment", new AddFragmentBean(ChatViewFragment.getInstance(data.getFid())));
         }
     }
 }

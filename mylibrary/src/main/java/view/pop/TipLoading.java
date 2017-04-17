@@ -22,9 +22,9 @@ import util.Util;
  */
 
 public class TipLoading extends PopBaseView {
-    private ImageView iv_info;
-    private TextView tv_content;
-    private ProgressBar pb_loading;
+//    private ImageView iv_info;
+//    private TextView tv_content;
+//    private ProgressBar pb_loading;
 
     public TipLoading(Context ctx) {
         super(ctx);
@@ -33,28 +33,28 @@ public class TipLoading extends PopBaseView {
     @Override
     protected View getView() {
         View view = View.inflate(ctx, R.layout.tip_loading, null);
-        iv_info = (ImageView) view.findViewById(R.id.iv_info);
-        tv_content = (TextView) view.findViewById(R.id.tv_content);
-        pb_loading = (ProgressBar) view.findViewById(R.id.pb_loading);
+//        iv_info = (ImageView) view.findViewById(R.id.iv_info);
+//        tv_content = (TextView) view.findViewById(R.id.tv_content);
+//        pb_loading = (ProgressBar) view.findViewById(R.id.pb_loading);
         return view;
     }
 
     @Override
     protected float getAlpha() {
-        return 0.3f;
+        return 1f;
     }
 
 
     public void stopAnimation() {
-        iv_info.clearAnimation();
+//        iv_info.clearAnimation();
     }
 
     public void setShowDrawable(@DrawableRes int rid, String content) {
-        tv_content.setText(content);
+//        tv_content.setText(content);
     }
 
     public void setLoadingContent(String content) {
-        tv_content.setText(content);
+//        tv_content.setText(content);
     }
 
     public void showSucces(String content) {
@@ -63,20 +63,22 @@ public class TipLoading extends PopBaseView {
     }
 
     public void showInfo(String content) {
-        iv_info.setVisibility(View.VISIBLE);
-        pb_loading.setVisibility(View.GONE);
-        setContent(content);
+//        iv_info.setVisibility(View.VISIBLE);
+//        pb_loading.setVisibility(View.GONE);
+//        setContent(content);
+        MyToast.showToast(content);
+        dismiss();
     }
 
 
     public void setContent(String content) {
-        tv_content.setText(content);
-        tv_content.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                dismiss();
-            }
-        }, 2000);
+//        tv_content.setText(content);
+//        tv_content.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                dismiss();
+//            }
+//        }, 2000);
     }
 
     public void showError(String content) {

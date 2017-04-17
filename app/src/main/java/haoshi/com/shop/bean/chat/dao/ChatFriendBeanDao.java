@@ -27,7 +27,7 @@ public class ChatFriendBeanDao extends AbstractDao<ChatFriendBean, String> {
     public static class Properties {
         public final static Property Fid = new Property(0, String.class, "fid", true, "FID");
         public final static Property Name = new Property(1, String.class, "name", false, "NAME");
-        public final static Property Header = new Property(2, String.class, "header", false, "HEADER");
+        public final static Property Logo = new Property(2, String.class, "logo", false, "LOGO");
         public final static Property Gid = new Property(3, String.class, "gid", false, "GID");
         public final static Property Type = new Property(4, int.class, "type", false, "TYPE");
     }
@@ -48,7 +48,7 @@ public class ChatFriendBeanDao extends AbstractDao<ChatFriendBean, String> {
         db.execSQL("CREATE TABLE " + constraint + "\"CHAT_FRIEND_BEAN\" (" + //
                 "\"FID\" TEXT PRIMARY KEY NOT NULL ," + // 0: fid
                 "\"NAME\" TEXT," + // 1: name
-                "\"HEADER\" TEXT," + // 2: header
+                "\"LOGO\" TEXT," + // 2: logo
                 "\"GID\" TEXT," + // 3: gid
                 "\"TYPE\" INTEGER NOT NULL );"); // 4: type
     }
@@ -73,9 +73,9 @@ public class ChatFriendBeanDao extends AbstractDao<ChatFriendBean, String> {
             stmt.bindString(2, name);
         }
  
-        String header = entity.getHeader();
-        if (header != null) {
-            stmt.bindString(3, header);
+        String logo = entity.getLogo();
+        if (logo != null) {
+            stmt.bindString(3, logo);
         }
  
         String gid = entity.getGid();
@@ -99,9 +99,9 @@ public class ChatFriendBeanDao extends AbstractDao<ChatFriendBean, String> {
             stmt.bindString(2, name);
         }
  
-        String header = entity.getHeader();
-        if (header != null) {
-            stmt.bindString(3, header);
+        String logo = entity.getLogo();
+        if (logo != null) {
+            stmt.bindString(3, logo);
         }
  
         String gid = entity.getGid();
@@ -121,7 +121,7 @@ public class ChatFriendBeanDao extends AbstractDao<ChatFriendBean, String> {
         ChatFriendBean entity = new ChatFriendBean( //
             cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0), // fid
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // name
-            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // header
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // logo
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // gid
             cursor.getInt(offset + 4) // type
         );
@@ -132,7 +132,7 @@ public class ChatFriendBeanDao extends AbstractDao<ChatFriendBean, String> {
     public void readEntity(Cursor cursor, ChatFriendBean entity, int offset) {
         entity.setFid(cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0));
         entity.setName(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
-        entity.setHeader(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
+        entity.setLogo(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setGid(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
         entity.setType(cursor.getInt(offset + 4));
      }

@@ -34,14 +34,6 @@
                 android:text="邓如果" />
 
             <TextView
-                android:id="@+id/tv_group"
-                style="@style/TextSize12Color999"
-                android:layout_alignLeft="@id/tv_name"
-                android:layout_below="@id/tv_name"
-                android:layout_marginTop="@dimen/size10"
-                android:text="大家庭" />
-
-            <TextView
                 android:id="@+id/tv_time"
                 style="@style/TextSize12Color999"
                 android:layout_alignParentRight="true"
@@ -51,7 +43,7 @@
                 android:id="@+id/tv_content"
                 style="@style/TextSize14Color666"
                 android:layout_alignLeft="@id/tv_name"
-                android:layout_below="@id/iv_head"
+                android:layout_below="@id/tv_name"
                 android:layout_marginTop="@dimen/size10"
                 android:lineSpacingExtra="@dimen/size3"
                 android:text="货到付款电话客服建华大街客户反馈几点回家开发环境看到回复见客户" />

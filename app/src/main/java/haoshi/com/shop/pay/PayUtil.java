@@ -25,6 +25,9 @@ import util.RxBus;
 
 public class PayUtil {
 
+    public static int PAYRESULT = 0;
+
+
     public static PayUtil getInstance() {
         return new PayUtil();
     }
@@ -51,7 +54,7 @@ public class PayUtil {
     }
 
     public void aliPay(final String data) {
-        Log.d("支付信息",data);
+        Log.d("支付信息", data);
         MyToast.showToast("正在调用支付宝支付,请耐心等待");
         new Thread(new Runnable() {
             @Override
@@ -81,7 +84,7 @@ public class PayUtil {
                     String resultStatus = payResult.getResultStatus();
                     if (TextUtils.equals(resultStatus, "9000")) {
                         MyToast.showToast("支付成功");
-                        RxBus.get().post("payRxBus", "0");
+                        RxBus.get().post("payRxBus", PAYRESULT);
                     } else {
                         if (TextUtils.equals(resultStatus, "8000")) {
                             MyToast.showToast("系统处理中");
@@ -92,7 +95,8 @@ public class PayUtil {
                         } else {
                             MyToast.showToast("支付失败");
                         }
-                        RxBus.get().post("payRxBus", "1");
+
+                        RxBus.get().post("payRxBus", PAYRESULT - 10000);
 
                     }
                     break;

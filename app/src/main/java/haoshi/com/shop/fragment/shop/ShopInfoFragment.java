@@ -22,17 +22,22 @@ import java.util.List;
 import java.util.Map;
 
 import base.bean.SerializableMap;
+import base.bean.rxbus.AddFragmentBean;
 import base.fragment.SingleNetWorkBaseFragment;
 import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import haoshi.com.shop.R;
+import haoshi.com.shop.bean.chat.dao.ChatFriendBean;
 import haoshi.com.shop.bean.chat.dao.SendBean;
+import haoshi.com.shop.bean.chat.impl.ChatFriendsImpl;
+import haoshi.com.shop.bean.shop.GoodDescBean;
 import haoshi.com.shop.bean.shop.ShopInfoBean;
 import haoshi.com.shop.constant.ApiConstant;
 import haoshi.com.shop.controller.ShareUtil;
 import haoshi.com.shop.fragment.BaseShapeFragment;
+import haoshi.com.shop.fragment.chat.ChatViewFragment;
 import interfaces.OnTitleBarListener;
 import util.RxBus;
 import util.Util;
@@ -149,6 +154,22 @@ public class ShopInfoFragment extends BaseShapeFragment<ShopInfoBean> implements
         return view;
     }
 
+    @OnClick(R.id.tv_chat)
+    void online() {
+        ChatFriendBean select = ChatFriendsImpl.getInstance().select(bean.data.shopUserId);
+        if (select == null) {
+            select = new ChatFriendBean();
+            select.setName(bean.data.shopUserName);
+            select.setFid(bean.data.shopUserId);
+            select.setGid("-1");
+            select.setType(2);
+            select.setLogo(bean.data.shopUserPhoto);
+            ChatFriendsImpl.getInstance().add(select);
+        }
+        RxBus.get().post("addFragment", new AddFragmentBean(ChatViewFragment.getInstance(bean.data.shopUserId,true)));
+
+    }
+
 
     private void initVp() {
         final ArrayList<Fragment> fragments = new ArrayList<>();
@@ -238,7 +259,7 @@ public class ShopInfoFragment extends BaseShapeFragment<ShopInfoBean> implements
 
     @Override
     public void right() {
-        if(isCanShape){
+        if (isCanShape) {
             showShare();
         }
     }

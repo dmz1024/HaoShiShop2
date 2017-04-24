@@ -27,7 +27,8 @@
             android:gravity="center_horizontal"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="@dimen/size10"
-            android:text="Copyright©2016 - 2017\n郝氏联众（北京）科技股份有限公司" />
-    </RelativeLayout>
+            android:text="郝氏联众（北京）科技股份有限公司" />
 
+    </RelativeLayout>
+    //Copyright©2016 - 2017\n
 </ScrollView>

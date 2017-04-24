@@ -30,13 +30,14 @@
             android:drawableLeft="@mipmap/zqh_search"
             android:drawablePadding="@dimen/size15"
             android:hint="好友手机号/昵称"
-            android:singleLine="true"
             android:paddingLeft="@dimen/size10"
             android:paddingRight="@dimen/size10"
+            android:singleLine="true"
             android:textColor="#999"
             android:textColorHint="#999"
             android:textSize="@dimen/sp13" />
     </RelativeLayout>
+
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -59,10 +60,10 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_history"
-        android:paddingLeft="@dimen/size10"
-        android:paddingRight="@dimen/size10"
-        android:layout_marginTop="@dimen/size0.5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#fff" />
+        android:layout_marginTop="@dimen/size0.5"
+        android:background="#fff"
+        android:paddingLeft="@dimen/size10"
+        android:paddingRight="@dimen/size10" />
 </LinearLayout>

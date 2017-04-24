@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import base.adapter.BaseAdapter;
 import base.adapter.BaseViewHolder;
 import base.bean.rxbus.AddFragmentBean;
+import base.fragment.WebViewFragment;
 import butterknife.BindView;
 import haoshi.com.shop.R;
 import haoshi.com.shop.bean.discover.DiscoverBean;
@@ -155,7 +156,20 @@ public class DiscoverAdapter extends BaseAdapter<DiscoverBean.Data> {
             RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) iv_img.getLayoutParams();
             params.height = (int) (Util.getWidth() / 1.6);
             iv_img.setLayoutParams(params);
+            itemView.setOnClickListener(this);
         }
+
+        @Override
+        protected void onClick(int layoutPosition) {
+            super.onClick(layoutPosition);
+            DiscoverBean.Data.AdsBean adsBean = list.get(layoutPosition).ads.get(0);
+            if (adsBean.is_type == 1) {
+                RxBus.get().post("addFragment", new AddFragmentBean(DiscoverDescFragment.getInstance(adsBean.adsGa)));
+            } else if (adsBean.is_type == 2) {
+                RxBus.get().post("addFragment", new AddFragmentBean(WebViewFragment.getInstance(adsBean.adURL)));
+            }
+        }
+
     }
 
     public class ViewOneImageHolder extends DiscoverBaseViewHolder {

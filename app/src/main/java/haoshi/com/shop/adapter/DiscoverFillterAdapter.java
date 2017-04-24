@@ -7,11 +7,17 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import base.adapter.BaseAdapter;
 import base.adapter.BaseViewHolder;
+import base.bean.SerializableMap;
+import base.bean.rxbus.AddFragmentBean;
 import butterknife.BindView;
 import haoshi.com.shop.R;
+import haoshi.com.shop.fragment.shop.GoodsIndexRootFragment;
+import util.RxBus;
 
 
 /**
@@ -39,6 +45,17 @@ public class DiscoverFillterAdapter extends BaseAdapter<String> {
 
         public ViewHolder(View itemView) {
             super(itemView);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        protected void onClick(int layoutPosition) {
+            super.onClick(layoutPosition);
+            SerializableMap serializableMap = new SerializableMap();
+            Map<String, String> map = new HashMap<>();
+            map.put("keyword", list.get(layoutPosition));
+            serializableMap.setMap(map);
+            RxBus.get().post("addFragment", new AddFragmentBean(GoodsIndexRootFragment.getInstance(serializableMap, "")));
         }
     }
 }

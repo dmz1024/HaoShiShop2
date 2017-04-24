@@ -116,7 +116,6 @@ public class PerfectRegInfoWriteFragment extends ListNetWorkBaseFragment<Perfect
         }
 
 
-
         editFriend(sbTag.toString(), sbWrite.toString());
 
     }
@@ -158,8 +157,8 @@ public class PerfectRegInfoWriteFragment extends ListNetWorkBaseFragment<Perfect
         }.setOnRequestListeren(new OnSingleRequestListener<SingleBaseBean>() {
             @Override
             public void succes(boolean isWrite, SingleBaseBean bean) {
-                RxBus.get().post("back","back");
-                RxBus.get().post("addFragment", new AddFragmentBean(new RegFriendRecommendFragment()));
+                UserInfo.isThree = "1";
+                RxBus.get().post("clearAll", "");
             }
 
             @Override

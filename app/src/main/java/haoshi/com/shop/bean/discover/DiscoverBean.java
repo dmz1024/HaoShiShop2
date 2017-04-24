@@ -32,6 +32,9 @@ public class DiscoverBean extends ListBaseBean<ArrayList<DiscoverBean.Data>> {
             public String adFile;
             public String adName;
             public String adURL;
+            public String adsGa;
+            public int is_type;
+            public int adsData;
         }
     }
 }

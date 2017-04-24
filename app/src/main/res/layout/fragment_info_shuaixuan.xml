@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        android:drawableRight="@mipmap/wode_back"
+        android:padding="@dimen/size10"
+        android:text="完善信息获取更多选择条件"
+        android:textColor="#666"
+        android:textSize="@dimen/sp14" />
+
+    <view.FlowTagLayout
+        android:id="@+id/ft_content"
+        android:background="#fff"
+        android:paddingBottom="-10dp"
+        android:layout_marginTop="@dimen/size10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/bt_submit"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size40"
+        android:layout_margin="@dimen/size10"
+        android:background="@drawable/hs_shape_ee9821_radius_3"
+        android:text="筛选"
+        android:textColor="#fff"
+        android:textSize="@dimen/sp14" />
+</LinearLayout>

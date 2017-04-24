@@ -34,21 +34,11 @@ public class SendDiscoverAdapter extends BaseAdapter<AllDiscoverClassifyBean.Dat
     }
 
     @Override
-    public int getItemCount() {
-        return list.size() + 1;
-    }
-
-    @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ViewHolder viewHolder = (ViewHolder) holder;
-        if (position != list.size()) {
-            AllDiscoverClassifyBean.Data data = list.get(position);
-            GlideUtil.GlideErrAndOc(ctx,data.catsImg,viewHolder.iv_icon);
-            viewHolder.tv_title.setText(data.catName);
-        } else {
-            viewHolder.iv_icon.setImageResource(R.mipmap.leimu);
-            viewHolder.tv_title.setText("自定义分类");
-        }
+        AllDiscoverClassifyBean.Data data = list.get(position);
+        GlideUtil.GlideErrAndOc(ctx,data.catsImg,viewHolder.iv_icon);
+        viewHolder.tv_title.setText(data.catName);
     }
 
     public class ViewHolder extends BaseViewHolder {
@@ -64,17 +54,10 @@ public class SendDiscoverAdapter extends BaseAdapter<AllDiscoverClassifyBean.Dat
 
         @Override
         protected void onClick(int layoutPosition) {
-            if (layoutPosition == list.size()) {
-                custom();
-            }else {
-                discover(layoutPosition);
-            }
+            discover(layoutPosition);
         }
     }
 
     protected void discover(int layoutPosition) {
-    }
-
-    protected void custom() {
     }
 }

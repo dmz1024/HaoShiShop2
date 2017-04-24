@@ -65,9 +65,10 @@ public abstract class ApiRequest<T extends BaseBean> {
         return true;
     }
 
-    protected String getMsg(int code){
+    protected String getMsg(int code) {
         return msg;
     }
+
     public ApiRequest get() {
         JavaBeanRequest<T> request = new JavaBeanRequest<>(getUrl(), getClx());
         creatRequest(request, null);
@@ -203,9 +204,10 @@ public abstract class ApiRequest<T extends BaseBean> {
             }
 
         } else {
+            String msg = getMsg(code);
             if (finalTipLoading != null && !isWrite) {
-                if (getShowInfo()) {
-                    finalTipLoading.showInfo(TextUtils.isEmpty(getMsg(code)) ? tip.getError() : getMsg(code));
+                if (getShowInfo() && !TextUtils.isEmpty(msg)) {
+                    finalTipLoading.showInfo(TextUtils.isEmpty(msg) ? tip.getError() : msg);
                 } else {
                     finalTipLoading.dismiss();
                 }

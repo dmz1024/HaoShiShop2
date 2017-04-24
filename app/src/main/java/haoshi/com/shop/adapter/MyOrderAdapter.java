@@ -17,6 +17,7 @@ import base.bean.rxbus.AddFragmentBean;
 import butterknife.BindView;
 import haoshi.com.shop.R;
 import haoshi.com.shop.bean.shop.MyOrderBean;
+import haoshi.com.shop.bean.shop.ShowLogisticsRootFragment;
 import haoshi.com.shop.constant.UserInfo;
 import haoshi.com.shop.controller.MyOrderController;
 import haoshi.com.shop.fragment.chat.ChatViewFragment;
@@ -32,6 +33,7 @@ import rx.functions.Action1;
 import util.MyToast;
 import util.RxBus;
 import view.pop.ChooseStringView;
+import view.pop.TipMessage;
 
 
 /**
@@ -57,7 +59,7 @@ public class MyOrderAdapter extends BaseAdapter<MyOrderBean.Data> {
         MyOrderBean.Data data = list.get(position);
         mHolder.tv_shop_name.setText(data.shopName);
         mHolder.tv_status.setText(data.status);
-        mHolder.tv_price.setText(data.needPay);
+        mHolder.tv_price.setText(data.realTotalMoney);
         inintGoods(mHolder.rv_content, data.list);
         manager(mHolder.tv_left, mHolder.tv_right, data.orderStatus, position);
     }
@@ -79,22 +81,31 @@ public class MyOrderAdapter extends BaseAdapter<MyOrderBean.Data> {
                 tv_left.setVisibility(View.VISIBLE);
                 tv_right.setVisibility(View.VISIBLE);
                 tv_left.setText("取消订单");
+
                 tv_left.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        MyOrderController.getInstance().cancelOrder(list.get(position).orderId, new OnSingleRequestListener<SingleBaseBean>() {
+                        new TipMessage(ctx, new TipMessage.TipMessageBean("提示", "是否取消订单?", "取消", "确认")) {
                             @Override
-                            public void succes(boolean isWrite, SingleBaseBean bean) {
-                                RxBus.get().post("orderManager", rootPosition);
-                            }
+                            protected void right() {
+                                super.right();
+                                MyOrderController.getInstance().cancelOrder(list.get(position).orderId, new OnSingleRequestListener<SingleBaseBean>() {
+                                    @Override
+                                    public void succes(boolean isWrite, SingleBaseBean bean) {
+                                        RxBus.get().post("orderManager", rootPosition);
+                                    }
 
-                            @Override
-                            public void error(boolean isWrite, SingleBaseBean bean, String msg) {
+                                    @Override
+                                    public void error(boolean isWrite, SingleBaseBean bean, String msg) {
 
+                                    }
+                                });
                             }
-                        });
+                        }.showAtLocation(true);
                     }
                 });
+
+
                 tv_right.setText("付款");
                 tv_right.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -109,10 +120,10 @@ public class MyOrderAdapter extends BaseAdapter<MyOrderBean.Data> {
                                 super.itemClick(p);
                                 switch (p) {
                                     case 0:
-                                        PayController.getInstance().ali(list.get(position).orderId);
+                                        PayController.getInstance().ali(list.get(position).orderId, "0");
                                         break;
                                     case 1:
-                                        MyToast.showToast("微信支付建设中");
+                                        PayController.getInstance().wechat(list.get(position).orderId, "0");
                                         break;
                                 }
                             }
@@ -147,22 +158,35 @@ public class MyOrderAdapter extends BaseAdapter<MyOrderBean.Data> {
                 tv_right.setVisibility(View.VISIBLE);
                 tv_right.setText("确认收货");
                 tv_left.setText("查看物流");
+                tv_left.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        RxBus.get().post("addFragment",new AddFragmentBean(ShowLogisticsRootFragment.getInstance(list.get(position).oexpressId,list.get(position).oexpressNo)));
+                    }
+                });
                 tv_right.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        MyOrderController.getInstance().receives(list.get(position).orderId, new OnSingleRequestListener<SingleBaseBean>() {
+                        new TipMessage(ctx, new TipMessage.TipMessageBean("提示", "是否确认收货?", "取消", "确认")) {
                             @Override
-                            public void succes(boolean isWrite, SingleBaseBean bean) {
-                                RxBus.get().post("orderManager", position);
-                            }
+                            protected void right() {
+                                super.right();
+                                MyOrderController.getInstance().receives(list.get(position).orderId, new OnSingleRequestListener<SingleBaseBean>() {
+                                    @Override
+                                    public void succes(boolean isWrite, SingleBaseBean bean) {
+                                        RxBus.get().post("orderManager", position);
+                                    }
 
-                            @Override
-                            public void error(boolean isWrite, SingleBaseBean bean, String msg) {
+                                    @Override
+                                    public void error(boolean isWrite, SingleBaseBean bean, String msg) {
 
+                                    }
+                                });
                             }
-                        });
+                        }.showAtLocation(true);
                     }
                 });
+
                 break;
             case 12:
                 tv_right.setVisibility(View.VISIBLE);
@@ -197,20 +221,27 @@ public class MyOrderAdapter extends BaseAdapter<MyOrderBean.Data> {
             case 15:
                 tv_right.setVisibility(View.VISIBLE);
                 tv_right.setText("删除订单");
+
                 tv_right.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        MyOrderController.getInstance().deleteOrder(list.get(position).orderId, new OnSingleRequestListener<SingleBaseBean>() {
+                        new TipMessage(ctx, new TipMessage.TipMessageBean("提示", "是否确认删除订单?", "取消", "确认")) {
                             @Override
-                            public void succes(boolean isWrite, SingleBaseBean bean) {
-                                RxBus.get().post("orderManager", rootPosition);
-                            }
+                            protected void right() {
+                                super.right();
+                                MyOrderController.getInstance().deleteOrder(list.get(position).orderId, new OnSingleRequestListener<SingleBaseBean>() {
+                                    @Override
+                                    public void succes(boolean isWrite, SingleBaseBean bean) {
+                                        RxBus.get().post("orderManager", rootPosition);
+                                    }
 
-                            @Override
-                            public void error(boolean isWrite, SingleBaseBean bean, String msg) {
+                                    @Override
+                                    public void error(boolean isWrite, SingleBaseBean bean, String msg) {
 
+                                    }
+                                });
                             }
-                        });
+                        }.showAtLocation(true);
                     }
                 });
                 break;
@@ -220,17 +251,23 @@ public class MyOrderAdapter extends BaseAdapter<MyOrderBean.Data> {
                 tv_right.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        MyOrderController.getInstance().cancelOrder(list.get(position).orderId, new OnSingleRequestListener<SingleBaseBean>() {
+                        new TipMessage(ctx, new TipMessage.TipMessageBean("提示", "是否确认取消退款?", "取消", "确认")) {
                             @Override
-                            public void succes(boolean isWrite, SingleBaseBean bean) {
-                                RxBus.get().post("orderManager", rootPosition);
-                            }
+                            protected void right() {
+                                super.right();
+                                MyOrderController.getInstance().cancelOrder(list.get(position).orderId, new OnSingleRequestListener<SingleBaseBean>() {
+                                    @Override
+                                    public void succes(boolean isWrite, SingleBaseBean bean) {
+                                        RxBus.get().post("orderManager", rootPosition);
+                                    }
 
-                            @Override
-                            public void error(boolean isWrite, SingleBaseBean bean, String msg) {
+                                    @Override
+                                    public void error(boolean isWrite, SingleBaseBean bean, String msg) {
 
+                                    }
+                                });
                             }
-                        });
+                        }.showAtLocation(true);
                     }
                 });
                 break;

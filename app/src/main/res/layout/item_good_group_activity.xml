@@ -55,6 +55,7 @@
             android:text="￥1230" />
 
         <TextView
+            android:visibility="gone"
             android:id="@+id/tv_count"
             style="@style/TextSize13Color666"
             android:layout_alignBottom="@id/iv_head"

@@ -52,6 +52,7 @@
         android:drawablePadding="@dimen/size16"
         android:gravity="center_vertical"
         android:background="@null"
+        android:digits="1234567890abcdefghijklmnopqrstuvwxyz"
         android:hint="输入密码(大于6位的字母和数字)"
         android:textColor="#666"
         android:textColorHint="#c3c3c3"

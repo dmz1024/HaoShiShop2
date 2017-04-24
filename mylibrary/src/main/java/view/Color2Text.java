@@ -37,15 +37,15 @@ public class Color2Text extends TextView {
     }
 
     private void init(AttributeSet attrs) {
-//        TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.Color2Text);
-//        size = typedArray.getDimensionPixelSize(R.styleable.Color2Text_Color2Text_size, 11);
-//        color = typedArray.getColor(R.styleable.Color2Text_Color2Text_color, getResources().getColor(R.color.color333));
-//        String content = typedArray.getString(R.styleable.Color2Text_Color2Text_content);
-//        typedArray.recycle();
-//        oldText = getText().toString();
-//        nowText = content == null ? "" : content;
-//        setText(oldText + nowText);
-//        setColor();
+        TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.Color2Text);
+        size = typedArray.getDimensionPixelSize(R.styleable.Color2Text_Color2Text_size, 11);
+        color = typedArray.getColor(R.styleable.Color2Text_Color2Text_color, getResources().getColor(R.color.color333));
+        String content = typedArray.getString(R.styleable.Color2Text_Color2Text_content);
+        typedArray.recycle();
+        oldText = getText().toString();
+        nowText = content == null ? "" : content;
+        setText(oldText + nowText);
+        setColor();
     }
 
 
@@ -64,7 +64,6 @@ public class Color2Text extends TextView {
     public void setChange(String text, String content) {
         oldText = text;
         nowText = content;
-        setText("");
         setText(oldText + nowText);
         setColor();
     }
@@ -90,12 +89,13 @@ public class Color2Text extends TextView {
      */
     private void setColor() {
         String str = oldText + nowText;
+        int count = str.length();
         SpannableStringBuilder style = new SpannableStringBuilder(str);
 //        style.setSpan(new BackgroundColorSpan(Color.RED), 2, 5, Spannable.SPAN_EXCLUSIVE_INCLUSIVE); //设置指定位置textview的背景颜色
 //        style.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.yd_666)), 0, oldText.length(), Spannable.SPAN_EXCLUSIVE_INCLUSIVE); //设置指定位置文字的颜色
 
-        style.setSpan(new AbsoluteSizeSpan(size), oldText.length(), str.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        style.setSpan(new ForegroundColorSpan(color), oldText.length(), str.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+        style.setSpan(new AbsoluteSizeSpan(size), oldText.length(), count, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        style.setSpan(new ForegroundColorSpan(color), oldText.length(), count, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
         setText(style);
     }
 

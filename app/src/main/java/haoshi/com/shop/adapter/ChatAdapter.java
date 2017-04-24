@@ -1,14 +1,18 @@
 package haoshi.com.shop.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.CountDownTimer;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -21,10 +25,14 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import audio.MediaPlayerUtils;
+import base.activity.BigPicBean;
+import base.activity.LookBigPicActivity;
 import base.adapter.BaseAdapter;
 import base.adapter.BaseViewHolder;
 import base.bean.rxbus.AddFragmentBean;
 import butterknife.BindView;
+import dmz.com.lookpiclibrary.PreviewLayout;
+import dmz.com.lookpiclibrary.ThumbViewInfo;
 import haoshi.com.shop.R;
 import haoshi.com.shop.bean.chat.FileBean;
 import haoshi.com.shop.bean.chat.PhotoBean;
@@ -44,6 +52,7 @@ import haoshi.com.shop.controller.ChatSendMessageController;
 import haoshi.com.shop.fragment.discover.DiscoverDescFragment;
 import haoshi.com.shop.fragment.shop.GoodDescFragment;
 import haoshi.com.shop.fragment.zongqinghui.FriendInfoFragment;
+import util.ContextUtil;
 import util.GlideUtil;
 import util.MyToast;
 import util.RxBus;
@@ -161,7 +170,7 @@ public class ChatAdapter extends BaseAdapter<ChatViewBean> {
                         textRightHolder.iv_tip.setVisibility(View.GONE);
                     } else {
                         textRightHolder.pb_loading.setVisibility(View.GONE);
-                        textRightHolder.iv_tip.setVisibility(View.VISIBLE);
+                        textRightHolder.iv_tip.setVisibility(View.GONE);
                     }
                 }
                 break;
@@ -187,7 +196,7 @@ public class ChatAdapter extends BaseAdapter<ChatViewBean> {
                         soundRightHolder.iv_tip.setVisibility(View.GONE);
                     } else {
                         soundRightHolder.pb_loading.setVisibility(View.GONE);
-                        soundRightHolder.iv_tip.setVisibility(View.VISIBLE);
+                        soundRightHolder.iv_tip.setVisibility(View.GONE);
                     }
                 }
                 break;
@@ -233,7 +242,7 @@ public class ChatAdapter extends BaseAdapter<ChatViewBean> {
                         photoRightHolder.iv_tip.setVisibility(View.GONE);
                     } else {
                         photoRightHolder.pb_loading.setVisibility(View.GONE);
-                        photoRightHolder.iv_tip.setVisibility(View.VISIBLE);
+                        photoRightHolder.iv_tip.setVisibility(View.GONE);
                     }
                 }
                 break;
@@ -278,7 +287,7 @@ public class ChatAdapter extends BaseAdapter<ChatViewBean> {
                     } else {
                         fileRightHolder.tv_status.setText("发送失败");
                         fileRightHolder.pb_loading.setVisibility(View.GONE);
-                        fileRightHolder.iv_tip.setVisibility(View.VISIBLE);
+                        fileRightHolder.iv_tip.setVisibility(View.GONE);
                     }
                 }
                 break;
@@ -305,7 +314,7 @@ public class ChatAdapter extends BaseAdapter<ChatViewBean> {
                         textRightHolder.iv_tip.setVisibility(View.GONE);
                     } else {
                         textRightHolder.pb_loading.setVisibility(View.GONE);
-                        textRightHolder.iv_tip.setVisibility(View.VISIBLE);
+                        textRightHolder.iv_tip.setVisibility(View.GONE);
                     }
                 }
                 break;
@@ -574,6 +583,8 @@ public class ChatAdapter extends BaseAdapter<ChatViewBean> {
         protected void onClick(int layoutPosition) {
             SendBean sendBean = SendImpl.getInstance().select(list.get(layoutPosition).getSign());
             if (sendBean.getIsGoods()) {
+
+
                 RxBus.get().post("addFragment", new AddFragmentBean(GoodDescFragment.getInstance(sendBean.getId())));
             } else {
                 RxBus.get().post("addFragment", new AddFragmentBean(DiscoverDescFragment.getInstance(sendBean.getId())));
@@ -589,13 +600,34 @@ public class ChatAdapter extends BaseAdapter<ChatViewBean> {
 
         public PhotoBaseHolder(View itemView) {
             super(itemView);
-            itemView.setOnClickListener(this);
+            iv_img.setOnClickListener(this);
         }
 
         @Override
-        protected void onClick(int layoutPosition) {
-            new PopShowBigImage(ctx, PhotoImpl.getInstance().select(list.get(layoutPosition).getSign()).getUrl_path()).showAtLocation(false);
+        protected void itemOnclick(int id, int layoutPosition) {
+            super.itemOnclick(id, layoutPosition);
+            switch (id) {
+                case R.id.iv_img:
+//                    PreviewLayout previewLayout = new PreviewLayout(ctx);
+//                    ArrayList<ThumbViewInfo> photos = new ArrayList<>();
+//                    previewLayout.setData(photos, 0);
+//                    photos.add(new ThumbViewInfo(PhotoImpl.getInstance().select(list.get(layoutPosition).getSign()).getUrl_path(),0));
+//                    previewLayout.startScaleUpAnimation();
+//                    ((FrameLayout) ((Activity) ctx).findViewById(android.R.id.content)).addView(previewLayout);
+                    ArrayList<BigPicBean> pics=new ArrayList<>();
+                    pics.add(new BigPicBean(PhotoImpl.getInstance().select(list.get(layoutPosition).getSign()).getUrl_path()));
+                    Intent intent=new Intent(ContextUtil.getAct(), LookBigPicActivity.class);
+                    intent.putParcelableArrayListExtra("data",pics);
+                    ActivityOptionsCompat options =
+                            ActivityOptionsCompat.makeScaleUpAnimation(iv_img, //The View that the new activity is animating from
+                                    (int)iv_img.getWidth()/2, (int)iv_img.getHeight()/2, //拉伸开始的坐标
+                                    0, 0);//拉伸开始的区域大小，这里用（0，0）表示从无到全屏
+                    ActivityCompat.startActivity(ContextUtil.getAct(), intent, options.toBundle());
+//                    new PopShowBigImage(ctx, PhotoImpl.getInstance().select(list.get(layoutPosition).getSign()).getUrl_path()).showAtLocation(false);
+                    break;
+            }
         }
+
     }
 
     public class ChatBaseHolder extends BaseViewHolder {

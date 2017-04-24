@@ -77,7 +77,7 @@ public class BuyCarGoodAdapter extends BaseAdapter<BuyCarBean.Data.ListBean> {
         } else {
             InfoViewHolder infoViewHolder = (InfoViewHolder) holder;
             infoViewHolder.tv_name.setText(bean.goodsName);
-            infoViewHolder.tv_price.setText(bean.shopPrice);
+            infoViewHolder.tv_price.setText(bean.shopPrice+"");
             infoViewHolder.tv_count.setText("x" + bean.cartNum);
         }
     }
@@ -92,18 +92,29 @@ public class BuyCarGoodAdapter extends BaseAdapter<BuyCarBean.Data.ListBean> {
 
         public GoodBaseViewHolder(View itemView) {
             super(itemView);
-            iv_choose.setOnClickListener(this);
+            itemView.setOnClickListener(this);
         }
 
         @Override
-        protected void itemOnclick(int id, int layoutPosition) {
-            switch (id) {
-                case R.id.iv_choose:
-                    list.get(layoutPosition).isChoose = !list.get(layoutPosition).isChoose;
-                    notifyDataSetChanged();
-                    break;
+        protected void onClick(int layoutPosition) {
+            super.onClick(layoutPosition);
+            list.get(layoutPosition).isChoose = !list.get(layoutPosition).isChoose;
+            notifyDataSetChanged();
+            boolean isChoose = true;
+            exit:
+            for (BuyCarBean.Data.ListBean data : list) {
+                if (!data.isChoose) {
+                    isChoose = false;
+                    break exit;
+                }
             }
+            goodsChange(isChoose);
         }
+
+    }
+
+    protected void goodsChange(boolean isChoose) {
+
     }
 
     public class DeleteViewHolder extends GoodBaseViewHolder {

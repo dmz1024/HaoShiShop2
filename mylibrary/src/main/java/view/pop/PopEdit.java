@@ -21,7 +21,7 @@ import base.other.PopBaseView;
  */
 
 public class PopEdit extends PopBaseView {
-    private boolean canEm=true;
+    private boolean canEm = true;
     private String content;
 
     public PopEdit(Context ctx) {
@@ -58,14 +58,14 @@ public class PopEdit extends PopBaseView {
             }
         });
 
-       et_content.postDelayed(new Runnable() {
-           @Override
-           public void run() {
-               et_content.requestFocus();
-               InputMethodManager inputManager = (InputMethodManager) ctx.getSystemService(Context.INPUT_METHOD_SERVICE);
-               inputManager.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-           }
-       },100);
+        et_content.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                et_content.requestFocus();
+                InputMethodManager inputManager = (InputMethodManager) ctx.getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputManager.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+            }
+        }, 100);
 
         et_content.addTextChangedListener(new TextWatcher() {
             @Override
@@ -113,5 +113,10 @@ public class PopEdit extends PopBaseView {
 
     }
 
-
+    @Override
+    public void onDismiss() {
+        super.onDismiss();
+//        InputMethodManager inputManager = (InputMethodManager) ctx.getSystemService(Context.INPUT_METHOD_SERVICE);
+//        inputManager.hideSoftInputFromWindow(0, InputMethodManager.HIDE_IMPLICIT_ONLY);
+    }
 }

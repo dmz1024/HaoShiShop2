@@ -3,6 +3,8 @@ package haoshi.com.shop.fragment.discover;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -14,6 +16,7 @@ import haoshi.com.shop.constant.ApiConstant;
 import interfaces.OnTitleBarListener;
 import util.RxBus;
 import view.DefaultTitleBarView;
+import view.GmRefreshLayout;
 
 /**
  * Created by dengmingzhi on 2017/3/19.
@@ -21,14 +24,26 @@ import view.DefaultTitleBarView;
 
 public class DiscoverCommentFragment extends ListNetWorkBaseFragment<AllDiscoverCommentBean> implements OnTitleBarListener {
     public static DiscoverCommentFragment getInstance(String id) {
+        return getInstance(id, false);
+    }
+
+    public static DiscoverCommentFragment getInstance(String id, boolean type) {
         DiscoverCommentFragment fragment = new DiscoverCommentFragment();
         Bundle bundle = new Bundle();
         bundle.putString("id", id);
+        bundle.putBoolean("type", type);
         fragment.setArguments(bundle);
         return fragment;
     }
 
+    private boolean type;
     private String id;
+
+
+    @Override
+    protected int getSize() {
+        return type ? Integer.MAX_VALUE : super.getSize();
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,6 +51,7 @@ public class DiscoverCommentFragment extends ListNetWorkBaseFragment<AllDiscover
         Bundle bundle = getArguments();
         if (bundle != null) {
             id = bundle.getString("id");
+            type = bundle.getBoolean("type");
         }
     }
 
@@ -68,6 +84,16 @@ public class DiscoverCommentFragment extends ListNetWorkBaseFragment<AllDiscover
                 .setTitleContent("评论")
                 .setOnTitleBarListener(this);
     }
+
+    @Override
+    protected View getTitleBarView() {
+        return type ? null : super.getTitleBarView();
+    }
+
+    protected ViewGroup.LayoutParams getParams() {
+        return type ? new GmRefreshLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT) : super.getParams();
+    }
+
 
     @Override
     public void left() {

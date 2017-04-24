@@ -91,7 +91,7 @@ public class PopContactDiscoverPerson extends PopBaseView implements View.OnClic
             Util.tel(ctx, content[0]);
             showComment();
         } else if (view == tv_call_sms) {
-            Util.sms(ctx, content[0], "您好，我看了您的文章:" + content[1]);
+            Util.sms(ctx, content[0], "【郝氏商城】您好，我看了您的文章:" + content[1]);
             showComment();
         } else if (view == tv_call_comment) {
             dismiss();
@@ -110,7 +110,7 @@ public class PopContactDiscoverPerson extends PopBaseView implements View.OnClic
                             super.itemClick(position);
                             switch (position) {
                                 case 0:
-                                    PayController.getInstance().ali(bean.data.orderId);
+                                    PayController.getInstance().ali(bean.data.orderId,"1");
                                     break;
                                 case 1:
                                     MyToast.showToast("微信支付正在建设中。。。", 5000);

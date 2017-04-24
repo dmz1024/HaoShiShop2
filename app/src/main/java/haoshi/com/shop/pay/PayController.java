@@ -25,19 +25,23 @@ public class PayController {
      *
      * @param id
      */
-    public void wechat(final String id) {
+    public void wechat(final String id, final String isBatch) {
         new ApiRequest<PayUtil.WechatInfo>() {
             @Override
             protected Map<String, String> getMap() {
                 Map<String, String> map = new HashMap<>();
-                map.put("order_id", id);
+                map.put("orderId", id);
+                map.put("isBatch", isBatch);
+                map.put("userId", UserInfo.userId);
+                map.put("uid", UserInfo.userId);
+                map.put("token", UserInfo.token);
                 return map;
             }
 
             @Override
             protected String getUrl() {
 
-                return null;
+                return ApiConstant.WXPAYS;
             }
 
             @Override
@@ -68,12 +72,14 @@ public class PayController {
      *
      * @param id
      */
-    public void ali(final String id) {
+    public void ali(final String id, final String isBatch) {
         new ApiRequest<PayUtil.AliPayInfo>() {
             @Override
             protected Map<String, String> getMap() {
                 Map<String, String> map = new HashMap<>();
-                map.put("orderid", id);
+                map.put("orderId", id);
+                map.put("isBatch", isBatch);
+                map.put("userId", UserInfo.userId);
                 map.put("uid", UserInfo.userId);
                 map.put("token", UserInfo.token);
                 return map;

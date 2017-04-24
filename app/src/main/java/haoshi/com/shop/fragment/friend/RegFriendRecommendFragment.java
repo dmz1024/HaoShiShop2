@@ -103,9 +103,7 @@ public class RegFriendRecommendFragment extends SingleNetWorkBaseFragment<RegFri
 
     @Override
     public void right() {
-        RxBus.get().post("back", "back");
-        RxBus.get().post("addFragment", new AddFragmentBean(new IndexFragment()));
-
+        RxBus.get().post("clearAll", "");
     }
 
     @Override

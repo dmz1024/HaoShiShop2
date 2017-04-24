@@ -112,6 +112,7 @@
         android:layout_marginLeft="@dimen/size10"
         android:layout_marginRight="@dimen/size10"
         android:text="删除好友"
+        android:visibility="gone"
         android:textColor="#fff"
         android:textSize="@dimen/sp15"
         android:layout_marginTop="@dimen/size7"

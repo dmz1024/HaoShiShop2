@@ -18,13 +18,15 @@ import android.widget.TextView;
 import com.mall.naiqiao.mylibrary.R;
 
 import butterknife.BindView;
+import interfaces.OnTitleBarListener;
+import util.RxBus;
 import view.DefaultTitleBarView;
 
 /**
  * Created by dengmingzhi on 2016/12/29.
  */
 
-public class WebViewFragment extends NotNetWorkBaseFragment {
+public class WebViewFragment extends NotNetWorkBaseFragment implements OnTitleBarListener {
     private WebView web_view;
     private TextView tv_load;
     private String url;
@@ -117,7 +119,7 @@ public class WebViewFragment extends NotNetWorkBaseFragment {
 
     @Override
     protected void initTitleView() {
-        titleBarView = ((DefaultTitleBarView) getTitleBar());
+        titleBarView = ((DefaultTitleBarView) getTitleBar()).setOnTitleBarListener(this);
     }
 
     @Override
@@ -127,5 +129,20 @@ public class WebViewFragment extends NotNetWorkBaseFragment {
 
     public WebView getWV() {
         return web_view;
+    }
+
+    @Override
+    public void left() {
+        RxBus.get().post("back","back");
+    }
+
+    @Override
+    public void right() {
+
+    }
+
+    @Override
+    public void center() {
+
     }
 }

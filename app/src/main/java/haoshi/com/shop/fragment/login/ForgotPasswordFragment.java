@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import base.bean.SingleBaseBean;
 import base.bean.TipLoadingBean;
@@ -22,6 +23,7 @@ import haoshi.com.shop.controller.SendCodeController;
 import interfaces.OnSingleRequestListener;
 import interfaces.OnTitleBarListener;
 import util.MyToast;
+import util.PhoneUtil;
 import util.RxBus;
 import view.DefaultTitleBarView;
 
@@ -66,6 +68,19 @@ public class ForgotPasswordFragment extends SingleNetWorkBaseFragment<SingleBase
         return super.map();
     }
 
+    @Override
+    protected String getnMsg(int code) {
+        switch (code) {
+            case 10012:
+                return "与原密码相同";
+            case 10009:
+                return "该用户不存在";
+            case 10008:
+                return "验证码错误";
+        }
+        return super.getnMsg(code);
+    }
+
     private String password;
     private String code;
 
@@ -89,7 +104,7 @@ public class ForgotPasswordFragment extends SingleNetWorkBaseFragment<SingleBase
     @Override
     protected void writeData(boolean isWrite, SingleBaseBean bean) {
         super.writeData(isWrite, bean);
-        RxBus.get().post("back","back");
+        RxBus.get().post("back", "back");
     }
 
     @OnClick(R.id.tv_send)
@@ -140,14 +155,14 @@ public class ForgotPasswordFragment extends SingleNetWorkBaseFragment<SingleBase
     @OnClick(R.id.bt_affirm)
     void affirm() {
         code = et_code.getText().toString();
+        password = et_password.getText().toString();
         if (TextUtils.isEmpty(code)) {
             MyToast.showToast("请输入验证码");
             return;
         }
 
-        password = et_password.getText().toString();
-        if (password.length() < 6) {
-            MyToast.showToast("密码小于6位");
+        if (!PhoneUtil.zhengze(password, Pattern.compile("^((?=.*[0-9].*)(?=.*[a-z].*))[_0-9a-z]{6,10}$"))) {
+            MyToast.showToast("密码为数字和字母组合,且为6-16位");
             return;
         }
 

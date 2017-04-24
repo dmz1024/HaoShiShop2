@@ -65,6 +65,8 @@ public class MyOrderBean extends ListBaseBean<ArrayList<MyOrderBean.Data>> {
         public ArrayList<OrderGoodBean> list;
         public String shopUserId;
         public String shopUserPhoto;
+        public String oexpressId;
+        public String oexpressNo;
         public String shopUserName;
         public static class OrderGoodBean implements Parcelable {
             /**

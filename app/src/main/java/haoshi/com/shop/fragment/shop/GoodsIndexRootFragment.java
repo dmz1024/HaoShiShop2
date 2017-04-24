@@ -14,6 +14,7 @@ import java.util.Map;
 
 import base.bean.SerializableMap;
 import base.bean.TipLoadingBean;
+import base.bean.rxbus.AddFragmentBean;
 import base.fragment.SingleNetWorkBaseFragment;
 import butterknife.BindView;
 import butterknife.BindViews;
@@ -43,13 +44,19 @@ public class GoodsIndexRootFragment extends SingleNetWorkBaseFragment<GoodAllCla
     private SerializableMap serializableMap;
 
     public static GoodsIndexRootFragment getInstance(SerializableMap Sfilter) {
+        return getInstance(Sfilter, "2");
+    }
+
+    public static GoodsIndexRootFragment getInstance(SerializableMap Sfilter, String type) {
         GoodsIndexRootFragment fragment = new GoodsIndexRootFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable("Sfilter", Sfilter);
+        bundle.putString("type", type);
         fragment.setArguments(bundle);
         return fragment;
     }
 
+    private String type;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,11 +65,15 @@ public class GoodsIndexRootFragment extends SingleNetWorkBaseFragment<GoodAllCla
         if (bundle != null) {
             serializableMap = (SerializableMap) bundle.getSerializable("Sfilter");
         }
-
         if (serializableMap == null) {
             serializableMap = new SerializableMap();
             serializableMap.setMap(new HashMap<String, String>());
         }
+        type = bundle.getString("type");
+        if(!TextUtils.isEmpty(type)){
+            serializableMap.getMap().put("type", type);
+        }
+
     }
 
 
@@ -103,6 +114,11 @@ public class GoodsIndexRootFragment extends SingleNetWorkBaseFragment<GoodAllCla
         return view;
     }
 
+    @OnClick(R.id.iv_buy_car)
+    void goBuyCar() {
+        RxBus.get().post("addFragment", new AddFragmentBean(new BuyCarRootFragment()));
+    }
+
     private String catId;
     private String catName;
     private String keyWord;
@@ -110,6 +126,9 @@ public class GoodsIndexRootFragment extends SingleNetWorkBaseFragment<GoodAllCla
     private void setFilter() {
         if (fragment != null) {
             Map<String, String> filter = new HashMap<>();
+            if (!TextUtils.isEmpty(type)) {
+                filter.put("type", type);
+            }
             if (!TextUtils.isEmpty(catId)) {
                 filter.put("catsId", catId);
             }
@@ -227,7 +246,7 @@ public class GoodsIndexRootFragment extends SingleNetWorkBaseFragment<GoodAllCla
                     catId = data.catId;
                     catName = data.catName;
                 }
-                ((DefaultTitleBarView) getTitleBar()).setTitleContent(catName);
+                ((DefaultTitleBarView) getTitleBar()).setTitleContent(TextUtils.isEmpty(type) ? catName : "团购:" + catName);
 
                 setFilter();
             }

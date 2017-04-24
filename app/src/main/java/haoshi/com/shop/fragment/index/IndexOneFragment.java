@@ -52,7 +52,6 @@ public class IndexOneFragment extends NotNetWorkBaseFragment implements OnTitleB
         ArrayList<ChooseStringBean> datas = new ArrayList<>();
         datas.add(new ChooseStringBean("去寻亲"));
         datas.add(new ChooseStringBean("添加分组"));
-        datas.add(new ChooseStringBean("测试退出"));
         new ChooseStringView<ChooseStringBean>(getContext(), datas) {
             @Override
             protected void itemClick(int position) {
@@ -61,9 +60,6 @@ public class IndexOneFragment extends NotNetWorkBaseFragment implements OnTitleB
                     RxBus.get().post("indexBottomTabChangeFromOther", 3);
                 } else if(position==1) {
                     new PopAddFriendGroup(getContext()).showAtLocation(false);
-                }else {
-                    RxBus.get().post("back","back");
-                    UserInfo.clearUserInfo();
                 }
             }
         }.showAtLocation(false);

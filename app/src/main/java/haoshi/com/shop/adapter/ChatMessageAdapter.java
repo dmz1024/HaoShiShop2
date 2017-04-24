@@ -2,6 +2,7 @@ package haoshi.com.shop.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -52,6 +53,10 @@ public class ChatMessageAdapter extends BaseAdapter<MessageBean> {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         MessageBean data = list.get(position);
         ViewHolder viewHolder = (ViewHolder) holder;
+
+        Log.d("用户id", position + "--" + data.getId());
+
+
         ChatFriendBean fUser = ChatFriendsImpl.getInstance().select(data.getId());
         GlideUtil.GlideErrAndOc(ctx, fUser.getLogo(), viewHolder.iv_head);
         viewHolder.tv_time.setText(TimeUtils.formatTime(data.getTime()));
@@ -156,6 +161,7 @@ public class ChatMessageAdapter extends BaseAdapter<MessageBean> {
         viewHolder.tv_content.setText(content);
 
     }
+
 
     public class ViewHolder extends BaseViewHolder {
         @BindView(R.id.iv_head)

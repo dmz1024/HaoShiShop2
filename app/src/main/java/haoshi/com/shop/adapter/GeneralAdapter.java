@@ -234,7 +234,7 @@ public class GeneralAdapter extends BaseAdapter<GeneralBean> {
 
         @Override
         protected void onClick(int layoutPosition) {
-            RxBus.get().post("addFragment", new AddFragmentBean(list.get(layoutPosition).fragment));
+            chooseItem(layoutPosition);
         }
     }
 

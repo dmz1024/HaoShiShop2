@@ -25,6 +25,8 @@ public class BuyCarBean extends ListBaseBean<ArrayList<BuyCarBean.Data>> {
         public String userId;
         public ArrayList<ListBean> list;
         public boolean isEdit;
+        public boolean isHandcar;
+
         public static class ListBean {
             public boolean isChoose;
 
@@ -57,7 +59,7 @@ public class BuyCarBean extends ListBaseBean<ArrayList<BuyCarBean.Data>> {
             public String goodsId;
             public String shopQQ;
             public String goodsName;
-            public String shopPrice;
+            public double shopPrice;
             public int goodsStock;
             public String specPrice;
             public int specStock;

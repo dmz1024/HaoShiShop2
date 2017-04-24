@@ -10,6 +10,8 @@ import base.fragment.ListNetWorkBaseFragment;
 import haoshi.com.shop.CeshiUrl;
 import haoshi.com.shop.adapter.MessageAdapter;
 import haoshi.com.shop.bean.MessageBean;
+import haoshi.com.shop.constant.ApiConstant;
+import haoshi.com.shop.constant.UserInfo;
 import interfaces.OnTitleBarListener;
 import util.RxBus;
 import view.DefaultTitleBarView;
@@ -26,13 +28,13 @@ public class MessageFragment extends ListNetWorkBaseFragment<MessageBean> implem
 
     @Override
     protected String url() {
-        return CeshiUrl.SINGLE_URL;
+        return ApiConstant.PAGEQUERY;
     }
 
     @Override
     protected Map<String, String> map() {
-        map.put("act", "get_brand_info");
-        map.put("brand_id", "47");
+        map.put("userId", UserInfo.userId);
+        map.put("token", UserInfo.token);
         return super.map();
     }
 
@@ -52,12 +54,12 @@ public class MessageFragment extends ListNetWorkBaseFragment<MessageBean> implem
 
     @Override
     public void left() {
-        RxBus.get().post("back","back");
+        RxBus.get().post("back", "back");
     }
 
     @Override
     public void right() {
-        RxBus.get().post("addFragment",new AddFragmentBean(new MessageSetFragment()));
+        RxBus.get().post("addFragment", new AddFragmentBean(new MessageSetFragment()));
     }
 
     @Override

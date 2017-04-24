@@ -15,7 +15,7 @@ public class GlideUtil {
     public static int loadImage;
 
     public static void GlideErrAndOc(Context ctx, Object url, ImageView iv) {
-        Glide.with(ctx).load(url).error(errImage).placeholder(loadImage).into(iv);
+        Glide.with(ctx).load(url).diskCacheStrategy(DiskCacheStrategy.ALL).error(errImage).placeholder(loadImage).into(iv);
 //        Glide.with(ctx).load(url).skipMemoryCache(true).error(errImage).placeholder(loadImage).into(iv);
 
     }

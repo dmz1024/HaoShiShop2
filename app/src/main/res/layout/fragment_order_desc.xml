@@ -110,7 +110,7 @@
                 android:layout_marginTop="@dimen/size0.5"
                 android:background="#fff" />
 
-            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/size10"
@@ -154,7 +154,11 @@
                     android:text="合计：" />
             </RelativeLayout>
 
-
+            <FrameLayout
+                android:layout_marginTop="@dimen/size10"
+                android:id="@+id/fg_back_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

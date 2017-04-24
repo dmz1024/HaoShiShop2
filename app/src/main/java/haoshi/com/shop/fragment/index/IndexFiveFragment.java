@@ -16,6 +16,7 @@ import java.util.Map;
 import base.bean.TipLoadingBean;
 import base.bean.rxbus.AddFragmentBean;
 import base.fragment.SingleNetWorkBaseFragment;
+import base.fragment.WebViewFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -26,6 +27,7 @@ import haoshi.com.shop.constant.ApiConstant;
 import haoshi.com.shop.constant.UserInfo;
 import haoshi.com.shop.fragment.discover.DiscoverCollectRootFragment;
 import haoshi.com.shop.fragment.discover.MyDiscoverSendFragment;
+import haoshi.com.shop.fragment.my.AboutUsFragment;
 import haoshi.com.shop.fragment.my.GeRenAuthentFragment;
 import haoshi.com.shop.fragment.my.MessageFragment;
 import haoshi.com.shop.fragment.my.MyFeedBackFragment;
@@ -220,7 +222,6 @@ public class IndexFiveFragment extends SingleNetWorkBaseFragment<PeosonCenterBea
                 break;
             case 3:
                 RxBus.get().post("addFragment", new AddFragmentBean(GeRenAuthentFragment.getInstance(true)));
-                new PopRenZTip(getContext()).showAtLocation(false);
                 break;
             case 4:
                 new TipMessage(getContext(), new TipMessage.TipMessageBean("提示", "个人认证失败\n原因："+data.wrongReason, "", "确定")){
@@ -320,6 +321,9 @@ public class IndexFiveFragment extends SingleNetWorkBaseFragment<PeosonCenterBea
                         break;
                     case 4:
                         RxBus.get().post("addFragment", new AddFragmentBean(new ApplyBuildFlockFragment()));
+                        break;
+                    case 5:
+                        RxBus.get().post("addFragment", new AddFragmentBean(WebViewFragment.getInstance(ApiConstant.AGREE,true)));
                         break;
                     case 6:
                         new PopContactService(ctx) {

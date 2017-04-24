@@ -37,7 +37,7 @@ public class ZanAdapter extends BaseAdapter<ZanBean.Data> {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ZanBean.Data data = list.get(position);
         ViewHolder viewHolder = (ViewHolder) holder;
-        viewHolder.iv_img.setImageResource(data.isSee == 0 ? R.drawable.hs_shape_oval_ee9821 : R.drawable.hs_shape_oval_999);
+//        viewHolder.iv_img.setImageResource(data.isSee == 0 ? R.drawable.hs_shape_oval_ee9821 : R.drawable.hs_shape_oval_999);
         viewHolder.tv_title.setText(data.userName + "赞了您的\"" + data.title + "\"");
         viewHolder.tv_time.setText(data.createtime);
     }
@@ -57,18 +57,18 @@ public class ZanAdapter extends BaseAdapter<ZanBean.Data> {
 
         @Override
         protected void onClick(final int layoutPosition) {
-            DiscoverZanController.getInstance().lookZan(list.get(layoutPosition).articleId, new OnSingleRequestListener<SingleBaseBean>() {
-                @Override
-                public void succes(boolean isWrite, SingleBaseBean bean) {
-                    list.get(layoutPosition).isSee = 1;
-                    notifyItemChanged(layoutPosition);
-                }
-
-                @Override
-                public void error(boolean isWrite, SingleBaseBean bean, String msg) {
-
-                }
-            });
+//            DiscoverZanController.getInstance().lookZan(list.get(layoutPosition).articleId, new OnSingleRequestListener<SingleBaseBean>() {
+//                @Override
+//                public void succes(boolean isWrite, SingleBaseBean bean) {
+//                    list.get(layoutPosition).isSee = 1;
+//                    notifyItemChanged(layoutPosition);
+//                }
+//
+//                @Override
+//                public void error(boolean isWrite, SingleBaseBean bean, String msg) {
+//
+//                }
+//            });
         }
     }
 }

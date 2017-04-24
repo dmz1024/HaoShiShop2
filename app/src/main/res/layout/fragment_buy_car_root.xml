@@ -28,7 +28,7 @@
             android:layout_alignParentRight="true"
             android:background="@drawable/hs_shape_ee9821_radius_3"
             android:gravity="center"
-            android:text="去结算（1）" />
+            android:text="去结算" />
 
         <TextView
             android:id="@+id/tv_price"
@@ -36,7 +36,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/size15"
             android:layout_toLeftOf="@id/tv_pay"
-            android:text="150"
+            android:text="0.0"
             android:textColor="#f00" />
 
         <TextView

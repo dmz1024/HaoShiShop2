@@ -22,6 +22,8 @@ import haoshi.com.shop.bean.shop.BuyCarBean;
  */
 
 public class BuyCarAdapter extends BaseAdapter<BuyCarBean.Data> {
+
+
     public BuyCarAdapter(Context ctx, ArrayList<BuyCarBean.Data> list) {
         super(ctx, list);
     }
@@ -41,17 +43,30 @@ public class BuyCarAdapter extends BaseAdapter<BuyCarBean.Data> {
         inintGoods(mHolder.rv_content, position);
     }
 
-    private void inintGoods(RecyclerView rv_content, int position) {
+    private void inintGoods(RecyclerView rv_content, final int position) {
         LinearLayoutManager manager = new LinearLayoutManager(ctx);
         ArrayList<BuyCarBean.Data.ListBean> list = this.list.get(position).list;
-        if (this.list.get(position).isChoose) {
+        if (this.list.get(position).isHandcar) {
+            this.list.get(position).isHandcar = false;
             for (BuyCarBean.Data.ListBean data : list) {
-                data.isChoose = true;
+                data.isChoose = this.list.get(position).isChoose;
             }
         }
-        BuyCarGoodAdapter mAdapter = new BuyCarGoodAdapter(ctx, list,this.list.get(position).isEdit);
+        BuyCarGoodAdapter mAdapter = new BuyCarGoodAdapter(ctx, list, this.list.get(position).isEdit) {
+            @Override
+            protected void goodsChange(boolean isChoose) {
+                BuyCarAdapter.this.list.get(position).isChoose = isChoose;
+                BuyCarAdapter.this.notifyDataSetChanged();
+                price();
+
+            }
+        };
         rv_content.setLayoutManager(manager);
         rv_content.setAdapter(mAdapter);
+    }
+
+    protected void price() {
+
     }
 
     public class ViewHolder extends BaseViewHolder {
@@ -70,10 +85,12 @@ public class BuyCarAdapter extends BaseAdapter<BuyCarBean.Data> {
 
         @Override
         protected void itemOnclick(int id, int layoutPosition) {
-            switch (id){
+            switch (id) {
                 case R.id.iv_choose:
-                    list.get(layoutPosition).isChoose=!list.get(layoutPosition).isChoose;
+                    list.get(layoutPosition).isHandcar = true;
+                    list.get(layoutPosition).isChoose = !list.get(layoutPosition).isChoose;
                     notifyDataSetChanged();
+                    price();
                     break;
             }
         }

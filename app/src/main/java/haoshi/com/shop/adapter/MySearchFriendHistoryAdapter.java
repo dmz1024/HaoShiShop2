@@ -8,13 +8,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import base.adapter.BaseAdapter;
 import base.adapter.BaseViewHolder;
+import base.bean.SerializableMap;
 import base.bean.rxbus.AddFragmentBean;
 import butterknife.BindView;
 import haoshi.com.shop.R;
 import haoshi.com.shop.constant.UserInfo;
+import haoshi.com.shop.fragment.shop.GoodsIndexRootFragment;
 import haoshi.com.shop.fragment.zongqinghui.MoreFriendFragment;
 import haoshi.com.shop.fragment.zongqinghui.SexFlockFragment;
 import util.JsonUtil;
@@ -59,8 +63,14 @@ public class MySearchFriendHistoryAdapter extends BaseAdapter<String> {
         protected void onClick(int layoutPosition) {
             if (type == 0) {
                 RxBus.get().post("addFragment", new AddFragmentBean(MoreFriendFragment.getInstance("name", list.get(layoutPosition), list.get(layoutPosition))));
-            } else {
+            } else if (type == 1) {
                 RxBus.get().post("addFragment", new AddFragmentBean(SexFlockFragment.getInstance("name", list.get(layoutPosition), list.get(layoutPosition))));
+            } else if (type == 2) {
+                SerializableMap serializableMap = new SerializableMap();
+                Map<String, String> map = new HashMap<>();
+                map.put("keyword", list.get(layoutPosition));
+                serializableMap.setMap(map);
+                RxBus.get().post("addFragment", new AddFragmentBean(GoodsIndexRootFragment.getInstance(serializableMap, "")));
             }
 
 

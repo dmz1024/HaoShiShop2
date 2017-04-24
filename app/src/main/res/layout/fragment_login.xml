@@ -16,7 +16,6 @@
     <EditText
         android:id="@+id/et_name"
         android:background="@null"
-        android:text="18326167257"
         android:layout_width="match_parent"
         android:layout_height="@dimen/size40"
         android:layout_below="@id/tv_logo"
@@ -26,7 +25,8 @@
         android:drawableLeft="@mipmap/yonghu"
         android:drawablePadding="@dimen/size16"
         android:gravity="center_vertical"
-        android:hint="用户名/手机号/邮箱"
+        android:hint="手机号"
+        android:inputType="number"
         android:textColor="#666"
         android:textColorHint="#c3c3c3"
         android:textSize="@dimen/sp14" />
@@ -43,7 +43,7 @@
         android:id="@+id/et_password"
         android:inputType="textPassword"
         android:background="@null"
-        android:text="123456"
+        android:digits="1234567890abcdefghijklmnopqrstuvwxyz"
         android:layout_width="match_parent"
         android:layout_height="@dimen/size40"
         android:layout_below="@id/et_name"

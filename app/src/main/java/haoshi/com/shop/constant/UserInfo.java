@@ -22,6 +22,7 @@ public class UserInfo {
     public static String userName;
     public static String userPhone;
     public static String logo;
+    public static String isThree;
 
     public static void saveUserInfo(LoginBean bean) {
         token = bean.data.token;
@@ -29,47 +30,29 @@ public class UserInfo {
         userName = bean.data.userName;
         userPhone = bean.data.userPhone;
         logo = bean.data.userPhoto;
-        new SharedPreferenUtil(ContextUtil.getCtx(), "loginInfo").setData(new String[]{"uid", bean.data.userId, "token", bean.data.token, "name", bean.data.userName, "phone", bean.data.userPhone, "logo", bean.data.userPhoto});
-        ChatFriendBean friendBean = new ChatFriendBean();
-        friendBean.setFid(userId);
-        friendBean.setType(2);
-        friendBean.setGid("-1");
-        friendBean.setLogo(logo);
-        friendBean.setName(userName);
-        ChatFriendBean select = ChatFriendsImpl.getInstance().select(userId);
-        if (select != null) {
-            ChatFriendsImpl.getInstance().delete(select);
-        }
-        ChatFriendsImpl.getInstance().add(friendBean);
+        isThree = bean.data.isThree;
+        new SharedPreferenUtil(ContextUtil.getCtx(), "loginInfo").setData(new String[]{"uid", bean.data.userId, "token", bean.data.token, "name", bean.data.userName, "phone", bean.data.userPhone, "logo", bean.data.userPhoto, "isThree", bean.data.isThree});
+        addUser(userId, logo, userName);
     }
 
     public static void getUserInfo() {
-        Map<String, String> loginInfo = new SharedPreferenUtil(ContextUtil.getCtx(), "loginInfo").getData(new String[]{"uid", "token", "name", "phone", "logo"});
-        if (loginInfo != null && loginInfo.size() == 5) {
+        Map<String, String> loginInfo = new SharedPreferenUtil(ContextUtil.getCtx(), "loginInfo").getData(new String[]{"uid", "token", "name", "phone", "logo", "isThree"});
+        if (loginInfo != null && loginInfo.size() == 6) {
             userId = loginInfo.get("uid");
             token = loginInfo.get("token");
             userName = loginInfo.get("name");
             userPhone = loginInfo.get("phone");
             logo = loginInfo.get("logo");
+            isThree = loginInfo.get("isThree");
             Log.d("用户信息", userId + "--" + token + "--" + userName + "--" + userPhone + "---" + logo);
-            ChatFriendBean friendBean = new ChatFriendBean();
-            friendBean.setFid(userId);
-            friendBean.setType(2);
-            friendBean.setGid("-1");
-            friendBean.setLogo(logo);
-            friendBean.setName(userName);
-            ChatFriendBean select = ChatFriendsImpl.getInstance().select(userId);
-            if (select != null) {
-                ChatFriendsImpl.getInstance().delete(select);
-            }
-            ChatFriendsImpl.getInstance().add(friendBean);
+            addUser(userId, logo, userName);
 
         }
 
     }
 
     public static void clearUserInfo() {
-        new SharedPreferenUtil(ContextUtil.getCtx(), "loginInfo").setData(new String[]{"uid", "", "token", "", "name", "", "phone", "", "logo", ""});
+        new SharedPreferenUtil(ContextUtil.getCtx(), "loginInfo").setData(new String[]{"uid", "", "token", "", "name", "", "phone", "", "logo", "", "isThree", "-1"});
     }
 
     public static String getSign(String fid) {

@@ -102,4 +102,9 @@ public class PhoneUtil {
         return matcher.find();
     }
 
+
+    public static boolean zhengze(String content,Pattern pattern){
+        Matcher matcher = pattern.matcher(content);
+        return matcher.find();
+    }
 }

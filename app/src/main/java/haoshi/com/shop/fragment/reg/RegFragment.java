@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import base.bean.SingleBaseBean;
 import base.bean.TipLoadingBean;
@@ -24,6 +25,7 @@ import haoshi.com.shop.controller.SendCodeController;
 import interfaces.OnSingleRequestListener;
 import interfaces.OnTitleBarListener;
 import util.MyToast;
+import util.PhoneUtil;
 import util.RxBus;
 import view.DefaultTitleBarView;
 
@@ -66,12 +68,9 @@ public class RegFragment extends SingleNetWorkBaseFragment<LoginBean> implements
     @Override
     protected void writeData(boolean isWrite, LoginBean bean) {
         super.writeData(isWrite, bean);
-        UserInfo.token = bean.data.token;
-        UserInfo.userId = bean.data.userId;
-        UserInfo.userName = bean.data.userName;
-        UserInfo.userPhone = bean.data.userPhone;
-        RxBus.get().post("back", "back");
-        RxBus.get().post("addFragment", new AddFragmentBean(new PerfectRegChooseUserInfoFragment()));
+        UserInfo.saveUserInfo(bean);
+        RxBus.get().post("back","back");
+        RxBus.get().post("addFragment",new AddFragmentBean(new PerfectRegChooseUserInfoFragment()));
     }
 
 
@@ -118,12 +117,13 @@ public class RegFragment extends SingleNetWorkBaseFragment<LoginBean> implements
         name = et_name.getText().toString();
         password = et_password.getText().toString();
         code = et_code.getText().toString();
-        if (TextUtils.isEmpty(name)) {
-            MyToast.showToast("请输入账号");
+        if (!PhoneUtil.isTel(name)) {
+            MyToast.showToast("手机号格式不正确");
             return;
         }
-        if (TextUtils.isEmpty(password)) {
-            MyToast.showToast("请输入密码");
+
+        if (!PhoneUtil.zhengze(password, Pattern.compile("^((?=.*[0-9].*)(?=.*[a-z].*))[_0-9a-z]{6,10}$"))) {
+            MyToast.showToast("密码为数字和字母组合,且为6-16位");
             return;
         }
         if (!TextUtils.equals(password, et_affirm_password.getText().toString())) {
@@ -132,6 +132,8 @@ public class RegFragment extends SingleNetWorkBaseFragment<LoginBean> implements
             et_affirm_password.setText("");
             return;
         }
+
+
         if (TextUtils.isEmpty(code)) {
             MyToast.showToast("请输入验证码");
             return;

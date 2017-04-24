@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 import java.util.Map;
 
+import base.bean.ChooseStringBean;
 import base.bean.SingleBaseBean;
 import base.bean.rxbus.AddFragmentBean;
 import base.fragment.SingleNetWorkBaseFragment;
@@ -86,6 +87,8 @@ public class FriendInfoFragment extends SingleNetWorkBaseFragment<FriendInfoBean
             bt_delete.setVisibility(View.GONE);
             bt_send.setVisibility(View.GONE);
             rl_bei.setVisibility(View.GONE);
+        } else if(bean.data.isadd==1){
+            ((DefaultTitleBarView) getTitleBar()).setRightImage(R.mipmap.zqh_more);
         }
     }
 
@@ -137,7 +140,7 @@ public class FriendInfoFragment extends SingleNetWorkBaseFragment<FriendInfoBean
 
     @OnClick(R.id.bt_dongtai)
     void dongtai() {
-        RxBus.get().post("addFragment", new AddFragmentBean(MyFriendDynamicRootFragment.getInstance(fid,type)));
+        RxBus.get().post("addFragment", new AddFragmentBean(MyFriendDynamicRootFragment.getInstance(fid, type)));
     }
 
     @OnClick(R.id.bt_send)
@@ -251,7 +254,15 @@ public class FriendInfoFragment extends SingleNetWorkBaseFragment<FriendInfoBean
 
     @Override
     public void right() {
-
+        ArrayList<ChooseStringBean> choose = new ArrayList<>();
+        choose.add(new ChooseStringBean("删除好友"));
+        new ChooseStringView<ChooseStringBean>(getContext(), choose) {
+            @Override
+            protected void itemClick(int position) {
+                super.itemClick(position);
+                delete();
+            }
+        }.showAtLocation(false);
     }
 
     @Override
@@ -262,5 +273,6 @@ public class FriendInfoFragment extends SingleNetWorkBaseFragment<FriendInfoBean
     @Override
     protected void initTitleView() {
         ((DefaultTitleBarView) getTitleBar()).setTitleContent("用户信息").setOnTitleBarListener(this);
+
     }
 }

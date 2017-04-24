@@ -166,7 +166,7 @@ public class ShopInfoFragment extends BaseShapeFragment<ShopInfoBean> implements
             select.setLogo(bean.data.shopUserPhoto);
             ChatFriendsImpl.getInstance().add(select);
         }
-        RxBus.get().post("addFragment", new AddFragmentBean(ChatViewFragment.getInstance(bean.data.shopUserId,true)));
+        RxBus.get().post("addFragment", new AddFragmentBean(ChatViewFragment.getInstance(bean.data.shopUserId, true)));
 
     }
 
@@ -177,6 +177,7 @@ public class ShopInfoFragment extends BaseShapeFragment<ShopInfoBean> implements
         SerializableMap sm1 = new SerializableMap();
         Map<String, String> map1 = new HashMap<>();
         map1.put("shopId", shopId);
+        map1.put("type", "2");
         sm1.setMap(map1);
 
         SerializableMap sm2 = new SerializableMap();

@@ -101,7 +101,9 @@ public class FindFlockFragment extends ListNetWorkBaseFragment<FindFlockBean> {
     protected boolean getLoadMore() {
         return false;
     }
-
-
+    @Override
+    protected boolean isOnlyInitOne() {
+        return false;
+    }
 
 }

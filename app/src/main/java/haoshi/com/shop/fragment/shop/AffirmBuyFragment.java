@@ -195,10 +195,10 @@ public class AffirmBuyFragment extends SingleNetWorkBaseFragment<AffirmBuyBean> 
                     public void succes(boolean isWrite, OrderIdBean bean) {
                         switch (position) {
                             case 0:
-                                PayController.getInstance().ali(bean.data.orderId);
+                                PayController.getInstance().ali(bean.data.orderId,"1");
                                 break;
                             case 1:
-                                MyToast.showToast("微信支付正在建设中。。。", 5000);
+                                PayController.getInstance().wechat(bean.data.orderId,"1");
                                 break;
                         }
 
@@ -208,6 +208,10 @@ public class AffirmBuyFragment extends SingleNetWorkBaseFragment<AffirmBuyBean> 
                     public void error(boolean isWrite, OrderIdBean bean, String msg) {
 
                     }
+
+
+
+
                 });
             }
         }.showAtLocation(false);

@@ -10,6 +10,9 @@ import base.bean.ListBaseBean;
 
 public class MessageBean extends ListBaseBean<ArrayList<MessageBean.Data>> {
     public static class Data{
-
+        public String createTime;
+        public String msgContent;
+        public String ID;
+        public String msgStatus;
     }
 }

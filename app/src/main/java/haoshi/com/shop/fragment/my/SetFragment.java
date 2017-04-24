@@ -2,17 +2,21 @@ package haoshi.com.shop.fragment.my;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.Button;
 
 import java.util.ArrayList;
 
 import base.bean.rxbus.AddFragmentBean;
 import base.fragment.NotNetWorkBaseFragment;
 import butterknife.BindView;
+import butterknife.OnClick;
 import haoshi.com.shop.adapter.GeneralAdapter;
 import haoshi.com.shop.bean.GeneralBean;
 import haoshi.com.shop.R;
+import haoshi.com.shop.constant.UserInfo;
 import interfaces.OnTitleBarListener;
 import util.ImageCatchUtil;
+import util.MyToast;
 import util.RxBus;
 import view.DefaultTitleBarView;
 import view.pop.TipMessage;
@@ -48,10 +52,17 @@ public class SetFragment extends NotNetWorkBaseFragment implements OnTitleBarLis
                         new TipMessage(getContext(), new TipMessage.TipMessageBean("提示", "清除缓存后将重新加载已加载数据,消耗额外流量,是否继续清除?", "取消", "清除")) {
                             @Override
                             protected void right() {
-                                super.right();
+                                MyToast.showToast("正在清除缓存数据");
                                 ImageCatchUtil.getInstance().clearImageAllCache();
-                                datas.get(2).content = ImageCatchUtil.getInstance().getCacheSize(getContext());
-                                notifyDataSetChanged();
+                                rv_content.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        dismiss();
+                                        datas.get(2).content = ImageCatchUtil.getInstance().getCacheSize(getContext());
+                                        notifyDataSetChanged();
+                                    }
+                                }, 1000);
+
                             }
                         }
                                 .showAtLocation(false);
@@ -68,9 +79,22 @@ public class SetFragment extends NotNetWorkBaseFragment implements OnTitleBarLis
         rv_content.setAdapter(mAdapter);
     }
 
+
+    @OnClick(R.id.bt_exit)
+    void exit() {
+        new TipMessage(getContext(), new TipMessage.TipMessageBean("提示", "是否确认退出?\n退出后将不在收到消息提醒", "取消", "退出")) {
+            @Override
+            protected void right() {
+                super.right();
+                UserInfo.clearUserInfo();
+                RxBus.get().post("clearAll", "");
+            }
+        }.showAtLocation(false);
+    }
+
     @Override
     protected int getRId() {
-        return R.layout.recycle_view;
+        return R.layout.fragment_set;
     }
 
     @Override

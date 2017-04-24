@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import base.bean.SingleBaseBean;
 import base.bean.TipLoadingBean;
@@ -27,6 +28,7 @@ import haoshi.com.shop.controller.SendCodeController;
 import interfaces.OnSingleRequestListener;
 import interfaces.OnTitleBarListener;
 import util.MyToast;
+import util.PhoneUtil;
 import util.RxBus;
 import view.DefaultTitleBarView;
 
@@ -144,14 +146,16 @@ public class WeChatAndQQRegFragment extends SingleNetWorkBaseFragment<LoginBean>
         code = "";
         name = et_name.getText().toString();
         password = et_password.getText().toString();
-        if (TextUtils.isEmpty(name)) {
-            MyToast.showToast("请输入账号");
+        if (!PhoneUtil.isTel(name)) {
+            MyToast.showToast("手机号格式不正确");
             return;
         }
-        if (TextUtils.isEmpty(password)) {
-            MyToast.showToast("请输入密码");
+
+        if (!PhoneUtil.zhengze(password, Pattern.compile("^((?=.*[0-9].*)(?=.*[a-z].*))[_0-9a-z]{6,10}$"))) {
+            MyToast.showToast("密码为数字和字母组合,且为6-16位");
             return;
         }
+
         if (!TextUtils.equals(password, et_affirm_password.getText().toString())) {
             MyToast.showToast("两次密码不一致");
             et_password.setText("");

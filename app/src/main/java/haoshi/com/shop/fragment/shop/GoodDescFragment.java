@@ -196,6 +196,11 @@ public class GoodDescFragment extends BaseShapeFragment<GoodDescBean> implements
      * @param attrs
      */
     private void initAttr(ArrayList<AttrsBean> attrs) {
+        if (attrs.size() % 2 != 0) {
+            attrs.add(new AttrsBean());
+        }
+
+
         rv_attr.setLayoutManager(new LinearLayoutManager(getContext()) {
             @Override
             public boolean canScrollVertically() {
@@ -372,7 +377,7 @@ public class GoodDescFragment extends BaseShapeFragment<GoodDescBean> implements
             select.setLogo(serviceid.shopUserPhoto);
             ChatFriendsImpl.getInstance().add(select);
         }
-        RxBus.get().post("addFragment", new AddFragmentBean(ChatViewFragment.getInstance(serviceid.shopUserId,true)));
+        RxBus.get().post("addFragment", new AddFragmentBean(ChatViewFragment.getInstance(serviceid.shopUserId, true)));
 
     }
 

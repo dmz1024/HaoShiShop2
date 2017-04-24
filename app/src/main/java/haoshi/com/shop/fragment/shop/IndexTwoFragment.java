@@ -13,8 +13,11 @@ import com.jude.rollviewpager.RollPagerView;
 import com.jude.rollviewpager.hintview.ColorPointHintView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import base.adapter.MyLoopPagerAdapter;
+import base.bean.SerializableMap;
 import base.bean.TipLoadingBean;
 import base.bean.rxbus.AddFragmentBean;
 import base.fragment.ListNetWorkBaseFragment;
@@ -24,8 +27,7 @@ import haoshi.com.shop.adapter.ShopIndexGoodsAdapter;
 import haoshi.com.shop.bean.GeneralBean;
 import haoshi.com.shop.bean.ShopIndexBean;
 import haoshi.com.shop.constant.ApiConstant;
-import haoshi.com.shop.fragment.my.AddressContentFragment;
-import haoshi.com.haoshi.com.shop.view.ShopIndexView;
+import haoshi.com.shop.view.ShopIndexView;
 import interfaces.OnShowListDataListener;
 import interfaces.OnTitleBarListener;
 import interfaces.ScrollChangeViewListener;
@@ -48,7 +50,7 @@ public class IndexTwoFragment extends ListNetWorkBaseFragment<ShopIndexBean> imp
 
     @Override
     protected int getSize() {
-        return 5;
+        return 15;
     }
 
     @Override
@@ -65,9 +67,8 @@ public class IndexTwoFragment extends ListNetWorkBaseFragment<ShopIndexBean> imp
     protected void initTitleView() {
         ((DefaultTitleBarView) getTitleBar())
                 .setTitleContent("商城")
-                .showVisiLeft(View.GONE).setRightContent("去地址").setOnTitleBarListener(this);
+                .showVisiLeft(View.GONE).setRightImage(R.mipmap.zqh_searchzhuyaode).setOnTitleBarListener(this);
     }
-
 
 
     @Override
@@ -111,12 +112,30 @@ public class IndexTwoFragment extends ListNetWorkBaseFragment<ShopIndexBean> imp
     private void initMenu(RecyclerView rv_menu) {
         ArrayList<GeneralBean> datas = new ArrayList<>();
 //        String title, int rid, Fragment fragment, int type
-        datas.add(new GeneralBean("团购活动", R.mipmap.shangcheng_rementuangou, new GoodsIndexRootFragment(), 12));
-        datas.add(new GeneralBean("商家精选", R.mipmap.shangcheng_jingxuan, new MerchantSiftFragment(), 12));
-        datas.add(new GeneralBean("购物车", R.mipmap.gouwuche, new BuyCarRootFragment(), 12));
-        datas.add(new GeneralBean("全部分类", R.mipmap.shangcheng_fenlei, new GoodAllClassifyFragment(), 12));
+        datas.add(new GeneralBean("团购活动", R.mipmap.shangcheng_rementuangou, null, 12));
+        datas.add(new GeneralBean("商家精选", R.mipmap.shangcheng_jingxuan, null, 12));
+        datas.add(new GeneralBean("购物车", R.mipmap.gouwuche, null, 12));
+        datas.add(new GeneralBean("全部分类", R.mipmap.shangcheng_fenlei, null, 12));
         GridLayoutManager manager = new GridLayoutManager(getContext(), 4);
-        GeneralAdapter mAdapter = new GeneralAdapter(getContext(), datas);
+        GeneralAdapter mAdapter = new GeneralAdapter(getContext(), datas) {
+            @Override
+            protected void chooseItem(int position) {
+                switch (position) {
+                    case 0:
+                        RxBus.get().post("addFragment", new AddFragmentBean(GoodsIndexRootFragment.getInstance(null)));
+                        break;
+                    case 1:
+                        RxBus.get().post("addFragment", new AddFragmentBean(new MerchantSiftFragment()));
+                        break;
+                    case 2:
+                        RxBus.get().post("addFragment", new AddFragmentBean(new BuyCarRootFragment()));
+                        break;
+                    case 3:
+                        RxBus.get().post("addFragment", new AddFragmentBean(new GoodAllClassifyFragment()));
+                        break;
+                }
+            }
+        };
         rv_menu.setLayoutManager(manager);
         rv_menu.setAdapter(mAdapter);
     }
@@ -168,7 +187,7 @@ public class IndexTwoFragment extends ListNetWorkBaseFragment<ShopIndexBean> imp
 
     @Override
     public void onScrollChanged(ScrollView scrollView, int x, int y, int oldx, int oldy) {
-        if (y < oldy ||y < (ll.getHeight() - sc.getHeight() - 500)) {
+        if (y < oldy || y < (ll.getHeight() - sc.getHeight() - 500)) {
             return;
         }
         moreData();
@@ -181,7 +200,7 @@ public class IndexTwoFragment extends ListNetWorkBaseFragment<ShopIndexBean> imp
 
     @Override
     protected TipLoadingBean getTipLoadingBeanForListNet() {
-        return page==1?null:new TipLoadingBean("加载更多","","");
+        return page == 1 ? null : new TipLoadingBean();
     }
 
     @Override
@@ -191,7 +210,7 @@ public class IndexTwoFragment extends ListNetWorkBaseFragment<ShopIndexBean> imp
 
     @Override
     public void right() {
-        RxBus.get().post("addFragment",new AddFragmentBean(new AddressContentFragment()));
+        RxBus.get().post("addFragment", new AddFragmentBean(new SearchGoodFragment()));
     }
 
     @Override

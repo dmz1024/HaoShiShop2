@@ -6,11 +6,14 @@ import java.util.Map;
 import api.ApiRequest;
 import base.bean.SingleBaseBean;
 import base.bean.TipLoadingBean;
+import base.bean.rxbus.AddFragmentBean;
 import haoshi.com.shop.bean.shop.OrderIdBean;
 import haoshi.com.shop.constant.ApiConstant;
 import haoshi.com.shop.constant.UserInfo;
+import haoshi.com.shop.fragment.shop.MyOrderRootFragment;
 import interfaces.OnSingleRequestListener;
 import util.RxBus;
+import view.pop.TipMessage;
 
 /**
  * Created by dengmingzhi on 2017/3/23.
@@ -46,11 +49,26 @@ public class MyOrderController {
                     case 10002:
                         return "请检查地址是否正确";
                     case 10001:
-                        RxBus.get().post("back", "back");
-                        return "请勿重复提交订单,可去个人中心查看生成的订单";
+                        new TipMessage(getContext(), new TipMessage.TipMessageBean("提示", "订单已提交,订单页查看?", "取消", "查看")) {
+                            @Override
+                            protected void left() {
+                                super.left();
+                                RxBus.get().post("back", "back");
+                            }
+
+                            @Override
+                            protected void right() {
+                                super.right();
+                                RxBus.get().post("back", "back");
+                                RxBus.get().post("addFragment", new AddFragmentBean(MyOrderRootFragment.getInstance(1)));
+                            }
+                        }.showAtLocation(true);
+
+                        return "";
                 }
                 return super.getMsg(code);
             }
+
 
             @Override
             protected boolean getShowSucces() {
@@ -84,7 +102,7 @@ public class MyOrderController {
 
             @Override
             protected String getUrl() {
-                return ApiConstant.CANCELREFUNDS;
+                return ApiConstant.CANCELLATIONS;
             }
 
             @Override
@@ -96,6 +114,16 @@ public class MyOrderController {
                         return "该订单状态已改变，取消失败,请刷新重试";
                 }
                 return super.getMsg(code);
+            }
+
+            @Override
+            protected boolean getShowSucces() {
+                return false;
+            }
+
+            @Override
+            protected boolean getShowInfo() {
+                return false;
             }
 
             @Override

@@ -1,4 +1,4 @@
-package haoshi.com.haoshi.com.shop.view;
+package haoshi.com.shop.view;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

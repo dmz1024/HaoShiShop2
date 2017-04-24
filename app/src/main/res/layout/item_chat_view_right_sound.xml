@@ -40,9 +40,9 @@
 
         <ImageView
             android:id="@+id/iv_sound"
-            android:src="@drawable/sounds_drawable_left"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:src="@drawable/sounds_drawable_right"
+            android:layout_width="@dimen/size30"
+            android:layout_height="@dimen/size20"
             android:layout_gravity="center_vertical|right"
             android:layout_marginRight="@dimen/size10"
             android:scaleType="fitXY" />

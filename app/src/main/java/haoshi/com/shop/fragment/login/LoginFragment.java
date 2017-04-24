@@ -24,6 +24,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import base.bean.ChooseStringBean;
 import base.bean.TipLoadingBean;
@@ -40,15 +41,18 @@ import haoshi.com.shop.constant.UserInfo;
 import haoshi.com.shop.controller.LoginController;
 import haoshi.com.shop.controller.WeChatLoginController;
 import haoshi.com.shop.fragment.index.IndexFragment;
+import haoshi.com.shop.fragment.reg.PerfectRegChooseUserInfoFragment;
 import haoshi.com.shop.fragment.reg.RegFragment;
 import interfaces.OnSingleRequestListener;
 import interfaces.OnTitleBarListener;
 import rx.Observable;
 import rx.functions.Action1;
 import util.MyToast;
+import util.PhoneUtil;
 import util.RxBus;
 import view.DefaultTitleBarView;
 import view.pop.ChooseStringView;
+import view.pop.TipMessage;
 
 /**
  * Created by dengmingzhi on 2017/2/20.
@@ -118,8 +122,17 @@ public class LoginFragment extends SingleNetWorkBaseFragment<LoginBean> implemen
     protected void writeData(boolean isWrite, LoginBean bean) {
         super.writeData(isWrite, bean);
         UserInfo.saveUserInfo(bean);
-        RxBus.get().post("back", "back");
-        RxBus.get().post("addFragment", new AddFragmentBean(new IndexFragment()));
+        if (TextUtils.equals("0", UserInfo.isThree)) {
+            new TipMessage(getContext(), new TipMessage.TipMessageBean("提示", "您的信息未完善，请先完善信息", "", "去完善")) {
+                @Override
+                protected void right() {
+                    super.right();
+                    RxBus.get().post("addFragment", new AddFragmentBean(new PerfectRegChooseUserInfoFragment()));
+                }
+            }.showAtLocation(true);
+        } else {
+            RxBus.get().post("clearAll", "");
+        }
     }
 
     @Override
@@ -166,12 +179,13 @@ public class LoginFragment extends SingleNetWorkBaseFragment<LoginBean> implemen
         password = "";
         name = et_name.getText().toString();
         password = et_password.getText().toString();
-        if (TextUtils.isEmpty(name)) {
-            MyToast.showToast("请输入账号");
+        if (!PhoneUtil.isTel(name)) {
+            MyToast.showToast("手机号格式不正确");
             return;
         }
-        if (TextUtils.isEmpty(password)) {
-            MyToast.showToast("请输入密码");
+
+        if (!PhoneUtil.zhengze(password, Pattern.compile("^((?=.*[0-9].*)(?=.*[a-z].*))[_0-9a-z]{6,10}$"))) {
+            MyToast.showToast("密码为数字和字母组合,且为6-16位");
             return;
         }
         getData();
@@ -301,8 +315,7 @@ public class LoginFragment extends SingleNetWorkBaseFragment<LoginBean> implemen
                                     @Override
                                     public void succes(boolean isWrite, LoginBean bean) {
                                         UserInfo.saveUserInfo(bean);
-                                        RxBus.get().post("back", "back");
-                                        RxBus.get().post("addFragment", new AddFragmentBean(new IndexFragment()));
+                                        RxBus.get().post("clearAll", "");
                                     }
 
                                     @Override
@@ -346,7 +359,7 @@ public class LoginFragment extends SingleNetWorkBaseFragment<LoginBean> implemen
     }
 
 
-    private static final String QQ_ID = "222222";
+    private static final String QQ_ID = "1106008551";
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -375,8 +388,8 @@ public class LoginFragment extends SingleNetWorkBaseFragment<LoginBean> implemen
                                     @Override
                                     public void succes(boolean isWrite, LoginBean bean) {
                                         UserInfo.saveUserInfo(bean);
-                                        RxBus.get().post("back", "back");
-                                        RxBus.get().post("addFragment", new AddFragmentBean(new IndexFragment()));
+                                        RxBus.get().post("clearAll", "");
+//                                        RxBus.get().post("addFragment", new AddFragmentBean(new IndexFragment()));
                                     }
 
                                     @Override

@@ -10,7 +10,21 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <!--<item name="android:windowContentOverlay">@null</item>-->
-        <!--<item name="android:windowBackground">@drawable/write</item>-->
+        <!--windowContentOverlay-->
+    </style>
+
+    <!-- Base application theme. -->
+    <style name="LookPicTheme" parent="Theme.AppCompat.NoActionBar">
+        <!--&lt;!&ndash; 状态栏颜色 &ndash;&gt;-->
+        <!--<item name="colorPrimaryDark">#f5f5f5</item>-->
+        <!--<item name="windowActionBar">false</item>-->
+        <!--<item name="windowNoTitle">true</item>-->
+        <!--<item name="android:windowContentOverlay">@null</item>-->
+        <!--windowContentOverlay-->
+    </style>
+
+    <style name="AppThemeStart" parent="AppTheme">
+        <item name="android:windowBackground">@drawable/icon_bg_logo</item>
         <!--windowContentOverlay-->
     </style>
 

@@ -34,6 +34,13 @@
                 android:text="邓如果" />
 
             <TextView
+                android:id="@+id/tv_group"
+                android:layout_alignLeft="@id/tv_name"
+                android:layout_below="@id/tv_name"
+                android:layout_marginTop="@dimen/size5"
+                style="@style/TextSize13Color666" />
+
+            <TextView
                 android:id="@+id/tv_time"
                 style="@style/TextSize12Color999"
                 android:layout_alignParentRight="true"
@@ -41,17 +48,17 @@
 
             <TextView
                 android:id="@+id/tv_content"
-                style="@style/TextSize14Color666"
+                style="@style/TextSize14Color333"
                 android:layout_alignLeft="@id/tv_name"
-                android:layout_below="@id/tv_name"
-                android:layout_marginTop="@dimen/size10"
-                android:lineSpacingExtra="@dimen/size3"
+                android:layout_below="@id/tv_group"
+                android:layout_marginTop="@dimen/size5"
                 android:text="货到付款电话客服建华大街客户反馈几点回家开发环境看到回复见客户" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/size56"
+            android:id="@+id/rl_content"
             android:layout_marginLeft="@dimen/size60"
             android:layout_marginTop="@dimen/size10"
             android:background="#ececec">
@@ -78,7 +85,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/size60"
-            android:layout_marginTop="@dimen/size15">
+            android:layout_marginTop="@dimen/size10">
 
             <TextView
                 android:id="@+id/tv_liulan"
@@ -88,6 +95,7 @@
             <TextView
                 android:id="@+id/tv_pinglun"
                 style="@style/TextSize11Color999"
+
                 android:layout_alignParentRight="true"
                 android:drawableLeft="@mipmap/liuyan"
                 android:drawablePadding="@dimen/size1"
@@ -95,6 +103,7 @@
 
             <TextView
                 android:id="@+id/tv_zan"
+
                 style="@style/TextSize11Color999"
                 android:layout_marginRight="@dimen/size15"
                 android:layout_toLeftOf="@id/tv_pinglun"

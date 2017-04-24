@@ -1,5 +1,7 @@
 package haoshi.com.shop.activity;
 
+import com.tencent.bugly.Bugly;
+
 import base.activity.MyApplication;
 
 /**
@@ -7,5 +9,9 @@ import base.activity.MyApplication;
  */
 
 public class MyApp extends MyApplication {
-
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        Bugly.init(getApplicationContext(), "010f081132", false);
+    }
 }

@@ -72,6 +72,7 @@ public interface ApiConstant {
     String EDIT_SUBGROUP = BASE + "app.php/home/evn/edit_subgroup";
     String JOIN_LIST = BASE + "app.php/home/evn/join_list";
     String SEND_FILE = BASE + "app.php/home/Helpcenter/evn";
+    String TXEXPRESS = BASE + "app.php/home/Orderrefunds/txexpress";
 
     String DELORDERS = BASE + "app.php/home/Orders/delOrders";
     String USERINTERFACE = BASE + "app.php/home/Users/userInterface";
@@ -116,6 +117,16 @@ public interface ApiConstant {
     String RECEIVES = BASE + "app.php/home/Orders/receives";
     String REFUND = BASE + "app.php/home/OrderRefunds/refund";
     String REASON = BASE + "app.php/home/OrderRefunds/reason";
+    String EXPRESSLIST = BASE + "app.php/home/Express/expressList";
+    String HOTSEARCH = BASE + "app.php/home/Cats/hotSearch";
+    String WXPAYS = BASE + "app.php/home/Weixinpays/wxpays";
+    String ISPUBLISHARTICLE = BASE + "app.php/home/Users/isPublishArticle";
+    String CANCELLATIONS = BASE + "app.php/home/Orders/cancellations";
+    String SHOPMULTISELECT = BASE + "app.php/home/Shops/shopMultiselect";
+    String PAGEQUERY = BASE + "app.php/home/Messages/pageQuery";
+    String AGREE = BASE + "app.php/Home/Users/agree";
+    String VIEWLOGISTICS = BASE + "app.php/home/Express/viewLogistics";
+    String SEARCH_LIST = BASE + "app.php/home/evn/search_list";
 
 
 }

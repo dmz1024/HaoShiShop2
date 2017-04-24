@@ -3,6 +3,7 @@ package base.activity;
 import android.app.Application;
 import android.content.Context;
 
+import com.facebook.drawee.backends.pipeline.BuildConfig;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -13,6 +14,8 @@ import com.yanzhenjie.nohttp.OkHttpNetworkExecutor;
 import com.yolanda.nohttp.NoHttp;
 import com.yolanda.nohttp.cache.DBCacheStore;
 
+import me.yokeyword.fragmentation.Fragmentation;
+import me.yokeyword.fragmentation.helper.ExceptionHandler;
 import util.JLogUtils;
 import util.Util;
 
@@ -30,6 +33,23 @@ public class MyApplication extends Application {
         Fresco.initialize(this);
         initImageLoader(getApplicationContext());
 //        Bugly.init(getApplicationContext(), "010f081132", false);
+
+        Fragmentation.builder()
+                // 设置 栈视图 模式为 悬浮球模式   SHAKE: 摇一摇唤出   NONE：隐藏
+                .stackViewMode(Fragmentation.BUBBLE)
+                // ture时，遇到异常："Can not perform this action after onSaveInstanceState!"时，会抛出
+                // false时，不会抛出，会捕获，可以在handleException()里监听到
+                .debug(true)
+                // 在debug=false时，即线上环境时，上述异常会被捕获并回调ExceptionHandler
+                .handleException(new ExceptionHandler() {
+                    @Override
+                    public void onException(Exception e) {
+                        // 建议在该回调处上传至我们的Crash监测服务器
+                        // 以Bugtags为例子: 手动把捕获到的 Exception 传到 Bugtags 后台。
+                        // Bugtags.sendException(e);
+                    }
+                })
+                .install();
     }
 
     //网络框架初始化

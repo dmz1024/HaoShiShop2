@@ -16,7 +16,7 @@ public class SharedPreferenUtil {
 
     public SharedPreferenUtil(Context ctx, String title) {
         this.ctx = ctx;
-        sp =this.ctx.getSharedPreferences(title, Context.MODE_PRIVATE);
+        sp = this.ctx.getSharedPreferences(title, Context.MODE_PRIVATE);
         editor = sp.edit();
 
     }
@@ -35,10 +35,18 @@ public class SharedPreferenUtil {
         editor.commit();
     }
 
+
     public void setData(String key, String value) {
         editor.putString(key, value);
         editor.commit();
     }
+
+
+    public void setData(String key, long value) {
+        editor.putLong(key, value);
+        editor.commit();
+    }
+
 
     public void setData(String key, int value) {
         editor.putInt(key, value);
@@ -67,6 +75,10 @@ public class SharedPreferenUtil {
 
     public String getString(String key) {
         return sp.getString(key, "");
+    }
+
+    public long getLong(String key) {
+        return sp.getLong(key, 0);
     }
 
     public int getInt(String key) {

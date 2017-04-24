@@ -23,6 +23,7 @@ import haoshi.com.shop.R;
 import haoshi.com.shop.adapter.MyOrderGoodAdapter;
 import haoshi.com.shop.adapter.OrderDescLogAdapter;
 import haoshi.com.shop.bean.shop.OrderDescBean;
+import haoshi.com.shop.bean.shop.ShowLogisticsRootFragment;
 import haoshi.com.shop.constant.ApiConstant;
 import haoshi.com.shop.constant.UserInfo;
 import haoshi.com.shop.controller.MyOrderController;
@@ -38,6 +39,7 @@ import util.MyToast;
 import util.RxBus;
 import view.DefaultTitleBarView;
 import view.pop.ChooseStringView;
+import view.pop.TipMessage;
 
 /**
  * Created by dengmingzhi on 2017/3/20.
@@ -121,7 +123,6 @@ public class OrderDescFragment extends SingleNetWorkBaseFragment<OrderDescBean> 
     }
 
 
-
     @Override
     protected TipLoadingBean getTipLoadingBean() {
         return isWriteData ? new TipLoadingBean("", "", "") : super.getTipLoadingBean();
@@ -165,18 +166,25 @@ public class OrderDescFragment extends SingleNetWorkBaseFragment<OrderDescBean> 
                 tv_left.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        MyOrderController.getInstance().cancelOrder(id, new OnSingleRequestListener<SingleBaseBean>() {
+                        new TipMessage(getContext(), new TipMessage.TipMessageBean("提示", "是否取消订单?", "取消", "确认")) {
                             @Override
-                            public void succes(boolean isWrite, SingleBaseBean bean) {
-                                getData();
-                                RxBus.get().post("orderManager", position);
-                            }
+                            protected void right() {
+                                super.right();
+                                MyOrderController.getInstance().cancelOrder(id, new OnSingleRequestListener<SingleBaseBean>() {
+                                    @Override
+                                    public void succes(boolean isWrite, SingleBaseBean bean) {
+                                        getData();
+                                        RxBus.get().post("orderManager", position);
+                                    }
 
-                            @Override
-                            public void error(boolean isWrite, SingleBaseBean bean, String msg) {
+                                    @Override
+                                    public void error(boolean isWrite, SingleBaseBean bean, String msg) {
 
+                                    }
+                                });
                             }
-                        });
+                        }.showAtLocation(true);
+
                     }
                 });
                 tv_right.setText("付款");
@@ -193,10 +201,10 @@ public class OrderDescFragment extends SingleNetWorkBaseFragment<OrderDescBean> 
                                 super.itemClick(p);
                                 switch (p) {
                                     case 0:
-                                        PayController.getInstance().ali(id);
+                                        PayController.getInstance().ali(id, "0");
                                         break;
                                     case 1:
-                                        MyToast.showToast("微信支付建设中");
+                                        PayController.getInstance().wechat(id, "0");
                                         break;
                                 }
                             }
@@ -217,6 +225,8 @@ public class OrderDescFragment extends SingleNetWorkBaseFragment<OrderDescBean> 
                         RxBus.get().post("addFragment", new AddFragmentBean(ChatViewFragment.getInstance(data.shopUserId)));
                     }
                 });
+
+
                 tv_left.setText("退款");
                 tv_left.setVisibility(View.VISIBLE);
                 tv_left.setOnClickListener(new View.OnClickListener() {
@@ -233,21 +243,36 @@ public class OrderDescFragment extends SingleNetWorkBaseFragment<OrderDescBean> 
                 tv_right.setVisibility(View.VISIBLE);
                 tv_right.setText("确认收货");
                 tv_left.setText("查看物流");
+
+                tv_left.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        RxBus.get().post("addFragment", new AddFragmentBean(ShowLogisticsRootFragment.getInstance(data.oexpressId, data.oexpressNo)));
+                    }
+                });
                 tv_right.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        MyOrderController.getInstance().receives(id, new OnSingleRequestListener<SingleBaseBean>() {
+                        new TipMessage(getContext(), new TipMessage.TipMessageBean("提示", "是否确认收货?", "取消", "确认")) {
                             @Override
-                            public void succes(boolean isWrite, SingleBaseBean bean) {
-                                getData();
-                                RxBus.get().post("orderManager", position);
-                            }
+                            protected void right() {
+                                super.right();
+                                MyOrderController.getInstance().receives(id, new OnSingleRequestListener<SingleBaseBean>() {
+                                    @Override
+                                    public void succes(boolean isWrite, SingleBaseBean bean) {
+                                        getData();
+                                        RxBus.get().post("orderManager", position);
+                                    }
 
-                            @Override
-                            public void error(boolean isWrite, SingleBaseBean bean, String msg) {
+                                    @Override
+                                    public void error(boolean isWrite, SingleBaseBean bean, String msg) {
 
+                                    }
+                                });
                             }
-                        });
+                        }.showAtLocation(true);
+
+
                     }
                 });
                 break;
@@ -280,6 +305,37 @@ public class OrderDescFragment extends SingleNetWorkBaseFragment<OrderDescBean> 
                     }
                 });
                 break;
+            case 17:
+            case 18:
+            case 10:
+                rl_show.setVisibility(View.VISIBLE);
+                tv_right.setVisibility(View.VISIBLE);
+                tv_right.setText("取消退款");
+                tv_right.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        new TipMessage(getContext(), new TipMessage.TipMessageBean("提示", "是否取消退款?", "取消", "确认")) {
+                            @Override
+                            protected void right() {
+                                super.right();
+                                MyOrderController.getInstance().cancelOrder(id, new OnSingleRequestListener<SingleBaseBean>() {
+                                    @Override
+                                    public void succes(boolean isWrite, SingleBaseBean bean) {
+                                        getData();
+                                        RxBus.get().post("orderManager", position);
+                                    }
+
+                                    @Override
+                                    public void error(boolean isWrite, SingleBaseBean bean, String msg) {
+
+                                    }
+                                });
+                            }
+                        }.showAtLocation(true);
+
+                    }
+                });
+                break;
             case 7:
             case 11:
             case 8:
@@ -290,43 +346,32 @@ public class OrderDescFragment extends SingleNetWorkBaseFragment<OrderDescBean> 
                 tv_right.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        MyOrderController.getInstance().deleteOrder(id, new OnSingleRequestListener<SingleBaseBean>() {
+                        new TipMessage(getContext(), new TipMessage.TipMessageBean("提示", "是否删除订单?", "取消", "确认")) {
                             @Override
-                            public void succes(boolean isWrite, SingleBaseBean bean) {
-                                RxBus.get().post("orderManager", position);
-                                RxBus.get().post("back", "back");
-                            }
+                            protected void right() {
+                                super.right();
+                                MyOrderController.getInstance().deleteOrder(id, new OnSingleRequestListener<SingleBaseBean>() {
+                                    @Override
+                                    public void succes(boolean isWrite, SingleBaseBean bean) {
+                                        RxBus.get().post("orderManager", position);
+                                        RxBus.get().post("back", "back");
+                                    }
 
-                            @Override
-                            public void error(boolean isWrite, SingleBaseBean bean, String msg) {
+                                    @Override
+                                    public void error(boolean isWrite, SingleBaseBean bean, String msg) {
 
+                                    }
+                                });
                             }
-                        });
+                        }.showAtLocation(true);
+
                     }
                 });
                 break;
-            case 10:
-                rl_show.setVisibility(View.VISIBLE);
-                tv_right.setVisibility(View.VISIBLE);
-                tv_right.setText("取消退款");
-                tv_right.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        MyOrderController.getInstance().cancelOrder(id, new OnSingleRequestListener<SingleBaseBean>() {
-                            @Override
-                            public void succes(boolean isWrite, SingleBaseBean bean) {
-                                getData();
-                                RxBus.get().post("orderManager", position);
-                            }
+        }
 
-                            @Override
-                            public void error(boolean isWrite, SingleBaseBean bean, String msg) {
-
-                            }
-                        });
-                    }
-                });
-                break;
+        if (data.orderStatus == 17 || data.orderStatus == 18 || data.orderStatus == 10 || data.orderStatus == 11) {
+            getChildFragmentManager().beginTransaction().replace(R.id.fg_back_desc, OrderBackDescFragment.getInstance(data, position)).commit();
         }
     }
 
@@ -432,7 +477,6 @@ public class OrderDescFragment extends SingleNetWorkBaseFragment<OrderDescBean> 
             orderDescRxBus.subscribe(new Action1<String>() {
                 @Override
                 public void call(String s) {
-
                     getData();
                 }
             });

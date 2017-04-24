@@ -70,10 +70,10 @@ public class ShopIndexGoodsAdapter extends BaseAdapter<ShopIndexBean.Data> {
                 case R.id.iv_img:
                     SerializableMap serializableMap = new SerializableMap();
                     Map<String, String> map = new HashMap<>();
-                    map.put("catName",list.get(layoutPosition).catName);
-                    map.put("catsId",list.get(layoutPosition).catId);
+                    map.put("catName", list.get(layoutPosition).catName);
+                    map.put("catsId", list.get(layoutPosition).catId);
                     serializableMap.setMap(map);
-                    RxBus.get().post("addFragment", new AddFragmentBean(GoodsIndexRootFragment.getInstance(serializableMap)));
+                    RxBus.get().post("addFragment", new AddFragmentBean(GoodsIndexRootFragment.getInstance(serializableMap, "")));
                     break;
             }
         }

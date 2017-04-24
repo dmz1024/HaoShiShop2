@@ -20,6 +20,7 @@ import java.util.Map;
 
 import api.ApiRequest;
 import api.UpLoadRequest;
+import base.bean.ChooseStringBean;
 import base.bean.SingleBaseBean;
 import base.bean.TipLoadingBean;
 import base.bean.UpLoadBean;
@@ -32,6 +33,7 @@ import butterknife.OnClick;
 import constant.ConstantForResult;
 import constant.PhotoIndex;
 import haoshi.com.shop.R;
+import haoshi.com.shop.bean.my.GongYIngLianBean;
 import haoshi.com.shop.bean.my.MyAreaBean;
 import haoshi.com.shop.bean.my.MyAreaListBean;
 import haoshi.com.shop.bean.my.QiYeInfoBean;
@@ -45,6 +47,7 @@ import util.GlideUtil;
 import util.MyToast;
 import util.RxBus;
 import view.DefaultTitleBarView;
+import view.pop.ChooseStringView;
 import view.pop.PopChooseArea;
 import view.pop.PopEdit;
 import view.pop.TipLoading;
@@ -89,6 +92,9 @@ public class QiYeAuthentFragment extends SingleNetWorkBaseFragment<QiYeInfoBean>
         GlideUtil.GlideErrAndOc(getContext(), data.n_img, ivs.get(2));
 
     }
+
+
+    private ArrayList<ChooseStringBean> gongyinglians;
 
 
     @OnClick({R.id.iv_yyzz, R.id.iv_sczz, R.id.iv_qita})
@@ -180,6 +186,49 @@ public class QiYeAuthentFragment extends SingleNetWorkBaseFragment<QiYeInfoBean>
             }.setMaxCount(3).showAtLocation(false);
 
 
+        } else if (position == 4) {
+            if (gongyinglians == null) {
+                new ApiRequest<GongYIngLianBean>() {
+                    @Override
+                    protected Map<String, String> getMap() {
+                        return null;
+                    }
+
+                    @Override
+                    protected String getUrl() {
+                        return ApiConstant.SHOPMULTISELECT;
+                    }
+
+                    @Override
+                    protected boolean getShowSucces() {
+                        return false;
+                    }
+
+                    @Override
+                    protected Class<GongYIngLianBean> getClx() {
+                        return GongYIngLianBean.class;
+                    }
+                }.setOnRequestListeren(new OnSingleRequestListener<GongYIngLianBean>() {
+                    @Override
+                    public void succes(boolean isWrite, GongYIngLianBean bean) {
+                        gongyinglians = new ArrayList<>();
+                        for (String s : bean.getData()
+                                ) {
+                            gongyinglians.add(new ChooseStringBean(s));
+                        }
+
+                        showHangye();
+
+                    }
+
+                    @Override
+                    public void error(boolean isWrite, GongYIngLianBean bean, String msg) {
+
+                    }
+                }).post(new TipLoadingBean());
+            }else {
+                showHangye();
+            }
         } else {
             final int finalPosition = position;
             new PopEdit(getContext(), tvs.get(finalPosition).getText().toString()) {
@@ -191,6 +240,16 @@ public class QiYeAuthentFragment extends SingleNetWorkBaseFragment<QiYeInfoBean>
             }.showAtLocation(false);
         }
 
+    }
+
+    private void showHangye() {
+        new ChooseStringView<ChooseStringBean>(getContext(), gongyinglians) {
+            @Override
+            protected void itemClick(int position) {
+                super.itemClick(position);
+                tvs.get(4).setText(gongyinglians.get(position).getString());
+            }
+        }.showAtLocation(false);
     }
 
     private String areaId;

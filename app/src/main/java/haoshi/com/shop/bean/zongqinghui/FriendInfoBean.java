@@ -16,5 +16,6 @@ public class FriendInfoBean extends BaseBean<FriendInfoBean.Data> {
         public String userSex;
         public String note;
         public String groupname;
+        public int isadd;
     }
 }

@@ -21,11 +21,14 @@ import haoshi.com.shop.constant.ApiConstant;
 import haoshi.com.shop.constant.UserInfo;
 import haoshi.com.shop.controller.SendCodeController;
 import haoshi.com.shop.fragment.index.IndexFragment;
+import haoshi.com.shop.fragment.reg.PerfectRegChooseUserInfoFragment;
 import interfaces.OnSingleRequestListener;
 import interfaces.OnTitleBarListener;
 import util.MyToast;
+import util.PhoneUtil;
 import util.RxBus;
 import view.DefaultTitleBarView;
+import view.pop.TipMessage;
 
 /**
  * Created by dengmingzhi on 2017/2/20.
@@ -89,13 +92,18 @@ public class SmSLoginFragment extends SingleNetWorkBaseFragment<LoginBean> imple
     @Override
     protected void writeData(boolean isWrite, LoginBean bean) {
         super.writeData(isWrite, bean);
-        UserInfo.token = bean.data.token;
-        UserInfo.userId = bean.data.userId;
-        UserInfo.userName = bean.data.userName;
-        UserInfo.userPhone = bean.data.userPhone;
-        RxBus.get().post("back", "back");
-        RxBus.get().post("back", "back");
-        RxBus.get().post("addFragment", new AddFragmentBean(new IndexFragment()));
+        UserInfo.saveUserInfo(bean);
+        if (TextUtils.equals("0", UserInfo.isThree)) {
+            new TipMessage(getContext(), new TipMessage.TipMessageBean("提示", "您的信息未完善，请先完善信息", "", "去完善")) {
+                @Override
+                protected void right() {
+                    super.right();
+                    RxBus.get().post("addFragment", new AddFragmentBean(new PerfectRegChooseUserInfoFragment()));
+                }
+            }.showAtLocation(true);
+        } else {
+            RxBus.get().post("clearAll", "");
+        }
     }
 
     @OnClick(R.id.bt_login)
@@ -104,8 +112,8 @@ public class SmSLoginFragment extends SingleNetWorkBaseFragment<LoginBean> imple
         code = "";
         name = et_name.getText().toString();
         code = et_code.getText().toString();
-        if (TextUtils.isEmpty(name)) {
-            MyToast.showToast("请输入账号");
+        if (!PhoneUtil.isTel(name)) {
+            MyToast.showToast("手机号格式不正确");
             return;
         }
         if (TextUtils.isEmpty(code)) {
@@ -136,8 +144,8 @@ public class SmSLoginFragment extends SingleNetWorkBaseFragment<LoginBean> imple
     void send() {
 
         name = et_name.getText().toString();
-        if (TextUtils.isEmpty(name)) {
-            MyToast.showToast("请输入账号");
+        if (!PhoneUtil.isTel(name)) {
+            MyToast.showToast("手机号格式不正确");
             return;
         }
         SendCodeController.getInstance().getupPwdCode(name, new OnSingleRequestListener<SingleBaseBean>() {

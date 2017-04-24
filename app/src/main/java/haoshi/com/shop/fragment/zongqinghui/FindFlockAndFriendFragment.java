@@ -13,10 +13,14 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import base.bean.rxbus.AddFragmentBean;
 import base.fragment.NotNetWorkBaseFragment;
 import butterknife.BindView;
+import butterknife.OnClick;
 import haoshi.com.shop.R;
 import haoshi.com.shop.bean.zongqinghui.FindFlockBean;
+import haoshi.com.shop.fragment.my.PeosonInfoFragment;
+import haoshi.com.shop.fragment.reg.PerfectRegInfoTagFragment;
 import haoshi.com.shop.view.FriendAndFlockTitleBarView;
 import util.GlideUtil;
 import util.RxBus;
@@ -69,6 +73,11 @@ public class FindFlockAndFriendFragment extends NotNetWorkBaseFragment implement
     };
 
 
+    @OnClick(R.id.rl_info)
+    void info() {
+        RxBus.get().post("addFragment", new AddFragmentBean(new PeosonInfoFragment()));
+    }
+
     @Override
     protected View getTitleBarView() {
         return new FriendAndFlockTitleBarView(getContext());
@@ -92,7 +101,7 @@ public class FindFlockAndFriendFragment extends NotNetWorkBaseFragment implement
 
     @Override
     public void right() {
-
+        RxBus.get().post("addFragment", new AddFragmentBean(ShaiXuanFragment.getInstance(vp_content.getCurrentItem())));
     }
 
 
@@ -143,6 +152,6 @@ public class FindFlockAndFriendFragment extends NotNetWorkBaseFragment implement
 
     @Override
     protected void initTitleView() {
-        ((FriendAndFlockTitleBarView) getTitleBar()).setOnTitleBarListener(this);
+        ((FriendAndFlockTitleBarView) getTitleBar()).setOnTitleBarListener(this).setRightImage(R.mipmap.wode_shaixuan);
     }
 }

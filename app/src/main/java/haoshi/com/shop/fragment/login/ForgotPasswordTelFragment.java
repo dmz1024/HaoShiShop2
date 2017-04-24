@@ -9,6 +9,7 @@ import butterknife.OnClick;
 import haoshi.com.shop.R;
 import interfaces.OnTitleBarListener;
 import util.MyToast;
+import util.PhoneUtil;
 import util.RxBus;
 import view.DefaultTitleBarView;
 
@@ -38,8 +39,8 @@ public class ForgotPasswordTelFragment extends NotNetWorkBaseFragment implements
     @OnClick(R.id.bt_next)
     void next() {
         String name=et_name.getText().toString();
-        if(name.length()!=11){
-            MyToast.showToast("请输入正确的手机号");
+        if (!PhoneUtil.isTel(name)) {
+            MyToast.showToast("手机号格式不正确");
             return;
         }
         RxBus.get().post("back","back");

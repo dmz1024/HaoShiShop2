@@ -40,7 +40,7 @@ public class CommentAdapter extends BaseAdapter<CommentsBean.Data> {
         mHolder.tv_title.setText(data.userName + "评论了您的\"" + data.goodsName + "\"");
         mHolder.tv_content.setText(data.title);
         mHolder.tv_time.setText(data.createtime);
-        mHolder.iv_img.setImageResource(data.isSee == 0 ? R.drawable.hs_shape_oval_ee9821 : R.drawable.hs_shape_oval_999);
+//        mHolder.iv_img.setImageResource(data.isSee == 0 ? R.drawable.hs_shape_oval_ee9821 : R.drawable.hs_shape_oval_999);
     }
 
     public class ViewHolder extends BaseViewHolder {
@@ -60,18 +60,18 @@ public class CommentAdapter extends BaseAdapter<CommentsBean.Data> {
 
         @Override
         protected void onClick(final int layoutPosition) {
-            DiscoverPingController.getInstance().lookPing(list.get(layoutPosition).userId, list.get(layoutPosition).goodsId, new OnSingleRequestListener<SingleBaseBean>() {
-                @Override
-                public void succes(boolean isWrite, SingleBaseBean bean) {
-                    list.get(layoutPosition).isSee = 1;
-                    notifyItemChanged(layoutPosition);
-                }
-
-                @Override
-                public void error(boolean isWrite, SingleBaseBean bean, String msg) {
-
-                }
-            });
+//            DiscoverPingController.getInstance().lookPing(list.get(layoutPosition).userId, list.get(layoutPosition).goodsId, new OnSingleRequestListener<SingleBaseBean>() {
+//                @Override
+//                public void succes(boolean isWrite, SingleBaseBean bean) {
+//                    list.get(layoutPosition).isSee = 1;
+//                    notifyItemChanged(layoutPosition);
+//                }
+//
+//                @Override
+//                public void error(boolean isWrite, SingleBaseBean bean, String msg) {
+//
+//                }
+//            });
         }
     }
 }

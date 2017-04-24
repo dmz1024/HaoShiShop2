@@ -10,9 +10,11 @@ import java.util.ArrayList;
 
 import base.adapter.BaseAdapter;
 import base.adapter.BaseViewHolder;
+import base.bean.rxbus.AddFragmentBean;
 import butterknife.BindView;
 import haoshi.com.shop.R;
 import haoshi.com.shop.bean.discover.AllDiscoverClassifyBean;
+import haoshi.com.shop.fragment.discover.SearchDiscoverFragment;
 import util.RxBus;
 
 
@@ -44,13 +46,14 @@ public class AllDiscoverClassifyItemAdapter extends BaseAdapter<AllDiscoverClass
 
         public ViewHolder(View itemView) {
             super(itemView);
-            itemView.setOnClickListener(this);
+            tv_content.setOnClickListener(this);
         }
 
         @Override
-        protected void onClick(int layoutPosition) {
-            RxBus.get().post("customChooseRxBus",new String[]{list.get(layoutPosition).catId,list.get(layoutPosition).catName});
-            RxBus.get().post("back","back");
+        protected void itemOnclick(int id, int layoutPosition) {
+            super.itemOnclick(id, layoutPosition);
+            RxBus.get().post("addFragment",new AddFragmentBean(SearchDiscoverFragment.getInstance(list.get(layoutPosition).catId,list.get(layoutPosition).catName)));
+
         }
     }
 }

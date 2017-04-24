@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -73,8 +74,10 @@ public class ChoosePhotoAdapter extends BaseAdapter<String> {
     @Override
     public int getItemCount() {
         int count = list.size();
-        if (count != max) {
-            count = count + 1;
+        if (isCanChoose) {
+            if (count != max) {
+                count = count + 1;
+            }
         }
         return count;
     }
@@ -92,6 +95,11 @@ public class ChoosePhotoAdapter extends BaseAdapter<String> {
                 iv_delete.setOnClickListener(this);
                 itemView.setOnLongClickListener(this);
             }
+
+//            FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) iv_img.getLayoutParams();
+//
+//            layoutParams.height = layoutParams.width;
+//            iv_img.setLayoutParams(layoutParams);
 
         }
 

@@ -31,7 +31,11 @@ public class MessageAdapter extends BaseAdapter<MessageBean.Data> {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
+        MessageBean.Data data = list.get(position);
+        ViewHolder viewHolder = (ViewHolder) holder;
+        viewHolder.tv_title.setText("通知");
+        viewHolder.tv_time.setText(data.createTime);
+        viewHolder.tv_content.setText(data.msgContent);
     }
 
     public class ViewHolder extends BaseViewHolder {
@@ -40,7 +44,8 @@ public class MessageAdapter extends BaseAdapter<MessageBean.Data> {
         @BindView(R.id.tv_title)
         TextView tv_title;
         @BindView(R.id.tv_content)
-        TextView tv_content; @BindView(R.id.tv_time)
+        TextView tv_content;
+        @BindView(R.id.tv_time)
         TextView tv_time;
 
         public ViewHolder(View itemView) {

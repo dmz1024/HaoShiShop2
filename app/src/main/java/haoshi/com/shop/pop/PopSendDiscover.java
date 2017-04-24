@@ -44,17 +44,10 @@ public class PopSendDiscover extends PopBaseView {
             @Override
             public void onClick(View view) {
                 dismiss();
-
             }
         });
         rv_content.setLayoutManager(new GridLayoutManager(ctx, 3));
         rv_content.setAdapter(new SendDiscoverAdapter(ctx, datas) {
-            @Override
-            protected void custom() {
-                dismiss();
-                RxBus.get().post("addFragment", new AddFragmentBean(new CustomDynamicFragment()));
-            }
-
             @Override
             protected void discover(int layoutPosition) {
                 dismiss();

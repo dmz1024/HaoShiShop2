@@ -73,7 +73,6 @@ public class GoodGroupActivityFragment extends ListNetWorkBaseFragment<GoodGroup
     @Override
     protected Map<String, String> map() {
         map.putAll(filterMap);
-        map.put("type", "2");
         return super.map();
     }
 

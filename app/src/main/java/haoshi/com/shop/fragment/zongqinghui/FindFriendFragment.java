@@ -102,4 +102,9 @@ public class FindFriendFragment extends ListNetWorkBaseFragment<FindFriendBean> 
     protected boolean getLoadMore() {
         return false;
     }
+
+    @Override
+    protected boolean isOnlyInitOne() {
+        return false;
+    }
 }

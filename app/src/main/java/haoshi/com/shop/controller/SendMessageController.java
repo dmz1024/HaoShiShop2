@@ -117,6 +117,10 @@ public class SendMessageController {
                         Integer.parseInt(content[1]) == 1 ? content[0] : "", size[0] + "," + size[1]);
     }
 
+    /**
+     * 发送文件
+     * @param content
+     */
     public void sendFile(String... content) {
         File file = new File(content[2]);
         StringBuilder exend = new StringBuilder();
@@ -134,6 +138,7 @@ public class SendMessageController {
         vb.setSign(sign);
         vb.setFid(content[0]);
         vb.setStatus(0);
+        vb.setUid(UserInfo.userId);
         vb.setFrom(2);
         vb.setIsRead(0);
         long time = System.currentTimeMillis();
@@ -168,7 +173,6 @@ public class SendMessageController {
         ChatViewsImpl.getInstance().add(vb);
         MessagesImpl.getInstance().addM(new MessageBean(content[0], time, 5, 1, 2, sign));
         RxBus.get().post("message", "");
-        SendBean s = new SendBean();
 
         ChatSendMessageController.getInstance()
                 .sendSend(sign, Integer.parseInt(content[1]) == 1 ? "" : content[0],

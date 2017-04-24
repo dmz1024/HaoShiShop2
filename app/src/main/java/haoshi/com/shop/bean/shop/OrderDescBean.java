@@ -1,5 +1,8 @@
 package haoshi.com.shop.bean.shop;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 
 import base.bean.BaseBean;
@@ -10,7 +13,7 @@ import base.bean.BaseBean;
 
 public class OrderDescBean extends BaseBean<OrderDescBean.Data> {
 
-    public static class Data {
+    public static class Data implements Parcelable {
         /**
          * orderId : 76
          * orderNo : 100001333
@@ -74,14 +77,17 @@ public class OrderDescBean extends BaseBean<OrderDescBean.Data> {
         public String orderNo;
         public String shopId;
         public String userId;
+
         public int orderStatus;
         public double goodsMoney;
         public int deliverType;
         public String deliverMoney;
         public String totalMoney;
         public String realTotalMoney;
+        public String reasonOther;
         public int payType;
         public int payFrom;
+        public int otype;
         public int isPay;
         public String areaId;
         public String areaIdPath;
@@ -94,6 +100,7 @@ public class OrderDescBean extends BaseBean<OrderDescBean.Data> {
         public String orderRemarks;
         public int orderSrc;
         public String needPay;
+        public ArrayList<String> voucherImg;
         public int isRefund;
         public int isAppraise;
         public int cancelReason;
@@ -104,8 +111,8 @@ public class OrderDescBean extends BaseBean<OrderDescBean.Data> {
         public String orderunique;
         public Object receiveTime;
         public Object deliveryTime;
-        public Object expressId;
-        public Object expressNo;
+        public String expressId;
+        public String expressNo;
         public Object tradeNo;
         public int dataFlag;
         public String createTime;
@@ -114,6 +121,7 @@ public class OrderDescBean extends BaseBean<OrderDescBean.Data> {
         public int type;
         public Object expressName;
         public String shopTel;
+        public String orfexpressName;
         public String shopName;
         public String shopQQ;
         public String shopWangWang;
@@ -123,12 +131,133 @@ public class OrderDescBean extends BaseBean<OrderDescBean.Data> {
         public Object backMoney;
         public Object accountNumber;
         public Object refundExplain;
-        public ArrayList<?> voucherImg;
         public ArrayList<LogBean> log;
         public ArrayList<MyOrderBean.Data.OrderGoodBean> goods;
         public String shopUserId;
         public String shopUserPhoto;
         public String shopUserName;
+        public String oexpressId;
+        public String oexpressNo;
+
+        protected Data(Parcel in) {
+            orderId = in.readString();
+            orderNo = in.readString();
+            shopId = in.readString();
+            userId = in.readString();
+            orderStatus = in.readInt();
+            goodsMoney = in.readDouble();
+            deliverType = in.readInt();
+            deliverMoney = in.readString();
+            totalMoney = in.readString();
+            realTotalMoney = in.readString();
+            reasonOther = in.readString();
+            payType = in.readInt();
+            payFrom = in.readInt();
+            otype = in.readInt();
+            isPay = in.readInt();
+            areaId = in.readString();
+            areaIdPath = in.readString();
+            userName = in.readString();
+            userAddress = in.readString();
+            userPhone = in.readString();
+            orderScore = in.readInt();
+            isInvoice = in.readInt();
+            invoiceClient = in.readString();
+            orderRemarks = in.readString();
+            orderSrc = in.readInt();
+            needPay = in.readString();
+            voucherImg = in.createStringArrayList();
+            isRefund = in.readInt();
+            isAppraise = in.readInt();
+            cancelReason = in.readInt();
+            rejectReason = in.readInt();
+            isClosed = in.readInt();
+            orderunique = in.readString();
+            dataFlag = in.readInt();
+            createTime = in.readString();
+            settlementId = in.readString();
+            commissionFee = in.readString();
+            type = in.readInt();
+            shopTel = in.readString();
+            orfexpressName = in.readString();
+            oexpressNo = in.readString();
+            shopName = in.readString();
+            shopQQ = in.readString();
+            shopWangWang = in.readString();
+            goods = in.createTypedArrayList(MyOrderBean.Data.OrderGoodBean.CREATOR);
+            shopUserId = in.readString();
+            shopUserPhoto = in.readString();
+            shopUserName = in.readString();
+        }
+
+        public static final Creator<Data> CREATOR = new Creator<Data>() {
+            @Override
+            public Data createFromParcel(Parcel in) {
+                return new Data(in);
+            }
+
+            @Override
+            public Data[] newArray(int size) {
+                return new Data[size];
+            }
+        };
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel parcel, int i) {
+            parcel.writeString(orderId);
+            parcel.writeString(orderNo);
+            parcel.writeString(shopId);
+            parcel.writeString(userId);
+            parcel.writeInt(orderStatus);
+            parcel.writeDouble(goodsMoney);
+            parcel.writeInt(deliverType);
+            parcel.writeString(deliverMoney);
+            parcel.writeString(totalMoney);
+            parcel.writeString(realTotalMoney);
+            parcel.writeString(reasonOther);
+            parcel.writeInt(payType);
+            parcel.writeInt(payFrom);
+            parcel.writeInt(otype);
+            parcel.writeInt(isPay);
+            parcel.writeString(areaId);
+            parcel.writeString(areaIdPath);
+            parcel.writeString(userName);
+            parcel.writeString(userAddress);
+            parcel.writeString(userPhone);
+            parcel.writeInt(orderScore);
+            parcel.writeInt(isInvoice);
+            parcel.writeString(invoiceClient);
+            parcel.writeString(orderRemarks);
+            parcel.writeInt(orderSrc);
+            parcel.writeString(needPay);
+            parcel.writeStringList(voucherImg);
+            parcel.writeInt(isRefund);
+            parcel.writeInt(isAppraise);
+            parcel.writeInt(cancelReason);
+            parcel.writeInt(rejectReason);
+            parcel.writeInt(isClosed);
+            parcel.writeString(orderunique);
+            parcel.writeInt(dataFlag);
+            parcel.writeString(createTime);
+            parcel.writeString(settlementId);
+            parcel.writeString(commissionFee);
+            parcel.writeInt(type);
+            parcel.writeString(shopTel);
+            parcel.writeString(orfexpressName);
+            parcel.writeString(oexpressNo);
+            parcel.writeString(shopName);
+            parcel.writeString(shopQQ);
+            parcel.writeString(shopWangWang);
+            parcel.writeTypedList(goods);
+            parcel.writeString(shopUserId);
+            parcel.writeString(shopUserPhoto);
+            parcel.writeString(shopUserName);
+        }
 
         public static class LogBean {
             /**

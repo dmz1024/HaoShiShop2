@@ -3,6 +3,7 @@ package base.activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -27,6 +28,7 @@ import util.WindowUtil;
  */
 
 public abstract class BaseActivity extends AppCompatActivity {
+    protected String topFragmentName;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,9 +42,10 @@ public abstract class BaseActivity extends AppCompatActivity {
             setShowBar(barView = findViewById(R.id.fg_bar));
             initChangeBarColor();
         }
-
+        clearFragmentsRxBus();
         initBackRxBus();
         initFragmentRxBus();
+        initChangeBarColor();
         initData();
     }
 
@@ -101,6 +104,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     private Observable<AddFragmentBean> addFragmentRxBus;
     private Observable<String> changeBarColorRxBus;
+    private Observable<String> clearFragmentsRxBus;
     private Observable<String> backRxBus;
     private View barView;
 
@@ -112,36 +116,60 @@ public abstract class BaseActivity extends AppCompatActivity {
 
 
     private void initChangeBarColor() {
-        changeBarColorRxBus = RxBus.get().register("changeBarColor", String.class);
-        changeBarColorRxBus.subscribe(new Action1<String>() {
-            @Override
-            public void call(String color) {
-                barView.setBackgroundColor(Color.parseColor(color));
-            }
-        });
+        if (changeBarColorRxBus == null) {
+            changeBarColorRxBus = RxBus.get().register("changeBarColor", String.class);
+            changeBarColorRxBus.subscribe(new Action1<String>() {
+                @Override
+                public void call(String color) {
+                    barView.setBackgroundColor(Color.parseColor(color));
+                }
+            });
+        }
+
     }
 
 
     private void initFragmentRxBus() {
-        addFragmentRxBus = RxBus.get().register("addFragment", AddFragmentBean.class);
-        addFragmentRxBus.subscribe(new Action1<AddFragmentBean>() {
-            @Override
-            public void call(AddFragmentBean bean) {
-                replace(bean);
-            }
-        });
+        if (addFragmentRxBus == null) {
+            addFragmentRxBus = RxBus.get().register("addFragment", AddFragmentBean.class);
+            addFragmentRxBus.subscribe(new Action1<AddFragmentBean>() {
+                @Override
+                public void call(AddFragmentBean bean) {
+                    replace(bean);
+                }
+            });
+        }
+
     }
 
     private void initBackRxBus() {
-        backRxBus = RxBus.get().register("back", String.class);
-        backRxBus.subscribe(new Action1<String>() {
-            @Override
-            public void call(String bean) {
-                Log.d("这里", "ddd");
-                getSupportFragmentManager().popBackStack();
-            }
-        });
+        if (backRxBus == null) {
+            backRxBus = RxBus.get().register("back", String.class);
+            backRxBus.subscribe(new Action1<String>() {
+                @Override
+                public void call(String bean) {
+                    getSupportFragmentManager().popBackStack();
+                }
+            });
+        }
+
     }
+
+    private void clearFragmentsRxBus() {
+        if (clearFragmentsRxBus == null) {
+            clearFragmentsRxBus = RxBus.get().register("clearAll", String.class);
+            clearFragmentsRxBus.subscribe(new Action1<String>() {
+                @Override
+                public void call(String bean) {
+                    Log.d("个数1", topFragmentName);
+                    getSupportFragmentManager().popBackStackImmediate(topFragmentName, 1);
+                    Log.d("个数", getSupportFragmentManager().getBackStackEntryCount() + "");
+                    initData();
+                }
+            });
+        }
+    }
+
 
     private void replace(AddFragmentBean bean) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -153,7 +181,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
         fragmentTransaction.add(R.id.fg_base, bean.getFragment(), bean.getBackName()).commit();
 
-        Log.d("个数", getSupportFragmentManager().getBackStackEntryCount() + "");
     }
 
 
@@ -163,6 +190,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         RxBus.get().unregister("addFragment", addFragmentRxBus);
         RxBus.get().unregister("changeBarColor", changeBarColorRxBus);
         RxBus.get().unregister("back", backRxBus);
+        RxBus.get().unregister("clearAll", clearFragmentsRxBus);
     }
 
 }

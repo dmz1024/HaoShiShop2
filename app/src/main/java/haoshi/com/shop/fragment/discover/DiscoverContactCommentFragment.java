@@ -12,6 +12,7 @@ import java.util.Map;
 
 import base.bean.SingleBaseBean;
 import base.bean.TipLoadingBean;
+import base.bean.rxbus.AddFragmentBean;
 import base.fragment.SingleNetWorkBaseFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,6 +20,7 @@ import butterknife.OnClick;
 import haoshi.com.shop.R;
 import haoshi.com.shop.constant.ApiConstant;
 import haoshi.com.shop.constant.UserInfo;
+import haoshi.com.shop.pop.PopContactDiscoverPerson;
 import interfaces.OnTitleBarListener;
 import util.GlideUtil;
 import util.MyToast;
@@ -51,6 +53,7 @@ public class DiscoverContactCommentFragment extends SingleNetWorkBaseFragment<Si
     protected void writeData(boolean isWrite, SingleBaseBean bean) {
         super.writeData(isWrite, bean);
         left();
+        new PopContactDiscoverPerson(getContext(), true, "", "", id, "").showAtLocation(true);
     }
 
     @Override

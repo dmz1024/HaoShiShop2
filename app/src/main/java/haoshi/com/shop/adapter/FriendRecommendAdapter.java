@@ -1,6 +1,7 @@
 package haoshi.com.shop.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,6 +56,8 @@ public class FriendRecommendAdapter extends BaseAdapter<FriendBean> {
         mHolder.tv_say_count.setText("近7日发言" + data.nums + "次");
         GlideUtil.GlideErrAndOc(ctx, data.userPhoto, mHolder.iv_head);
         mHolder.bt_add.setText(data.isadd == 1 ? "已添加" : "添加");
+        mHolder.bt_add.setBackgroundResource(data.isadd == 1 ? R.drawable.rectangle_fff_e2e2e2 : R.drawable.hs_shape_ee9821_radius_3);
+        mHolder.bt_add.setTextColor(Color.parseColor(data.isadd == 1 ? "#333333" : "#ffffff"));
     }
 
     public class ViewHolder extends BaseViewHolder {

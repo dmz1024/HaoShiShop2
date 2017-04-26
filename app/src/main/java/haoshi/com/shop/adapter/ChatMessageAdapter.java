@@ -58,6 +58,7 @@ public class ChatMessageAdapter extends BaseAdapter<MessageBean> {
 
 
         ChatFriendBean fUser = ChatFriendsImpl.getInstance().select(data.getId());
+
         GlideUtil.GlideErrAndOc(ctx, fUser.getLogo(), viewHolder.iv_head);
         viewHolder.tv_time.setText(TimeUtils.formatTime(data.getTime()));
         viewHolder.tv_name.setText(fUser.getName());

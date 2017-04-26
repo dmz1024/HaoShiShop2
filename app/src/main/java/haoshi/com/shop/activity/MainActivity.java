@@ -9,6 +9,7 @@ import android.view.View;
 import com.canyinghao.canphotos.CanPhotoHelper;
 import com.yanzhenjie.album.Album;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import base.GuideFragment;
@@ -31,10 +32,16 @@ import haoshi.com.shop.fragment.reg.PerfectRegChooseUserInfoFragment;
 import haoshi.com.shop.view.ChatShowView;
 import rx.Observable;
 import rx.functions.Action1;
+import top.zibin.luban.Luban;
+import top.zibin.luban.OnCompressListener;
+import util.ContextUtil;
 import util.GlideUtil;
+import util.ListUtils;
+import util.MyToast;
 import util.RxBus;
 import util.SharedPreferenUtil;
 import util.Util;
+import view.pop.TipLoading;
 import view.pop.TipMessage;
 
 public class MainActivity extends BaseActivity {
@@ -128,14 +135,51 @@ public class MainActivity extends BaseActivity {
                 Uri uri = data.getData();//得到uri，后面就是将uri转化成file的过程。
                 RxBus.get().post("chooseFileRxBus", new ChooseFileRxBus(ChooseFileIndex.INDEX, Util.getPathByUri4kitkat(this, uri)));
             } else if (requestCode == ConstantForResult.CHOOSE_PHOTO_SINGLE) {
-                RxBus.get().post("photoRxBus", new PhotoRxbus(PhotoIndex.INDEX, Album.parseResult(data).get(0)));
+                sendPhotoRxbus(ListUtils.list2Array(Album.parseResult(data)), true);
             } else if (requestCode == ConstantForResult.CHOOSE_PHOTO_LIST) {
-                RxBus.get().post("photoRxBus", new PhotoRxbus(PhotoIndex.INDEX, Album.parseResult(data)));
+                sendPhotoRxbus(ListUtils.list2Array(Album.parseResult(data)), false);
             } else if (data.hasExtra(CanPhotoHelper.PHOTO_COLLECTION)) {
-                RxBus.get().post("photoRxBus", new PhotoRxbus(PhotoIndex.INDEX, data.getStringArrayListExtra(CanPhotoHelper.PHOTO_COLLECTION)));
+                sendPhotoRxbus(data.getStringArrayListExtra(CanPhotoHelper.PHOTO_COLLECTION), false);
             }
         }
 
+    }
+
+
+    private void sendPhotoRxbus(final ArrayList<String> list, final boolean isSingle) {
+        final ArrayList<String> sends = new ArrayList<>();
+        final TipLoading tipLoading = new TipLoading(this);
+        tipLoading.showAtLocation(true);
+        for (String path : list) {
+            Luban.get(ContextUtil.getCtx()
+                    .getApplicationContext())
+                    .load(new File(path))
+                    .putGear(Luban.THIRD_GEAR).setCompressListener(new OnCompressListener() {
+                @Override
+                public void onStart() {
+
+                }
+
+                @Override
+                public void onSuccess(File file) {
+                    sends.add(file.getAbsolutePath());
+                    if (sends.size() == list.size()) {
+                        if (isSingle) {
+                            RxBus.get().post("photoRxBus", new PhotoRxbus(PhotoIndex.INDEX, sends.get(0)));
+                        } else {
+                            RxBus.get().post("photoRxBus", new PhotoRxbus(PhotoIndex.INDEX, sends));
+                        }
+                        tipLoading.dismiss();
+                    }
+                }
+
+                @Override
+                public void onError(Throwable e) {
+                    MyToast.showToast("图片选择失败");
+                    tipLoading.dismiss();
+                }
+            }).launch();
+        }
     }
 
     private Observable<ChatMessageBean> initShowChatViewRxBus;

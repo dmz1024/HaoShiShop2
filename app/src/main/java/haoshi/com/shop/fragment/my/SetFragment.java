@@ -13,6 +13,9 @@ import butterknife.OnClick;
 import haoshi.com.shop.adapter.GeneralAdapter;
 import haoshi.com.shop.bean.GeneralBean;
 import haoshi.com.shop.R;
+import haoshi.com.shop.bean.chat.ConfigInterface;
+import haoshi.com.shop.bean.chat.dao.DaoMaster;
+import haoshi.com.shop.bean.chat.impl.ChatFriendsImpl;
 import haoshi.com.shop.constant.UserInfo;
 import interfaces.OnTitleBarListener;
 import util.ImageCatchUtil;
@@ -82,11 +85,12 @@ public class SetFragment extends NotNetWorkBaseFragment implements OnTitleBarLis
 
     @OnClick(R.id.bt_exit)
     void exit() {
-        new TipMessage(getContext(), new TipMessage.TipMessageBean("提示", "是否确认退出?\n退出后将不在收到消息提醒", "取消", "退出")) {
+        new TipMessage(getContext(), new TipMessage.TipMessageBean("提示", "是否确认退出?", "取消", "退出")) {
             @Override
             protected void right() {
                 super.right();
                 UserInfo.clearUserInfo();
+                ConfigInterface.getInstance().closeConnect();
                 RxBus.get().post("clearAll", "");
             }
         }.showAtLocation(false);

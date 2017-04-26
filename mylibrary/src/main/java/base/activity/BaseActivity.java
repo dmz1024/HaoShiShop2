@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import com.mall.naiqiao.mylibrary.R;
 
 import base.bean.rxbus.AddFragmentBean;
+import me.yokeyword.fragmentation.SupportActivity;
 import rx.Observable;
 import rx.functions.Action1;
 import util.ContextUtil;
@@ -27,7 +28,7 @@ import util.WindowUtil;
  * Created by dengmingzhi on 2016/11/22.
  */
 
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends SupportActivity {
     protected String topFragmentName;
 
     @Override

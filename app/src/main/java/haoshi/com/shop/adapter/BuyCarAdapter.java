@@ -55,8 +55,12 @@ public class BuyCarAdapter extends BaseAdapter<BuyCarBean.Data> {
         BuyCarGoodAdapter mAdapter = new BuyCarGoodAdapter(ctx, list, this.list.get(position).isEdit) {
             @Override
             protected void goodsChange(boolean isChoose) {
-                BuyCarAdapter.this.list.get(position).isChoose = isChoose;
-                BuyCarAdapter.this.notifyDataSetChanged();
+                if (BuyCarAdapter.this.list.get(position).list.size() == 0) {
+                    BuyCarAdapter.this.remove(position);
+                }else {
+                    BuyCarAdapter.this.list.get(position).isChoose = isChoose;
+                    BuyCarAdapter.this.notifyDataSetChanged();
+                }
                 price();
 
             }

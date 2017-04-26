@@ -47,9 +47,9 @@
             android:layout_height="@dimen/size25"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/size7"
-            android:background="@drawable/rectangle_fff_e2e2e2"
+            android:background="@drawable/hs_shape_ee9821_radius_3"
             android:text="申请加入"
-            android:textColor="#333"
+            android:textColor="#fff"
             android:textSize="@dimen/sp13" />
 
         <View

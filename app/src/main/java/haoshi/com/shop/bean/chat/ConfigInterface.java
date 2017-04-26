@@ -64,6 +64,14 @@ public class ConfigInterface {
     }
 
 
+    public ConfigInterface closeConnect() {
+        if(mConnection!=null &&mConnection.isConnected()){
+            mConnection.disconnect();
+        }
+
+        return anInterface;
+    }
+
     /**
      * 连接服务器
      *
@@ -75,6 +83,7 @@ public class ConfigInterface {
                 mConnection = new WebSocketConnection();
             } else {
                 if (mConnection.isConnected()) {
+
                     return this;
                 }
             }

@@ -11,6 +11,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+
+import me.yokeyword.fragmentation_swipeback.SwipeBackFragment;
 import util.Util;
 import view.DefaultTitleBarView;
 
@@ -18,7 +20,7 @@ import view.DefaultTitleBarView;
  * Created by dengmingzhi on 2016/11/22.
  */
 
-public abstract class BaseFragment extends Fragment implements View.OnTouchListener {
+public abstract class BaseFragment extends SwipeBackFragment {
     private View titleBarView;
     protected FrameLayout rootView;
 
@@ -26,7 +28,6 @@ public abstract class BaseFragment extends Fragment implements View.OnTouchListe
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = new FrameLayout(getContext());
-        rootView.setOnTouchListener(this);
         rootView.setBackgroundColor(Color.parseColor(getBackColor()));
         ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         rootView.setLayoutParams(params);
@@ -36,6 +37,9 @@ public abstract class BaseFragment extends Fragment implements View.OnTouchListe
             initTitleView();
         }
         rootAddContentView(rootView);
+        if (isSwipeBack()) {
+            return attachToSwipeBack(rootView);
+        }
         return rootView;
     }
 
@@ -65,14 +69,7 @@ public abstract class BaseFragment extends Fragment implements View.OnTouchListe
         return 45;
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        rootView = null;
-    }
-
-    @Override
-    public boolean onTouch(View v, MotionEvent event) {
+    protected boolean isSwipeBack() {
         return true;
     }
 }

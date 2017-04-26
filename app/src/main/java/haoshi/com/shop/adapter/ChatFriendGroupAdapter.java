@@ -52,7 +52,7 @@ public class ChatFriendGroupAdapter extends BaseAdapter<ChatFriendGroupBean> {
 
     private void initFriend(RecyclerView rv_friend, ChatFriendGroupBean data) {
         LinearLayoutManager manager = new LinearLayoutManager(ctx);
-        ChatFriendAdapter mAdapter = new ChatFriendAdapter(ctx, ListUtils.list2Array(data.getFbs()), sendShape);
+        ChatFriendAdapter mAdapter = new ChatFriendAdapter(ctx, ListUtils.list2Array(ChatFriendsImpl.getInstance().getGroupFriens(data.getID())), sendShape);
         rv_friend.setLayoutManager(manager);
         rv_friend.setAdapter(mAdapter);
         rv_friend.setVisibility(data.isShow() ? View.VISIBLE : View.GONE);

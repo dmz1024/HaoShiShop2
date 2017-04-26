@@ -88,40 +88,45 @@ public class PerfectRegWriteInfoAdapter extends BaseAdapter<PerfectRegInfoTagBea
                 });
                 break;
             case 3:
-                ArrayList<PopChooseLike.ListSBean> listSBeen = new ArrayList<>();
-                PerfectRegInfoTagBean.Data data = list.get(position);
+               viewHolder.et_content.setOnClickListener(new View.OnClickListener() {
+                   @Override
+                   public void onClick(View view) {
+                       ArrayList<PopChooseLike.ListSBean> listSBeen = new ArrayList<>();
+                       PerfectRegInfoTagBean.Data data = list.get(position);
 
-                for (int i = 0; i < data.list.size(); i++) {
-                    PopChooseLike.ListSBean plist = new PopChooseLike.ListSBean();
+                       for (int i = 0; i < data.list.size(); i++) {
+                           PopChooseLike.ListSBean plist = new PopChooseLike.ListSBean();
 
-                    plist.lists = new ArrayList<>();
+                           plist.lists = new ArrayList<>();
 
-                    PerfectRegInfoTagBean.ChooseListBean listBean = data.list.get(i);
-                    plist.content = listBean.content;
-                    for (int j = 0; j < listBean.lists.size(); j++) {
-                        PerfectRegInfoTagBean.ChooseListBeans listBean1 = listBean.lists.get(j);
-                        PopChooseLike.ListSBean plist1 = new PopChooseLike.ListSBean();
-                        plist1.content = listBean1.content;
-                        plist1.fid = listBean1.fid;
-                        plist1.pid = listBean1.pid;
+                           PerfectRegInfoTagBean.ChooseListBean listBean = data.list.get(i);
+                           plist.content = listBean.content;
+                           for (int j = 0; j < listBean.lists.size(); j++) {
+                               PerfectRegInfoTagBean.ChooseListBeans listBean1 = listBean.lists.get(j);
+                               PopChooseLike.ListSBean plist1 = new PopChooseLike.ListSBean();
+                               plist1.content = listBean1.content;
+                               plist1.fid = listBean1.fid;
+                               plist1.pid = listBean1.pid;
 
-                        plist.lists.add(plist1);
-                    }
+                               plist.lists.add(plist1);
+                           }
 
-                    listSBeen.add(plist);
+                           listSBeen.add(plist);
 
-                }
+                       }
 
-                Log.d("list", listSBeen.size() + "");
-                new PopChooseLike(ctx, listSBeen) {
-                    @Override
-                    protected void choose(String... content) {
-                        super.choose(content);
-                        list.get(position).value = content[2];
-                        notifyDataSetChanged();
-                        list.get(position).result = "{\"fid\":\"" + content[0] + "\",\"tid\":\"" + content[1] + "\"}";
-                    }
-                }.showAtLocation(false);
+                       Log.d("list", listSBeen.size() + "");
+                       new PopChooseLike(ctx, listSBeen) {
+                           @Override
+                           protected void choose(String... content) {
+                               super.choose(content);
+                               list.get(position).value = content[2];
+                               notifyDataSetChanged();
+                               list.get(position).result = "{\"fid\":\"" + content[0] + "\",\"tid\":\"" + content[1] + "\"}";
+                           }
+                       }.showAtLocation(false);
+                   }
+               });
                 break;
         }
     }

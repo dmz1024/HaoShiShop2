@@ -70,7 +70,8 @@ public class CustomDynamicFragment extends SingleNetWorkBaseFragment<SingleBaseB
     @Override
     protected void writeData(boolean isWrite, SingleBaseBean bean) {
         super.writeData(isWrite, bean);
-        MyToast.showToast("发布成功");
+        MyToast.showToast("动态发表成功");
+        RxBus.get().post("friendDynamicNoti", "");
         RxBus.get().post("back", "back");
     }
 

@@ -36,9 +36,9 @@
             android:layout_width="@dimen/size70"
             android:layout_height="@dimen/size30"
             android:layout_gravity="center"
-            android:background="@drawable/rectangle_fff_e2e2e2"
+            android:background="@drawable/hs_shape_ee9821_radius_3"
             android:text="申请加入"
-            android:textColor="#333"
+            android:textColor="#fff"
             android:textSize="@dimen/sp13" />
     </FrameLayout>
 

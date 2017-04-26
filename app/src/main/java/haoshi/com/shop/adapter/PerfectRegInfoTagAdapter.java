@@ -56,7 +56,7 @@ public class PerfectRegInfoTagAdapter extends BaseAdapter<PerfectRegInfoTagBean.
         @Override
         protected void onClick(int layoutPosition) {
             list.get(layoutPosition).isChoose = !list.get(layoutPosition).isChoose;
-            notifyItemChanged(layoutPosition);
+            notifyDataSetChanged();
         }
     }
 

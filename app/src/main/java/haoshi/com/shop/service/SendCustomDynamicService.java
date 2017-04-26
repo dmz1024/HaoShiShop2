@@ -20,6 +20,7 @@ import base.bean.UpLoadBean;
 import haoshi.com.shop.constant.ApiConstant;
 import interfaces.OnSingleRequestListener;
 import util.MyToast;
+import util.RxBus;
 
 /**
  * Created by dengmingzhi on 2017/3/22.
@@ -46,9 +47,13 @@ public class SendCustomDynamicService extends IntentService {
         final String title = intent.getStringExtra("title");
         final String[] photo = intent.getStringExtra("photo").split("、");
         Log.d("上传图片", "开始");
+
+
         new UpLoadRequest<UpLoadBean>() {
             @Override
             protected List<Binary> getFiles() {
+
+
                 List<Binary> binaries = new ArrayList<>();
                 for (String p : photo) {
                     binaries.add(new FileBinary(new File(p)));
@@ -102,14 +107,15 @@ public class SendCustomDynamicService extends IntentService {
                 }.setOnRequestListeren(new OnSingleRequestListener<SingleBaseBean>() {
                     @Override
                     public void succes(boolean isWrite, SingleBaseBean bean) {
-                        Log.d("上传图片", "说说上传成功");
-                        MyToast.showToast("发表说说成功");
+                        Log.d("上传图片", "说说发表成功");
+                        MyToast.showToast("动态发表成功");
+                        RxBus.get().post("friendDynamicNoti", "");
                     }
 
                     @Override
                     public void error(boolean isWrite, SingleBaseBean bean, String msg) {
                         Log.d("上传图片", "说说上传失败");
-                        MyToast.showToast("发表说说失败");
+                        MyToast.showToast("动态发表失败");
                     }
                 }).post();
             }

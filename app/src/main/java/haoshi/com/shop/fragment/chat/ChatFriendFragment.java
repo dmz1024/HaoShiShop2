@@ -212,6 +212,8 @@ public class ChatFriendFragment extends ListNetWorkBaseFragment<ChatFriendGroupN
 
     }
 
+
+
     @Override
     protected int time() {
         return sendShape ? 500 : super.time();

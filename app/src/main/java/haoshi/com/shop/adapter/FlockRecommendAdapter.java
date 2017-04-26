@@ -1,6 +1,7 @@
 package haoshi.com.shop.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,6 +60,8 @@ public class FlockRecommendAdapter extends BaseAdapter<FlockBean> {
         mHolder.tv_count.setText(data.number + "人已加入");
         GlideUtil.GlideErrAndOc(ctx, data.grouplogo, mHolder.iv_head);
         mHolder.bt_add.setText(data.isadd == 1 ? "已加入该群" : "申请加入");
+        mHolder.bt_add.setBackgroundResource(data.isadd == 1 ? R.drawable.rectangle_fff_e2e2e2 : R.drawable.hs_shape_ee9821_radius_3);
+        mHolder.bt_add.setTextColor(Color.parseColor(data.isadd == 1 ? "#333333" : "#ffffff"));
     }
 
     public class ViewHolder extends BaseViewHolder {

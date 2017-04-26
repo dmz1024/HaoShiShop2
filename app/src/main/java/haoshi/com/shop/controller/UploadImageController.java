@@ -11,7 +11,10 @@ import api.UpLoadRequest;
 import base.bean.UpLoadBean;
 import haoshi.com.shop.constant.ApiConstant;
 import interfaces.OnSingleRequestListener;
+import top.zibin.luban.Luban;
+import top.zibin.luban.OnCompressListener;
 import util.ContextUtil;
+import util.MyToast;
 import view.pop.TipLoading;
 
 /**
@@ -24,7 +27,7 @@ public class UploadImageController {
     }
 
 
-    public void upload(OnSingleRequestListener<UpLoadBean> listener, final String... photo ) {
+    public void upload(OnSingleRequestListener<UpLoadBean> listener, final String... photo) {
         new UpLoadRequest<UpLoadBean>() {
             @Override
             protected List<Binary> getFiles() {
@@ -44,6 +47,6 @@ public class UploadImageController {
             protected String getUrl() {
                 return ApiConstant.USERSIMG;
             }
-        }.request(listener,new TipLoading(ContextUtil.getCtx()));
+        }.request(listener, new TipLoading(ContextUtil.getCtx()));
     }
 }

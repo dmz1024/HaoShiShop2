@@ -126,6 +126,13 @@ public class IndexFiveFragment extends SingleNetWorkBaseFragment<PeosonCenterBea
     private void initInfo() {
         GlideUtil.GlideErrAndOc(getContext(), data.userPhoto, iv_bg);
         GlideUtil.GlideErrAndOc(getContext(), data.userPhoto, iv_head);
+
+        UserInfo.logo = data.userPhoto;
+        UserInfo.userName = data.userName;
+
+        UserInfo.addUser(UserInfo.userId, data.userPhoto, data.userName);
+
+
         tv_name.setText(data.userName);
         Drawable d = null;
         if (data.userSex != 0) {
@@ -224,7 +231,7 @@ public class IndexFiveFragment extends SingleNetWorkBaseFragment<PeosonCenterBea
                 RxBus.get().post("addFragment", new AddFragmentBean(GeRenAuthentFragment.getInstance(true)));
                 break;
             case 4:
-                new TipMessage(getContext(), new TipMessage.TipMessageBean("提示", "个人认证失败\n原因："+data.wrongReason, "", "确定")){
+                new TipMessage(getContext(), new TipMessage.TipMessageBean("提示", "个人认证失败\n原因：" + data.wrongReason, "", "确定")) {
                     @Override
                     protected void right() {
                         super.right();
@@ -239,7 +246,7 @@ public class IndexFiveFragment extends SingleNetWorkBaseFragment<PeosonCenterBea
                 RxBus.get().post("addFragment", new AddFragmentBean(QiYeAuthentFragment.getInstance(true)));
                 break;
             case 7:
-                new TipMessage(getContext(), new TipMessage.TipMessageBean("提示", "商家认证失败\n原因："+data.handleDesc, "", "确定")){
+                new TipMessage(getContext(), new TipMessage.TipMessageBean("提示", "商家认证失败\n原因：" + data.handleDesc, "", "确定")) {
                     @Override
                     protected void right() {
                         super.right();
@@ -323,7 +330,7 @@ public class IndexFiveFragment extends SingleNetWorkBaseFragment<PeosonCenterBea
                         RxBus.get().post("addFragment", new AddFragmentBean(new ApplyBuildFlockFragment()));
                         break;
                     case 5:
-                        RxBus.get().post("addFragment", new AddFragmentBean(WebViewFragment.getInstance(ApiConstant.AGREE,true)));
+                        RxBus.get().post("addFragment", new AddFragmentBean(WebViewFragment.getInstance(ApiConstant.AGREE, true)));
                         break;
                     case 6:
                         new PopContactService(ctx) {

@@ -41,6 +41,7 @@ import haoshi.com.shop.constant.UserInfo;
 import haoshi.com.shop.controller.LoginController;
 import haoshi.com.shop.controller.WeChatLoginController;
 import haoshi.com.shop.fragment.index.IndexFragment;
+import haoshi.com.shop.fragment.my.PeosonInfoFragment;
 import haoshi.com.shop.fragment.reg.PerfectRegChooseUserInfoFragment;
 import haoshi.com.shop.fragment.reg.RegFragment;
 import interfaces.OnSingleRequestListener;
@@ -127,7 +128,7 @@ public class LoginFragment extends SingleNetWorkBaseFragment<LoginBean> implemen
                 @Override
                 protected void right() {
                     super.right();
-                    RxBus.get().post("addFragment", new AddFragmentBean(new PerfectRegChooseUserInfoFragment()));
+                    RxBus.get().post("addFragment", new AddFragmentBean(new PeosonInfoFragment()));
                 }
             }.showAtLocation(true);
         } else {
@@ -184,7 +185,7 @@ public class LoginFragment extends SingleNetWorkBaseFragment<LoginBean> implemen
             return;
         }
 
-        if (!PhoneUtil.zhengze(password, Pattern.compile("^((?=.*[0-9].*)(?=.*[a-z].*))[_0-9a-z]{6,10}$"))) {
+        if (!PhoneUtil.zhengze(password, Pattern.compile("^((?=.*[0-9].*)(?=.*[a-z].*))[_0-9a-z]{6,16}$"))) {
             MyToast.showToast("密码为数字和字母组合,且为6-16位");
             return;
         }
@@ -430,7 +431,6 @@ public class LoginFragment extends SingleNetWorkBaseFragment<LoginBean> implemen
         }
 
     }
-
 
 
 }

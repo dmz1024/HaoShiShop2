@@ -130,6 +130,7 @@ public interface ApiConstant {
     String UNBUNDLING = BASE + "app.php/home/Users/unbundling";
     String BINDTHIRDLOGIN = BASE + "app.php/home/Users/bindThirdLogin";
     String OUT_GROUP = BASE + "app.php/home/evn/out_group";
+    String APPBOOTPAGE = BASE + "app.php/Home/Index/appBootPage";
 
 
 }

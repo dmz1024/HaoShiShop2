@@ -19,6 +19,7 @@ import haoshi.com.shop.bean.shop.BuyCarBean;
 import haoshi.com.shop.controller.BuyCarController;
 import interfaces.OnSingleRequestListener;
 import util.GlideUtil;
+import util.MyToast;
 
 
 /**
@@ -64,21 +65,23 @@ public class BuyCarGoodAdapter extends BaseAdapter<BuyCarBean.Data.ListBean> {
         GlideUtil.GlideErrAndOc(ctx, bean.goodsImg, baseViewHolder.iv_head);
         baseViewHolder.iv_choose.setImageResource(bean.isChoose ? R.mipmap.shangcheng_piont : R.mipmap.shangcheng_piont2);
 
-        for (BuyCarBean.Data.ListBean.SpecNamesBean s : specNames) {
-            if (sb.length() > 0) {
-                sb.append("、");
-            }
-            sb.append(s.catName).append(":").append(s.itemName);
-        }
-        baseViewHolder.tv_count_attr.setText(sb.toString());
+
         if (isEdit) {
             DeleteViewHolder deleteViewHolder = (DeleteViewHolder) holder;
             deleteViewHolder.tv_zhi.setText(bean.cartNum + "");
+            baseViewHolder.tv_count_attr.setText("库存：" + bean.goodsStock);
         } else {
             InfoViewHolder infoViewHolder = (InfoViewHolder) holder;
             infoViewHolder.tv_name.setText(bean.goodsName);
-            infoViewHolder.tv_price.setText(bean.shopPrice+"");
+            infoViewHolder.tv_price.setText(bean.shopPrice + "");
             infoViewHolder.tv_count.setText("x" + bean.cartNum);
+            for (BuyCarBean.Data.ListBean.SpecNamesBean s : specNames) {
+                if (sb.length() > 0) {
+                    sb.append("、");
+                }
+                sb.append(s.catName).append(":").append(s.itemName);
+            }
+            infoViewHolder.tv_count_attr.setText(sb.toString());
         }
     }
 
@@ -132,6 +135,8 @@ public class BuyCarGoodAdapter extends BaseAdapter<BuyCarBean.Data.ListBean> {
         public DeleteViewHolder(View itemView) {
             super(itemView);
             tv_delete.setOnClickListener(this);
+            fg_add.setOnClickListener(this);
+            fg_jian.setOnClickListener(this);
         }
 
         @Override
@@ -142,6 +147,15 @@ public class BuyCarGoodAdapter extends BaseAdapter<BuyCarBean.Data.ListBean> {
                         @Override
                         public void succes(boolean isWrite, SingleBaseBean bean) {
                             remove(layoutPosition);
+                            boolean isChoose = true;
+                            exit:
+                            for (BuyCarBean.Data.ListBean data : list) {
+                                if (!data.isChoose) {
+                                    isChoose = false;
+                                    break exit;
+                                }
+                            }
+                            goodsChange(isChoose);
                         }
 
                         @Override
@@ -150,9 +164,35 @@ public class BuyCarGoodAdapter extends BaseAdapter<BuyCarBean.Data.ListBean> {
                         }
                     }, list.get(layoutPosition).cartId);
                     break;
+                case R.id.fg_add:
+                    changeZhi(layoutPosition, true);
+                    break;
+                case R.id.fg_jian:
+                    changeZhi(layoutPosition, false);
+                    break;
             }
         }
     }
+
+    private void changeZhi(int position, boolean i) {
+        BuyCarBean.Data.ListBean listBean = list.get(position);
+        if (i) {
+            if (listBean.goodsStock < listBean.cartNum + 1) {
+                return;
+            } else {
+                listBean.cartNum = listBean.cartNum + 1;
+                notifyDataSetChanged();
+            }
+        } else {
+            if (listBean.cartNum - 1 <= 0) {
+                return;
+            } else {
+                listBean.cartNum = listBean.cartNum - 1;
+                notifyDataSetChanged();
+            }
+        }
+    }
+
 
     public class InfoViewHolder extends GoodBaseViewHolder {
         @BindView(R.id.tv_name)

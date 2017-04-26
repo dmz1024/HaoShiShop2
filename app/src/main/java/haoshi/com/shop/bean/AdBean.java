@@ -8,6 +8,7 @@ import base.bean.BaseBean;
 
 public class AdBean extends BaseBean<AdBean.Data> {
     public static class Data {
-
+        public String adFile;
+        public String adURL;
     }
 }

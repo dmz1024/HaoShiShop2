@@ -46,7 +46,6 @@ public class UserInfo {
             isThree = loginInfo.get("isThree");
             Log.d("用户信息", userId + "--" + token + "--" + userName + "--" + userPhone + "---" + logo);
             addUser(userId, logo, userName);
-
         }
 
     }

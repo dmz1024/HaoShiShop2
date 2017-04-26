@@ -40,10 +40,17 @@ public class PopContactDiscoverPerson extends PopBaseView implements View.OnClic
     }
 
     private String[] content;
+    private boolean isFrom;
 
     public PopContactDiscoverPerson(Context ctx, String... content) {
         super(ctx);
         this.content = content;
+    }
+
+    public PopContactDiscoverPerson(Context ctx, boolean isFrom, String... content) {
+        super(ctx);
+        this.content = content;
+        this.isFrom = isFrom;
     }
 
     @Override
@@ -72,8 +79,14 @@ public class PopContactDiscoverPerson extends PopBaseView implements View.OnClic
                 initChooseMoney(inflateChooseMoney);
             }
 
-
         });
+        if (isFrom) {
+            TextView tv_tip = (TextView) in_safe_tipsView.findViewById(R.id.tv_tip);
+            TextView tv_tip_content = (TextView) in_safe_tipsView.findViewById(R.id.tv_tip_content);
+            tv_tip.setText("打赏");
+            tv_tip_content.setText("亲人们，犒劳一下我呗！");
+        }
+//        showMoneyType(true);
         return view;
     }
 
@@ -81,9 +94,7 @@ public class PopContactDiscoverPerson extends PopBaseView implements View.OnClic
 
     @Override
     public void onClick(View view) {
-        if (view == tv_update_money) {
-            showMoneyType(true);
-        } else if (view == tv_money_1 || view == tv_money_2 || view == tv_money_3) {
+        if (view == tv_money_1 || view == tv_money_2 || view == tv_money_3) {
             changeMoneyColor((TextView) view);
         } else if (view.getId() == R.id.iv_cancel) {
             dismiss();
@@ -94,6 +105,7 @@ public class PopContactDiscoverPerson extends PopBaseView implements View.OnClic
             showComment();
         } else if (view == tv_call_sms) {
             Util.sms(ctx, content[0], "【郝氏商城】您好，我看了您的文章:" + content[1]);
+
             showComment();
         } else if (view == tv_call_comment) {
             dismiss();
@@ -131,7 +143,7 @@ public class PopContactDiscoverPerson extends PopBaseView implements View.OnClic
                 public void error(boolean isWrite, OrderIdBean bean, String msg) {
 
                 }
-            }, content[2], tv_money.getText().toString().substring(1));
+            }, content[2], money);
         }
     }
 
@@ -192,12 +204,17 @@ public class PopContactDiscoverPerson extends PopBaseView implements View.OnClic
      * @param inflate
      */
     private void initChooseMoney(View inflate) {
-        tv_update_money = (TextView) inflate.findViewById(R.id.tv_update_money);
-        tv_money = (TextView) inflate.findViewById(R.id.tv_money);
+
         tv_contact = (TextView) inflate.findViewById(R.id.tv_contact);
         ll_choose_money = (LinearLayout) inflate.findViewById(R.id.ll_choose_money);
-        tv_update_money.setOnClickListener(this);
-        tv_contact.setOnClickListener(this);
+//        tv_update_money.setOnClickListener(this);
+        if (isFrom) {
+            tv_contact.setVisibility(View.GONE);
+        } else {
+            tv_contact.setOnClickListener(this);
+        }
+
+
         tv_money_1 = (TextView) inflate.findViewById(R.id.tv_money_1);
         tv_money_2 = (TextView) inflate.findViewById(R.id.tv_money_2);
         tv_money_3 = (TextView) inflate.findViewById(R.id.tv_money_3);
@@ -240,7 +257,12 @@ public class PopContactDiscoverPerson extends PopBaseView implements View.OnClic
                 @Override
                 public void call(Integer s) {
                     if (s == 60000) {
-                        initPhone();
+                        if (isFrom) {
+                            dismiss();
+                        } else {
+                            initPhone();
+                        }
+
                     }
                 }
             });

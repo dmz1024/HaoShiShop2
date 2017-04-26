@@ -122,7 +122,7 @@ public class RegFragment extends SingleNetWorkBaseFragment<LoginBean> implements
             return;
         }
 
-        if (!PhoneUtil.zhengze(password, Pattern.compile("^((?=.*[0-9].*)(?=.*[a-z].*))[_0-9a-z]{6,10}$"))) {
+        if (!PhoneUtil.zhengze(password, Pattern.compile("^((?=.*[0-9].*)(?=.*[a-z].*))[_0-9a-z]{6,16}$"))) {
             MyToast.showToast("密码为数字和字母组合,且为6-16位");
             return;
         }

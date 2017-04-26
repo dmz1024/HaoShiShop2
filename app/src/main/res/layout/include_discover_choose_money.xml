@@ -13,23 +13,9 @@
         android:paddingLeft="@dimen/size10"
         android:paddingRight="@dimen/size10"
         android:paddingTop="@dimen/size60">
-        <TextView
-            android:id="@+id/tv_money"
-            android:text="￥0.99"
-            android:textSize="@dimen/sp24"
-            android:layout_gravity="center_horizontal"
-            android:textColor="#e83029"
-            style="@style/TextSize15Color333" />
-        <TextView
-            android:id="@+id/tv_update_money"
-            android:text="修改金额"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/size15"
-            android:textColor="#838383"
-            style="@style/TextSize12Color333" />
+
         <LinearLayout
             android:id="@+id/ll_choose_money"
-            android:visibility="gone"
             android:paddingLeft="@dimen/size10"
             android:paddingRight="@dimen/size10"
             android:layout_width="match_parent"

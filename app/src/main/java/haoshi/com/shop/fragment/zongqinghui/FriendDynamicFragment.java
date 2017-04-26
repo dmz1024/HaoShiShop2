@@ -41,6 +41,7 @@ public class FriendDynamicFragment extends ListNetWorkBaseFragment<FriendDynamic
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initRefreshRxBus();
+        friendDynamicNoti();
     }
 
     @Override
@@ -84,6 +85,21 @@ public class FriendDynamicFragment extends ListNetWorkBaseFragment<FriendDynamic
         return "#f6f6f6";
     }
 
+    private Observable<String> friendDynamicNoti;
+
+    private void friendDynamicNoti() {
+        if (friendDynamicNoti == null) {
+            friendDynamicNoti = RxBus.get().register("friendDynamicNoti", String.class);
+            friendDynamicNoti.subscribe(new Action1<String>() {
+                @Override
+                public void call(String s) {
+                    getData();
+                }
+            });
+        }
+
+    }
+
     private Observable<String> friendDynamicFragment;
 
     private void initRefreshRxBus() {
@@ -104,6 +120,7 @@ public class FriendDynamicFragment extends ListNetWorkBaseFragment<FriendDynamic
     @Override
     public void onDestroy() {
         super.onDestroy();
-
+        RxBus.get().unregister("friendDynamicNoti",friendDynamicNoti);
+        RxBus.get().unregister("FriendDynamicFragment",friendDynamicFragment);
     }
 }

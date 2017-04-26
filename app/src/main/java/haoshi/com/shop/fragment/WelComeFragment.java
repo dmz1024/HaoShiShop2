@@ -1,5 +1,6 @@
 package haoshi.com.shop.fragment;
 
+import android.os.CountDownTimer;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -19,6 +20,7 @@ import butterknife.OnClick;
 import haoshi.com.shop.CeshiUrl;
 import haoshi.com.shop.R;
 import haoshi.com.shop.bean.AdBean;
+import haoshi.com.shop.constant.ApiConstant;
 import haoshi.com.shop.constant.UserInfo;
 import haoshi.com.shop.fragment.index.IndexFragment;
 import haoshi.com.shop.fragment.login.LoginFragment;
@@ -39,27 +41,31 @@ public class WelComeFragment extends SingleNetWorkBaseFragment<AdBean> {
     Color2Text tv_next;
     @BindView(R.id.iv_img)
     ImageView iv_img;
-    private int time = 3;
-    private int adTime = 5;
-    private boolean isHaveAd;
-    private ChangeRunnable changeRunnable = new ChangeRunnable();
-
-    private class ChangeRunnable implements Runnable {
+    private CountDownTimer adTimer = new CountDownTimer(5 * 1000, 1000) {
+        @Override
+        public void onTick(long l) {
+            tv_next.setVisibility(View.VISIBLE);
+            tv_next.setChange("跳过\n", (l / 1000) + "s");
+        }
 
         @Override
-        public void run() {
-            int i = isHaveAd ? (adTime--) : (time--);
-            if (i <= 0) {
-                next();
-            } else {
-                if (isHaveAd) {
-                    tv_next.setVisibility(View.VISIBLE);
-                    tv_next.setChange("跳过\n", i + "s");
-                }
-                view_root.postDelayed(changeRunnable, 1000);
-            }
+        public void onFinish() {
+            next();
         }
-    }
+    };
+
+    private CountDownTimer noAdTimer = new CountDownTimer(3 * 1000, 1000) {
+        @Override
+        public void onTick(long l) {
+
+        }
+
+        @Override
+        public void onFinish() {
+            next();
+        }
+    };
+
 
     @Override
     protected Class<AdBean> getTClass() {
@@ -69,11 +75,11 @@ public class WelComeFragment extends SingleNetWorkBaseFragment<AdBean> {
     @Override
     protected void writeData(boolean isWrite, AdBean bean) {
         super.writeData(isWrite, bean);
-        isHaveAd = true;
-        view_root.removeCallbacks(changeRunnable);
-        view_root.postDelayed(changeRunnable, 1000);
-        Glide.with(getContext()).load("http://mall.east-profit.com/upload/brands/2017-04/58f5f4f05a6d9.jpg").into(iv_bg);
+        Glide.with(getContext()).load(bean.data.adFile).into(iv_bg);
+        noAdTimer.cancel();
+        adTimer.start();
     }
+
 
     @Override
     protected void manageError(boolean isWrite, AdBean user, String msg) {
@@ -89,13 +95,7 @@ public class WelComeFragment extends SingleNetWorkBaseFragment<AdBean> {
 
     @Override
     protected String url() {
-        return CeshiUrl.TEST;
-    }
-
-    @Override
-    protected Map<String, String> map() {
-        map.put("act", "single");
-        return super.map();
+        return ApiConstant.APPBOOTPAGE;
     }
 
 
@@ -103,17 +103,17 @@ public class WelComeFragment extends SingleNetWorkBaseFragment<AdBean> {
     protected View getHaveDataView() {
         View view = View.inflate(getContext(), R.layout.fragment_welcome, null);
         ButterKnife.bind(this, view);
-        view_root.postDelayed(changeRunnable, 1000);
+        noAdTimer.start();
         return view;
     }
 
 
     @OnClick(R.id.tv_next)
     void next() {
+        adTimer.cancel();
+        noAdTimer.cancel();
         new SharedPreferenUtil(getContext(), "ad_time").setData("time", System.currentTimeMillis());
         RxBus.get().post("clearAll", "");
-        view_root.removeCallbacks(changeRunnable);
-        onDestroy();
     }
 
     @Override

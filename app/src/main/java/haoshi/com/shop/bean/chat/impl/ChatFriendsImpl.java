@@ -44,6 +44,11 @@ public class ChatFriendsImpl extends ChatBaseBean<ChatFriendBean, ChatFriendBean
         }
     }
 
+
+    public List<ChatFriendBean> getGroupFriens(String gid) {
+       return getDao().queryBuilder().where(ChatFriendBeanDao.Properties.Gid.eq(gid)).build().list();
+    }
+
     public ChatFriendsImpl(String dbName) {
         super(dbName);
         setDao(getDaoSession().getChatFriendBeanDao());
@@ -52,6 +57,7 @@ public class ChatFriendsImpl extends ChatBaseBean<ChatFriendBean, ChatFriendBean
     public void delete(String fid) {
         getDao().queryBuilder().where(ChatFriendBeanDao.Properties.Fid.eq(fid)).buildDelete().executeDeleteWithoutDetachingEntities();
     }
+
 
     private int type;
 

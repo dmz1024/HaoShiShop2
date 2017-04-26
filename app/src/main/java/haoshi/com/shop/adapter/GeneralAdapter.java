@@ -136,7 +136,7 @@ public class GeneralAdapter extends BaseAdapter<GeneralBean> {
             case 9:
                 MessageSetViewHolder mHolderMessageSet = ((MessageSetViewHolder) holder);
                 mHolderMessageSet.tv_title.setText(data.title);
-                mHolderMessageSet.tv_title.setCompoundDrawables(null, null, DrawableUtil.setBounds(ctx.getResources().getDrawable(list.get(position).num == 1 ? R.mipmap.wode_kaiguan : R.mipmap.wode_kaiguan_you)), null);
+                mHolderMessageSet.tv_title.setCompoundDrawables(null, null, DrawableUtil.setBounds(ctx.getResources().getDrawable(list.get(position).num == 0 ? R.mipmap.wode_kaiguan : R.mipmap.wode_kaiguan_you)), null);
                 break;
             case 10:
                 PerfectRegChooseUserInfoViewHolder regUserInfoViewHolder = (PerfectRegChooseUserInfoViewHolder) holder;

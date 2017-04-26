@@ -56,7 +56,8 @@ public class LookBigPicActivity extends AppCompatActivity {
 
         @Override
         public View instantiateItem(final ViewGroup container, final int position) {
-            PhotoView photoView = new PhotoView(LookBigPicActivity.this);
+            View view=View.inflate(LookBigPicActivity.this,R.layout.view_look_big_pic,null);
+            PhotoView photoView = (PhotoView) view.findViewById(R.id.iv_img);
 
             Glide.with(LookBigPicActivity.this).load(pics.get(position).getBig_pic()).into(photoView);
             photoView.setOnViewTapListener(new PhotoViewAttacher.OnViewTapListener() {
@@ -66,9 +67,9 @@ public class LookBigPicActivity extends AppCompatActivity {
                 }
             });
 
-            container.addView(photoView);
+            container.addView(view);
 
-            return photoView;
+            return view;
         }
 
         @Override

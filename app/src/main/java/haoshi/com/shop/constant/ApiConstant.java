@@ -6,7 +6,7 @@ package haoshi.com.shop.constant;
 
 public interface ApiConstant {
     String CHAT = "ws://mall.east-profit.com:7272";
-    String BASE = "http://mall.east-profit.com/";
+    String BASE = "http://haoshishop.com/";
     String SHOP_INDEX = BASE + "app.php/Home/Index/index";//商城首页
     String GOOD_DESC = BASE + "app.php/Home/goods/goodsinfo";//商品详情
     String MERCHANT_SIFT = BASE + "app.php/Home/Shops/shopStreet";//商家精选
@@ -127,6 +127,9 @@ public interface ApiConstant {
     String AGREE = BASE + "app.php/Home/Users/agree";
     String VIEWLOGISTICS = BASE + "app.php/home/Express/viewLogistics";
     String SEARCH_LIST = BASE + "app.php/home/evn/search_list";
+    String UNBUNDLING = BASE + "app.php/home/Users/unbundling";
+    String BINDTHIRDLOGIN = BASE + "app.php/home/Users/bindThirdLogin";
+    String OUT_GROUP = BASE + "app.php/home/evn/out_group";
 
 
 }

@@ -27,6 +27,9 @@ public class IndexOneFragment extends NotNetWorkBaseFragment implements OnTitleB
     }
 
 
+
+
+
     @Override
     protected int getRId() {
         return R.layout.fragment_one;

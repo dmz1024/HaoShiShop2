@@ -111,11 +111,7 @@ public class WelComeFragment extends SingleNetWorkBaseFragment<AdBean> {
     @OnClick(R.id.tv_next)
     void next() {
         new SharedPreferenUtil(getContext(), "ad_time").setData("time", System.currentTimeMillis());
-        RxBus.get().post("back", "back");
-        AddFragmentBean addFragmentBean = new AddFragmentBean(TextUtils.isEmpty(UserInfo.userId) ? new LoginFragment() : new IndexFragment());
-        addFragmentBean.setAddBack(true);
-        addFragmentBean.setHaveAnima(true);
-        RxBus.get().post("addFragment", addFragmentBean);
+        RxBus.get().post("clearAll", "");
         view_root.removeCallbacks(changeRunnable);
         onDestroy();
     }

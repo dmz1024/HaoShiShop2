@@ -3,6 +3,7 @@ package haoshi.com.shop.adapter;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -23,6 +24,7 @@ import haoshi.com.shop.bean.my.MyAreaListBean;
 import haoshi.com.shop.bean.my.PersonInfoBean;
 import haoshi.com.shop.constant.ApiConstant;
 import haoshi.com.shop.constant.UserInfo;
+import haoshi.com.shop.pop.PopChooseLike;
 import interfaces.OnSingleRequestListener;
 import util.RxBus;
 import view.pop.ChooseStringView;
@@ -133,6 +135,42 @@ public class PersonInfoAdapter extends BaseAdapter<PersonInfoBean.Data> {
                             list.get(layoutPosition).value = list.get(layoutPosition).list.get(p).content;
                             notifyDataSetChanged();
                             editFriend(list.get(layoutPosition).name, "tags", "[{\"fid\":\"" + list.get(layoutPosition).list.get(p).fid + "\",\"tid\":\"" + list.get(layoutPosition).list.get(p).tid + "\"}]");
+                        }
+                    }.showAtLocation(false);
+                    break;
+                case 3:
+                    ArrayList<PopChooseLike.ListSBean> listSBeen = new ArrayList<>();
+                    PersonInfoBean.Data data = list.get(layoutPosition);
+
+                    for (int i = 0; i < data.list.size(); i++) {
+                        PopChooseLike.ListSBean plist = new PopChooseLike.ListSBean();
+
+                        plist.lists = new ArrayList<>();
+
+                        PersonInfoBean.ListBean listBean = data.list.get(i);
+                        plist.content = listBean.content;
+                        for (int j = 0; j < listBean.lists.size(); j++) {
+                            PersonInfoBean.ListBeans listBean1 = listBean.lists.get(j);
+                            PopChooseLike.ListSBean plist1 = new PopChooseLike.ListSBean();
+                            plist1.content = listBean1.content;
+                            plist1.fid = listBean1.fid;
+                            plist1.pid = listBean1.pid;
+
+                            plist.lists.add(plist1);
+                        }
+
+                        listSBeen.add(plist);
+
+                    }
+
+                    Log.d("list", listSBeen.size() + "");
+                    new PopChooseLike(ctx, listSBeen) {
+                        @Override
+                        protected void choose(String... content) {
+                            super.choose(content);
+                            list.get(layoutPosition).value = content[2];
+                            notifyDataSetChanged();
+                            editFriend(list.get(layoutPosition).name, "tags", "[{\"fid\":\"" + content[0] + "\",\"tid\":\"" + content[1] + "\"}]");
                         }
                     }.showAtLocation(false);
                     break;

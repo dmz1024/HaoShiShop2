@@ -40,9 +40,17 @@ import view.pop.TipMessage;
 public class MainActivity extends BaseActivity {
     private ChatShowView chat_view;
     public static boolean ISSHOW = true;
+    private String type;
+    private String id;
 
     @Override
     protected void initData() {
+
+        Log.d("initData", getIntent().getStringExtra("type") + "--" + getIntent().getStringExtra("id"));
+
+        type = getIntent().getStringExtra("type");
+        id = getIntent().getStringExtra("id");
+
         GlideUtil.setErrImage(R.mipmap.image_loading);
         GlideUtil.setLoadImage(R.mipmap.image_loading);
         UserInfo.getUserInfo();
@@ -78,6 +86,11 @@ public class MainActivity extends BaseActivity {
                         }.showAtLocation(true);
                     }
                 } else {
+                    if (!TextUtils.isEmpty(type)) {
+                        new SharedPreferenUtil(this, "from_no").setData(new String[]{"type", type, "id", id});
+                        type = "";
+                        id = "";
+                    }
                     topFragmentName = IndexFragment.class.getName();
                     addFragmentBean = new AddFragmentBean(new IndexFragment());
                 }
@@ -165,4 +178,5 @@ public class MainActivity extends BaseActivity {
         super.onDestroy();
         RxBus.get().unregister("initShowChatViewRxBus", initShowChatViewRxBus);
     }
+
 }

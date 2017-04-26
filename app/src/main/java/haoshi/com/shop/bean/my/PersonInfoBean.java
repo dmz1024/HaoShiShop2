@@ -34,12 +34,22 @@ public class PersonInfoBean extends ListBaseBean<ArrayList<PersonInfoBean.Data>>
         public String content;
         public String fid;
         public String tid;
+        public ArrayList<ListBeans> lists;
 
         @Override
         public String getString() {
             return content;
         }
     }
+    public static class ListBeans implements OnStringInterface {
+        public String content;
+        public String fid;
+        public String pid;
 
+        @Override
+        public String getString() {
+            return content;
+        }
+    }
 
 }

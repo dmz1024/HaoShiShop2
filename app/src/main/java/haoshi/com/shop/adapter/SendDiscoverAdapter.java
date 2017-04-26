@@ -34,10 +34,15 @@ public class SendDiscoverAdapter extends BaseAdapter<AllDiscoverClassifyBean.Dat
     }
 
     @Override
+    public int getItemCount() {
+        return list.size() - 1;
+    }
+
+    @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ViewHolder viewHolder = (ViewHolder) holder;
-        AllDiscoverClassifyBean.Data data = list.get(position);
-        GlideUtil.GlideErrAndOc(ctx,data.catsImg,viewHolder.iv_icon);
+        AllDiscoverClassifyBean.Data data = list.get(position + 1);
+        GlideUtil.GlideErrAndOc(ctx, data.catsImg, viewHolder.iv_icon);
         viewHolder.tv_title.setText(data.catName);
     }
 

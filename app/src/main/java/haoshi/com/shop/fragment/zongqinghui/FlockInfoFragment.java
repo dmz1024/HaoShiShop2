@@ -9,20 +9,30 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.HashMap;
 import java.util.Map;
 
+import api.ApiRequest;
+import base.bean.SingleBaseBean;
+import base.bean.TipLoadingBean;
 import base.fragment.SingleNetWorkBaseFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import haoshi.com.shop.R;
 import haoshi.com.shop.adapter.FlockInfoUserAdapter;
+import haoshi.com.shop.bean.chat.MessageBean;
+import haoshi.com.shop.bean.chat.impl.ChatFriendsImpl;
+import haoshi.com.shop.bean.chat.impl.MessagesImpl;
 import haoshi.com.shop.bean.zongqinghui.FlockInfoBean;
 import haoshi.com.shop.constant.ApiConstant;
 import haoshi.com.shop.constant.UserInfo;
+import interfaces.OnSingleRequestListener;
 import interfaces.OnTitleBarListener;
 import util.GlideUtil;
 import util.RxBus;
 import view.DefaultTitleBarView;
+import view.pop.TipMessage;
 
 /**
  * Created by dengmingzhi on 2017/3/31.
@@ -71,7 +81,7 @@ public class FlockInfoFragment extends SingleNetWorkBaseFragment<FlockInfoBean> 
         ((DefaultTitleBarView) getTitleBar()).setTitleContent(bean.getData().groupname);
         tv_name.setText(bean.getData().groupname);
         tv_content.setText("近7日发言" + bean.getData().nums + "次");
-        tv_desc.setText(TextUtils.isEmpty(bean.getData().intro)?"暂无群介绍":bean.getData().intro);
+        tv_desc.setText(TextUtils.isEmpty(bean.getData().intro) ? "暂无群介绍" : bean.getData().intro);
         tv_count.setText("群成员(" + bean.getData().users.size() + ")");
         rv_content.setLayoutManager(new GridLayoutManager(getContext(), 8) {
             @Override
@@ -93,6 +103,62 @@ public class FlockInfoFragment extends SingleNetWorkBaseFragment<FlockInfoBean> 
         map.put("uid", UserInfo.userId);
         map.put("token", UserInfo.token);
         return super.map();
+    }
+
+
+    @OnClick(R.id.bt_exit)
+    void exit() {
+        new TipMessage(getContext(), new TipMessage.TipMessageBean("提示", "是否确定退出群组?", "取消", "退出")) {
+            @Override
+            protected void right() {
+                super.right();
+                new ApiRequest<SingleBaseBean>() {
+                    @Override
+                    protected Map<String, String> getMap() {
+                        Map<String, String> map = new HashMap<>();
+                        map.put("uid", UserInfo.userId);
+                        map.put("token", UserInfo.token);
+                        map.put("groupid", id);
+                        return map;
+                    }
+
+                    @Override
+                    protected String getUrl() {
+                        return ApiConstant.OUT_GROUP;
+                    }
+
+                    @Override
+                    protected boolean getShowSucces() {
+                        return false;
+                    }
+
+                    @Override
+                    protected Class<SingleBaseBean> getClx() {
+                        return SingleBaseBean.class;
+                    }
+                }.setOnRequestListeren(new OnSingleRequestListener<SingleBaseBean>() {
+                    @Override
+                    public void succes(boolean isWrite, SingleBaseBean bean) {
+                        ChatFriendsImpl.getInstance().delete(id);
+                        MessageBean select = MessagesImpl.getInstance().select(id);
+                        if (select != null) {
+                            MessagesImpl.getInstance().delete(select);
+                            RxBus.get().post("message", "");
+                        }
+                        RxBus.get().post("initNotiFlockRxBus", "");
+                        RxBus.get().post("back", "back");
+                        RxBus.get().post("back", "back");
+                    }
+
+                    @Override
+                    public void error(boolean isWrite, SingleBaseBean bean, String msg) {
+
+                    }
+                }).post(new TipLoadingBean());
+            }
+        }.showAtLocation(true);
+
+
     }
 
 

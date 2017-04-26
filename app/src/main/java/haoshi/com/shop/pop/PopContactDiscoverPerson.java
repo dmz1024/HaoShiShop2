@@ -77,6 +77,8 @@ public class PopContactDiscoverPerson extends PopBaseView implements View.OnClic
         return view;
     }
 
+    private String money = "0.99";
+
     @Override
     public void onClick(View view) {
         if (view == tv_update_money) {
@@ -110,7 +112,7 @@ public class PopContactDiscoverPerson extends PopBaseView implements View.OnClic
                             super.itemClick(position);
                             switch (position) {
                                 case 0:
-                                    PayController.getInstance().ali(bean.data.orderId,"1");
+                                    PayController.getInstance().ali(bean.data.orderId, "1");
                                     break;
                                 case 1:
                                     MyToast.showToast("微信支付正在建设中。。。", 5000);
@@ -223,8 +225,9 @@ public class PopContactDiscoverPerson extends PopBaseView implements View.OnClic
         tv_money_3.setTextColor(Color.parseColor("#666666"));
         tv.setTextColor(Color.parseColor("#ee9821"));
         tv.setBackgroundResource(R.drawable.rectangle_00000000_ee9821);
-        showMoneyType(false);
-        tv_money.setText("￥" + tv.getText().toString());
+//        showMoneyType(false);
+//        tv_money.setText("￥" + tv.getText().toString());
+        money = tv.getText().toString();
     }
 
     private Observable<Integer> payRxBus;

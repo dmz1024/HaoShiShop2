@@ -67,6 +67,10 @@ public class IndexThreeFragment extends SingleNetWorkBaseFragment<AllDiscoverCla
     protected void writeData(boolean isWrite, final AllDiscoverClassifyBean bean) {
         super.writeData(isWrite, bean);
         this.bean = bean;
+        AllDiscoverClassifyBean.Data c = new AllDiscoverClassifyBean.Data();
+        c.catName = "推荐";
+        c.catId = "";
+        bean.getData().set(0, c);
         final ArrayList<Fragment> fragments = new ArrayList<>();
         for (int i = 0; i < bean.data.size(); i++) {
             fragments.add(DiscoverFragment.getInstance(bean.data.get(i).catId, i == 0));

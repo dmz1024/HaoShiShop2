@@ -39,6 +39,18 @@ public class PerfectRegInfoTagBean extends ListBaseBean<ArrayList<PerfectRegInfo
         public String content;
         public String fid;
         public String tid;
+        public ArrayList<ChooseListBeans> lists;
+
+        @Override
+        public String getString() {
+            return content;
+        }
+    }
+
+    public static class ChooseListBeans implements OnStringInterface {
+        public String content;
+        public String fid;
+        public String pid;
 
         @Override
         public String getString() {

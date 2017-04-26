@@ -1,11 +1,26 @@
 package haoshi.com.shop.fragment.my;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 
+import com.tencent.connect.common.Constants;
+import com.tencent.mm.sdk.modelmsg.SendAuth;
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
+import com.tencent.tauth.IUiListener;
+import com.tencent.tauth.Tencent;
+import com.tencent.tauth.UiError;
 import com.yanzhenjie.album.Album;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,12 +40,16 @@ import butterknife.OnClick;
 import haoshi.com.shop.adapter.GeneralAdapter;
 import haoshi.com.shop.bean.GeneralBean;
 import haoshi.com.shop.R;
+import haoshi.com.shop.bean.login.LoginBean;
 import haoshi.com.shop.bean.my.PersonSetBean;
 import haoshi.com.shop.constant.ApiConstant;
 import haoshi.com.shop.constant.UserInfo;
+import haoshi.com.shop.controller.LoginController;
 import haoshi.com.shop.controller.UploadImageController;
+import haoshi.com.shop.controller.WeChatLoginController;
 import haoshi.com.shop.fragment.login.ForgotPasswordFragment;
 import haoshi.com.shop.fragment.login.ForgotPasswordTelFragment;
+import haoshi.com.shop.fragment.login.LoginFragment;
 import haoshi.com.shop.pop.PopRenZTip;
 import constant.ConstantForResult;
 import constant.PhotoIndex;
@@ -38,6 +57,7 @@ import interfaces.OnSingleRequestListener;
 import interfaces.OnTitleBarListener;
 import rx.Observable;
 import rx.functions.Action1;
+import util.MyToast;
 import util.RxBus;
 import view.DefaultTitleBarView;
 import view.pop.PopEdit;
@@ -171,15 +191,16 @@ public class PeosonSetFragment extends SingleNetWorkBaseFragment<PersonSetBean> 
 
 
     private PersonSetBean bean;
-
+    private ArrayList<GeneralBean> datas;
     @Override
-    protected void writeData(boolean isWrite, PersonSetBean bean) {
+    protected void writeData(boolean isWrite, final PersonSetBean bean) {
         super.writeData(isWrite, bean);
         this.bean = bean;
         initAgain();
 
-        checkContent = getCheckInfo(checkStatus=getStatus(bean.data.isTrue, bean.data.shops, bean.data.person));
-        final ArrayList<GeneralBean> datas = new ArrayList<>();
+        checkContent = getCheckInfo(checkStatus = getStatus(bean.data.isTrue, bean.data.shops, bean.data.person));
+
+        datas = new ArrayList<>();
         datas.add(new GeneralBean("个人资料", 8));
         datas.add(new GeneralBean("头像", null, bean.data.userPhoto, 7));
         datas.add(new GeneralBean("昵称", null, bean.data.userName, 6));
@@ -195,7 +216,7 @@ public class PeosonSetFragment extends SingleNetWorkBaseFragment<PersonSetBean> 
 
         mAdapter = new GeneralAdapter(getContext(), datas) {
             @Override
-            protected void chooseItem(int position) {
+            protected void chooseItem(final int position) {
                 if (datas.get(position).type == 6 || datas.get(position).type == 7) {
                     switch (position) {
                         case 1:
@@ -223,6 +244,44 @@ public class PeosonSetFragment extends SingleNetWorkBaseFragment<PersonSetBean> 
                             break;
                         case 7:
                             RxBus.get().post("addFragment", new AddFragmentBean(ForgotPasswordFragment.getInstance(UserInfo.userPhone)));
+                            break;
+                        case 9:
+                            if (bean.data.wx != 0) {
+                                WeChatLoginController.getInstance().relieveBind("wx", new OnSingleRequestListener<SingleBaseBean>() {
+                                    @Override
+                                    public void succes(boolean isWrite, SingleBaseBean b) {
+                                        list.get(position).content="未绑定";
+                                        bean.data.wx=0;
+                                        notifyDataSetChanged();
+                                    }
+
+                                    @Override
+                                    public void error(boolean isWrite, SingleBaseBean b, String msg) {
+
+                                    }
+                                });
+                            } else {
+                                wechat();
+                            }
+                            break;
+                        case 10:
+                            if (bean.data.qq != 0) {
+                                WeChatLoginController.getInstance().relieveBind("qq", new OnSingleRequestListener<SingleBaseBean>() {
+                                    @Override
+                                    public void succes(boolean isWrite, SingleBaseBean b) {
+                                        list.get(position).content="未绑定";
+                                        bean.data.qq=0;
+                                        notifyDataSetChanged();
+                                    }
+
+                                    @Override
+                                    public void error(boolean isWrite, SingleBaseBean b, String msg) {
+
+                                    }
+                                });
+                            } else {
+                                qq();
+                            }
                             break;
 
 
@@ -333,23 +392,6 @@ public class PeosonSetFragment extends SingleNetWorkBaseFragment<PersonSetBean> 
                 @Override
                 public void call(String s) {
                     getData();
-//                    switch (s) {
-//                        case "qiye":
-//                            checkStatus = 1;
-//                            checkContent = "企业认证";//企业已认证
-//                            mAdapter.notifyDataSetChanged();
-//                            break;
-//                        case "geren":
-//                            checkStatus = 2;
-//                            checkContent = "个人认证";//已完成个人认证
-//                            mAdapter.notifyDataSetChanged();
-//                            break;
-//                        case "wrz":
-//                            checkStatus = 3;
-//                            checkContent = "未认证";
-//                            mAdapter.notifyDataSetChanged();
-//                            break;
-//                    }
                 }
             });
         }
@@ -369,6 +411,11 @@ public class PeosonSetFragment extends SingleNetWorkBaseFragment<PersonSetBean> 
             }
 
             @Override
+            protected boolean getShowSucces() {
+                return false;
+            }
+
+            @Override
             protected String getUrl() {
                 return ApiConstant.EDITUSERINFO;
             }
@@ -384,6 +431,7 @@ public class PeosonSetFragment extends SingleNetWorkBaseFragment<PersonSetBean> 
                 RxBus.get().post("fivegetdata", "");
             }
 
+
             @Override
             public void error(boolean isWrite, SingleBaseBean bean, String msg) {
 
@@ -396,5 +444,145 @@ public class PeosonSetFragment extends SingleNetWorkBaseFragment<PersonSetBean> 
         super.onDestroy();
         RxBus.get().unregister("photoRxBus", photoRxBus);
         RxBus.get().unregister("fivegetdata", fivegetdata);
+        loginBroadcastReceiver = null;
     }
+
+    private static final String QQ_ID = "1106008551";
+
+    private static final String WECHAT_ID = "wx2c2dcafaa34cf74e";
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (tencent != null) {
+            tencent.handleLoginData(data, new LoginUilister());
+        }
+    }
+
+
+    private IWXAPI weChatApi;
+
+    private Tencent tencent;
+
+
+    private void wechat() {
+        if (weChatApi == null) {
+            weChatApi = WXAPIFactory.createWXAPI(getContext(), WECHAT_ID, true);
+        }
+
+        if (!weChatApi.isWXAppInstalled()) {
+            MyToast.showToast("请先下载微信客户端");
+            return;
+        }
+
+        if (loginBroadcastReceiver == null) {
+            loginBroadcastReceiver = new LoginBroadcastReceiver();
+            IntentFilter filter = new IntentFilter();
+            filter.addAction("login_receiver");
+            getContext().registerReceiver(loginBroadcastReceiver, filter);
+        }
+
+        weChatApi.registerApp(WECHAT_ID);
+        final SendAuth.Req req = new SendAuth.Req();
+        req.scope = "snsapi_userinfo";
+        req.state = "wechat_sdk_demo_test";
+        weChatApi.sendReq(req);
+    }
+
+    private void qq() {
+        if (tencent == null) {
+            tencent = Tencent.createInstance(QQ_ID, getContext().getApplicationContext());
+        }
+
+        if (!tencent.isSessionValid()) {
+            isQq = true;
+            tencent.login(this, "all", new LoginUilister());
+        }
+    }
+
+    private boolean isQq;
+
+    private class LoginUilister implements IUiListener {
+
+        @Override
+        public void onComplete(Object o) {
+            Log.d("qq登录", o.toString());
+            if (isQq) {
+                isQq = false;
+                try {
+                    JSONObject jsonObject = new JSONObject(o.toString());
+                    String openID = jsonObject.getString(Constants.PARAM_OPEN_ID);
+                    //TODOqq绑定
+                    WeChatLoginController.getInstance().bind("qq", openID, new OnSingleRequestListener<SingleBaseBean>() {
+                        @Override
+                        public void succes(boolean isWrite, SingleBaseBean b) {
+                            datas.get(10).content="已绑定";
+                            bean.data.qq=1;
+                            mAdapter.notifyDataSetChanged();
+                        }
+
+                        @Override
+                        public void error(boolean isWrite, SingleBaseBean bean, String msg) {
+
+                        }
+                    });
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+
+        }
+
+        @Override
+        public void onError(UiError uiError) {
+            Log.d("qq登录", uiError.toString());
+        }
+
+        @Override
+        public void onCancel() {
+            Log.d("qq登录", "取消");
+        }
+    }
+
+    private LoginBroadcastReceiver loginBroadcastReceiver;
+
+    public class LoginBroadcastReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (TextUtils.equals(intent.getAction(), "login_receiver")) {
+                String sdk = intent.getStringExtra("sdk");
+                if (TextUtils.equals("wechat", sdk)) {
+                    String code = intent.getStringExtra("code");
+                    Log.d("code", code);
+                    WeChatLoginController.getInstance().getChatOponId(code, new OnSingleRequestListener<WeChatLoginController.AccessToken>() {
+                        @Override
+                        public void succes(boolean isWrite, WeChatLoginController.AccessToken bb) {
+                            WeChatLoginController.getInstance().bind("wx", bb.data.openid, new OnSingleRequestListener<SingleBaseBean>() {
+                                @Override
+                                public void succes(boolean isWrite, SingleBaseBean b) {
+                                    datas.get(9).content="已绑定";
+                                    bean.data.wx=1;
+                                    mAdapter.notifyDataSetChanged();
+                                }
+
+                                @Override
+                                public void error(boolean isWrite, SingleBaseBean b, String msg) {
+
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void error(boolean isWrite, WeChatLoginController.AccessToken bean, String msg) {
+
+                        }
+                    });
+                }
+            }
+        }
+    }
+
+
 }

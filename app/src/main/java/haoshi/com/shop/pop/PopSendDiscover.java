@@ -51,7 +51,7 @@ public class PopSendDiscover extends PopBaseView {
             @Override
             protected void discover(int layoutPosition) {
                 dismiss();
-                AllDiscoverClassifyBean.Data data = datas.get(layoutPosition);
+                AllDiscoverClassifyBean.Data data = datas.get(layoutPosition+1);
                 final ArrayList<AllDiscoverClassifyBean.Cats> cats = data.cats;
                 if (cats == null || cats.size() == 0) {
                     RxBus.get().post("addFragment", new AddFragmentBean(SendDiscoverFragment.getInstance(data.catId, data.catName)));

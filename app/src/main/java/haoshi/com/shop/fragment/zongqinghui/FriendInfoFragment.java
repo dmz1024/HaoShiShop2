@@ -233,8 +233,8 @@ public class FriendInfoFragment extends SingleNetWorkBaseFragment<FriendInfoBean
                 if (select != null) {
                     MessagesImpl.getInstance().delete(select);
                     RxBus.get().post("message", "");
-                    RxBus.get().post("groupNotifyDataRxBus", "");
                 }
+                RxBus.get().post("groupNotifyDataRxBus", "");
                 RxBus.get().post("back", "back");
                 RxBus.get().post("back", "back");
             }

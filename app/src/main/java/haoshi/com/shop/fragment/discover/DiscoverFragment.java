@@ -3,6 +3,7 @@ package haoshi.com.shop.fragment.discover;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -54,7 +55,9 @@ public class DiscoverFragment extends ListNetWorkBaseFragment<DiscoverBean> {
 
     @Override
     protected Map<String, String> map() {
-        map.put("catId", catId);
+        if(!TextUtils.isEmpty(catId)){
+            map.put("catId", catId);
+        }
         return super.map();
     }
 

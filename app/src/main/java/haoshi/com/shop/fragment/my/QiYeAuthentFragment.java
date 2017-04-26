@@ -186,8 +186,9 @@ public class QiYeAuthentFragment extends SingleNetWorkBaseFragment<QiYeInfoBean>
             }.setMaxCount(3).showAtLocation(false);
 
 
-        } else if (position == 4) {
+        } else if (position == 4 ||position==3) {
             if (gongyinglians == null) {
+                final int finalPosition1 = position;
                 new ApiRequest<GongYIngLianBean>() {
                     @Override
                     protected Map<String, String> getMap() {
@@ -217,7 +218,7 @@ public class QiYeAuthentFragment extends SingleNetWorkBaseFragment<QiYeInfoBean>
                             gongyinglians.add(new ChooseStringBean(s));
                         }
 
-                        showHangye();
+                        showHangye(finalPosition1);
 
                     }
 
@@ -227,7 +228,7 @@ public class QiYeAuthentFragment extends SingleNetWorkBaseFragment<QiYeInfoBean>
                     }
                 }).post(new TipLoadingBean());
             }else {
-                showHangye();
+                showHangye(position);
             }
         } else {
             final int finalPosition = position;
@@ -242,12 +243,12 @@ public class QiYeAuthentFragment extends SingleNetWorkBaseFragment<QiYeInfoBean>
 
     }
 
-    private void showHangye() {
+    private void showHangye(int position) {
         new ChooseStringView<ChooseStringBean>(getContext(), gongyinglians) {
             @Override
             protected void itemClick(int position) {
                 super.itemClick(position);
-                tvs.get(4).setText(gongyinglians.get(position).getString());
+                tvs.get(position).setText(gongyinglians.get(position).getString());
             }
         }.showAtLocation(false);
     }

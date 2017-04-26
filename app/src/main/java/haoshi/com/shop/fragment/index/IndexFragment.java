@@ -28,6 +28,7 @@ public class IndexFragment extends NotNetWorkBaseFragment {
 
     @Override
     protected void initData() {
+        RxBus.get().post("clearBroadCast", "");
         getChildFragmentManager().beginTransaction().replace(R.id.fg_bottom, new IndexBottomFragment()).commit();
         getChildFragmentManager().beginTransaction().replace(R.id.fg_content, new IndexContentFragment()).commit();
 

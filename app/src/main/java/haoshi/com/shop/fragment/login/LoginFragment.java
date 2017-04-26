@@ -235,6 +235,7 @@ public class LoginFragment extends SingleNetWorkBaseFragment<LoginBean> implemen
     public void onDestroy() {
         super.onDestroy();
         RxBus.get().unregister("regLoginRxBus", regLoginRxBus);
+        RxBus.get().unregister("clearBroadCast", clearBroadCast);
     }
 
     @Override
@@ -254,6 +255,7 @@ public class LoginFragment extends SingleNetWorkBaseFragment<LoginBean> implemen
             return;
         }
 
+        initClearBroadCast();
         if (loginBroadcastReceiver == null) {
             loginBroadcastReceiver = new LoginBroadcastReceiver();
             IntentFilter filter = new IntentFilter();
@@ -389,12 +391,11 @@ public class LoginFragment extends SingleNetWorkBaseFragment<LoginBean> implemen
                                     public void succes(boolean isWrite, LoginBean bean) {
                                         UserInfo.saveUserInfo(bean);
                                         RxBus.get().post("clearAll", "");
-//                                        RxBus.get().post("addFragment", new AddFragmentBean(new IndexFragment()));
+
                                     }
 
                                     @Override
                                     public void error(boolean isWrite, LoginBean bean, String msg) {
-
                                     }
                                 }, bean.getData(), "wx");
                             } else {
@@ -414,6 +415,22 @@ public class LoginFragment extends SingleNetWorkBaseFragment<LoginBean> implemen
 
 
     private static final String WECHAT_ID = "wx2c2dcafaa34cf74e";
+
+    private Observable<String> clearBroadCast;
+
+    private void initClearBroadCast() {
+        if (clearBroadCast == null) {
+            clearBroadCast = RxBus.get().register("clearBroadCast", String.class);
+            clearBroadCast.subscribe(new Action1<String>() {
+                @Override
+                public void call(String s) {
+                    loginBroadcastReceiver = null;
+                }
+            });
+        }
+
+    }
+
 
 
 }

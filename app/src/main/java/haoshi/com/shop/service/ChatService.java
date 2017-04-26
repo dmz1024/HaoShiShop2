@@ -2,6 +2,7 @@ package haoshi.com.shop.service;
 
 import android.app.IntentService;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.media.Ringtone;
@@ -123,9 +124,17 @@ public class ChatService extends IntentService {
                 }
             }.showAtLocation(true);
         } else {
+            Intent broadcastIntent = new Intent(getApplicationContext(), NotificationReceiver.class);
+            broadcastIntent.putExtra("type", "dianzan");
+            broadcastIntent.putExtra("id", "");
+            PendingIntent pendingIntent = PendingIntent.
+                    getBroadcast(getApplicationContext(), 0, broadcastIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+
             NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
                     .setSmallIcon(R.mipmap.ic_launcher)
                     .setContentTitle("点赞通知")
+                    .setContentIntent(pendingIntent)
                     .setContentText("有人点赞了您的文章");
             NotificationManager mNotificationManager =
                     (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -141,15 +150,25 @@ public class ChatService extends IntentService {
                     super.right();
                     RxBus.get().post("addFragment", new AddFragmentBean(new CommentFragment()));
                 }
+
                 @Override
                 protected float getAlpha() {
                     return 1;
                 }
             }.showAtLocation(true);
         } else {
+
+            Intent broadcastIntent = new Intent(getApplicationContext(), NotificationReceiver.class);
+            broadcastIntent.putExtra("type", "pinglun");
+            broadcastIntent.putExtra("id", "");
+            PendingIntent pendingIntent = PendingIntent.
+                    getBroadcast(getApplicationContext(), 0, broadcastIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+
             NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
                     .setSmallIcon(R.mipmap.ic_launcher)
                     .setContentTitle("评论通知")
+                    .setContentIntent(pendingIntent)
                     .setContentText("有人评论了您的文章");
             NotificationManager mNotificationManager =
                     (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -165,15 +184,25 @@ public class ChatService extends IntentService {
                     super.right();
                     RxBus.get().post("addFragment", new AddFragmentBean(MyOrderRootFragment.getInstance(2)));
                 }
+
                 @Override
                 protected float getAlpha() {
                     return 1;
                 }
             }.showAtLocation(true);
         } else {
+
+            Intent broadcastIntent = new Intent(getApplicationContext(), NotificationReceiver.class);
+            broadcastIntent.putExtra("type", "fahuo");
+            broadcastIntent.putExtra("id", "");
+            PendingIntent pendingIntent = PendingIntent.
+                    getBroadcast(getApplicationContext(), 0, broadcastIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+
             NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
                     .setSmallIcon(R.mipmap.ic_launcher)
                     .setContentTitle("发货通知")
+                    .setContentIntent(pendingIntent)
                     .setContentText("您有一个订单已发货");
             NotificationManager mNotificationManager =
                     (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -190,15 +219,23 @@ public class ChatService extends IntentService {
                     super.right();
                     RxBus.get().post("addFragment", new AddFragmentBean(new MessageFragment()));
                 }
+
                 @Override
                 protected float getAlpha() {
                     return 1;
                 }
             }.showAtLocation(true);
         } else {
+            Intent broadcastIntent = new Intent(getApplicationContext(), NotificationReceiver.class);
+            broadcastIntent.putExtra("type", "tongzhi");
+            broadcastIntent.putExtra("id", "");
+            PendingIntent pendingIntent = PendingIntent.
+                    getBroadcast(getApplicationContext(), 0, broadcastIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
             NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
                     .setSmallIcon(R.mipmap.ic_launcher)
                     .setContentTitle("系统通知")
+                    .setContentIntent(pendingIntent)
                     .setContentText("您有一条系统通知");
             NotificationManager mNotificationManager =
                     (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -220,9 +257,18 @@ public class ChatService extends IntentService {
             }
             r.play();
         } else {
+
+            Intent broadcastIntent = new Intent(getApplicationContext(), NotificationReceiver.class);
+            broadcastIntent.putExtra("type", "say");
+            broadcastIntent.putExtra("id", chat.getId());
+            PendingIntent pendingIntent = PendingIntent.
+                    getBroadcast(getApplicationContext(), 0, broadcastIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+
             NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
                     .setSmallIcon(R.mipmap.ic_launcher)
                     .setContentTitle(chat.getNameOnLine())
+                    .setContentIntent(pendingIntent)
                     .setContentText(chat.content);
             NotificationManager mNotificationManager =
                     (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);

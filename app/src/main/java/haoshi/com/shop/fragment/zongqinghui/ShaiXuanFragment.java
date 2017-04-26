@@ -23,6 +23,7 @@ import haoshi.com.shop.constant.UserInfo;
 import haoshi.com.shop.fragment.my.PeosonInfoFragment;
 import util.MyToast;
 import util.RxBus;
+import view.DefaultTitleBarView;
 import view.FlowTagLayout;
 import view.OnTagSelectListener;
 
@@ -140,6 +141,11 @@ public class ShaiXuanFragment extends SingleNetWorkBaseFragment<ShaiXuanBean> {
         View view = View.inflate(getContext(), R.layout.fragment_info_shuaixuan, null);
         ButterKnife.bind(this, view);
         return view;
+    }
+
+    @Override
+    protected void initTitleView() {
+        ((DefaultTitleBarView) getTitleBar()).setTitleContent("筛选");
     }
 
     @Override

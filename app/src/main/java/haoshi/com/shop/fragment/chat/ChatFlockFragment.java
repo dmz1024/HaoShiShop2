@@ -19,6 +19,8 @@ import haoshi.com.shop.bean.chat.impl.ChatFriendsImpl;
 import haoshi.com.shop.constant.ApiConstant;
 import haoshi.com.shop.constant.UserInfo;
 import interfaces.OnTitleBarListener;
+import rx.Observable;
+import rx.functions.Action1;
 import util.RxBus;
 import view.DefaultTitleBarView;
 
@@ -55,10 +57,38 @@ public class ChatFlockFragment extends SingleNetWorkBaseFragment<ChatFlockNetBea
     RecyclerView rv_content;
 
     private void nativeData() {
+        datas.clear();
         datas.addAll(ChatFriendsImpl.getInstance().setType(1).getDatas());
-        adapter = new ChatFriendAdapter(getContext(), datas, sendShape);
-        rv_content.setLayoutManager(new LinearLayoutManager(getContext()));
-        rv_content.setAdapter(adapter);
+        if (adapter == null) {
+            adapter = new ChatFriendAdapter(getContext(), datas, sendShape);
+            rv_content.setLayoutManager(new LinearLayoutManager(getContext()));
+            rv_content.setAdapter(adapter);
+        } else {
+            adapter.notifyDataSetChanged();
+        }
+
+
+    }
+
+    private Observable<String> notiFlockRxBus;
+
+    private void initNotiFlockRxBus() {
+
+        if (notiFlockRxBus == null) {
+            notiFlockRxBus = RxBus.get().register("initNotiFlockRxBus", String.class);
+            notiFlockRxBus.subscribe(new Action1<String>() {
+                @Override
+                public void call(String s) {
+                    nativeData();
+                }
+            });
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        RxBus.get().unregister("notiFlockRxBus", notiFlockRxBus);
     }
 
     @Override
@@ -101,6 +131,7 @@ public class ChatFlockFragment extends SingleNetWorkBaseFragment<ChatFlockNetBea
             if (isFirstNative) {
                 isFirstNative = false;
                 nativeData();
+                initNotiFlockRxBus();
             }
         } else {
             adapter = new ChatFriendAdapter(getContext(), datas, sendShape);
@@ -140,6 +171,11 @@ public class ChatFlockFragment extends SingleNetWorkBaseFragment<ChatFlockNetBea
 
     private void initAddFlockRxBus() {
 
+    }
+
+    @Override
+    protected boolean isOnlyInitOne() {
+        return false;
     }
 
     @Override

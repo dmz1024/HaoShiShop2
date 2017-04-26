@@ -166,6 +166,7 @@ public class ChatFriendFragment extends ListNetWorkBaseFragment<ChatFriendGroupN
     }
 
     private void nativeData() {
+        totalList.clear();
         totalList.addAll(ChatFriendGroupImpl.getInstance().getDatas());
         mAdapter.notifyDataSetChanged();
     }
@@ -201,6 +202,7 @@ public class ChatFriendFragment extends ListNetWorkBaseFragment<ChatFriendGroupN
             groupNotifyDataRxBus.subscribe(new Action1<String>() {
                 @Override
                 public void call(String s) {
+                    nativeData();
                     if (mAdapter != null) {
                         getData();
                     }
